@@ -2,12 +2,42 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\InvoiceRepository;
+use Doctrine\Common\Annotations\Annotation\Attributes;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=InvoiceRepository::class)
  */
+#[ApiResource(
+    attributes: ["pagination_enabled" => true],
+    normalizationContext: ['groups' => [
+        'invoices_read'
+    ]],
+    subresourceOperations: [
+        'api_customers_invoices_get_subresource' =>  [
+            'normalization_context' => [
+                'groups' => ['invoices_subresources']
+            ]
+        ],
+    ],
+    denormalizationContext: [
+        "disable_type_enforcement" => true
+    ]
+)]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'status' => 'exact',
+        'customer.firstName' => 'partial',
+        'customer.lastName' => 'partial',
+    ]
+)]
 class Invoice
 {
     /**
@@ -20,27 +50,48 @@ class Invoice
     /**
      * @ORM\Column(type="float")
      */
+    #[Groups(['invoices_read', 'customer:read', 'invoices_subresources'])]
+    #[Assert\NotBlank(message: "This field can't be null")]
+    #[Assert\Type(
+        type: 'float',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
+    #[Assert\Positive(message: "This number have to be positive")]
     private $amout;
 
     /**
      * @ORM\Column(type="datetime")
      */
+    #[Groups(['invoices_read', 'customer:read', 'invoices_subresources'])]
+    #[Assert\NotBlank(message: "This field can't be null")]
     private $sentAt;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(['invoices_read', 'customer:read', 'invoices_subresources'])]
+    #[Assert\NotBlank(message: "This field can't be null")]
+    #[Assert\Choice(['SENT', 'PAID', 'CANCELLED'])]
     private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="invoices")
      * @ORM\JoinColumn(nullable=false)
      */
+    #[Groups('invoices_read')]
+    #[Assert\NotBlank(message: "This field can't be null")]
     private $customer;
 
     /**
      * @ORM\Column(type="integer")
      */
+    #[Groups(['invoices_read', 'customer:read', 'invoices_subresources'])]
+    #[Assert\NotBlank(message: "This field can't be null")]
+    #[Assert\Type(
+        type: 'integer',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
+    #[Assert\Positive(message: "This number have to be positive")]
     private $chrono;
 
     public function getId(): ?int
@@ -48,12 +99,22 @@ class Invoice
         return $this->id;
     }
 
+    /**
+     * Get user
+     * @return User
+     */
+    #[Groups('invoices_read')]
+    public function getUser(): User
+    {
+        return $this->customer->getUser();
+    }
+
     public function getAmout(): ?float
     {
         return $this->amout;
     }
 
-    public function setAmout(float $amout): self
+    public function setAmout($amout): self
     {
         $this->amout = $amout;
 
@@ -101,7 +162,7 @@ class Invoice
         return $this->chrono;
     }
 
-    public function setChrono(int $chrono): self
+    public function setChrono( $chrono): self
     {
         $this->chrono = $chrono;
 

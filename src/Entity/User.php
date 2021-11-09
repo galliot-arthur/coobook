@@ -2,16 +2,22 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
+#[ApiResource()]
+#[UniqueEntity('email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
@@ -24,6 +30,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
+    #[Groups(['customer:read', 'invoices_read'])]
+    #[Assert\NotBlank(message: "This field can't be null")]
+    #[Assert\Email(message: 'The email {{ value }} is not a valid email.')]
     private $email;
 
     /**
@@ -35,16 +44,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
+    #[Assert\NotBlank(message: "This field can't be null")]
+    #[Assert\Length(
+        min: 8,
+        max: 70,
+        minMessage: 'Your password must be at least {{ limit }} characters long',
+        maxMessage: 'Your password cannot be longer than {{ limit }} characters',
+    )]
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(['customer:read', 'invoices_read'])]
+    #[Assert\NotBlank(message: "This field can't be null")]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Your first name must be at least {{ limit }} characters long',
+        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+    )]
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(['customer:read', 'invoices_read'])]
+    #[Assert\NotBlank(message: "This field can't be null")]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Your last name must be at least {{ limit }} characters long',
+        maxMessage: 'Your last name cannot be longer than {{ limit }} characters',
+    )]
     private $lastName;
 
     /**

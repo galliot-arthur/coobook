@@ -1,0 +1,14 @@
+api_platform:
+    title: 'Test API'
+    description: 'First Try'
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity']
+    patch_formats:
+        json: ['application/merge-patch+json']
+    enable_swagger: true
+    enable_swagger_ui: true
+    swagger:
+        versions: [3]
+    collection:
+        pagination:
+            enabled: false
