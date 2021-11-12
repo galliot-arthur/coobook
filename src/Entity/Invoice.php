@@ -15,7 +15,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=InvoiceRepository::class)
  */
 #[ApiResource(
-    attributes: ["pagination_enabled" => true],
     normalizationContext: ['groups' => [
         'invoices_read'
     ]],
@@ -162,7 +161,7 @@ class Invoice
         return $this->chrono;
     }
 
-    public function setChrono( $chrono): self
+    public function setChrono($chrono): self
     {
         $this->chrono = $chrono;
 

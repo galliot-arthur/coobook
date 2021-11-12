@@ -1,5 +1,6 @@
 {
     "devDependencies": {
+        "@babel/preset-react": "^7.0.0",
         "@symfony/stimulus-bridge": "^2.0.0",
         "@symfony/webpack-encore": "^1.0.0",
         "core-js": "^3.0.0",
@@ -10,9 +11,18 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "dev-server": "encore dev-server",
+        "dev-server": "encore dev-server --port 8085",
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "axios": "^0.18.0",
+        "bootstrap-icons": "^1.7.0",
+        "jwt-decode": "^3.1.2",
+        "moment": "^2.29.1",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "react-router-dom": "^5.0.0"
     }
 }

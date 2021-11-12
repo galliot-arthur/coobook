@@ -32,6 +32,7 @@ class Customer
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['customer:read', 'invoices_read'])]
     private $id;
 
     /**
@@ -78,9 +79,7 @@ class Customer
      * @ORM\OneToMany(targetEntity=Invoice::class, mappedBy="customer", orphanRemoval=true)
      */
     #[Groups('customer:read')]
-    #[ApiSubresource(
-
-    )]
+    #[ApiSubresource()]
     private $invoices;
 
     /**
