@@ -27,6 +27,7 @@ class JwtCreatedSubscriber
 
         $payload = $event->getData();
         $user = $event->getUser();
+        $payload['id'] = $user->getId();
         $payload['firstName'] = $user->getFirstName();
         $payload['lastName'] = $user->getLastName();
         $payload['email'] = $user->getEmail();

@@ -3,6 +3,7 @@ import authAPI from '../services/authAPI'
 import AuthContext from '../context/AuthContext'
 import { Loader } from '../ui/Loader'
 import Field from '../components/forms/Field'
+import { toast } from 'react-toastify'
 
 export default function LoginPage({ history }) {
     const { connected, setConnected } = useContext(AuthContext)
@@ -28,6 +29,7 @@ export default function LoginPage({ history }) {
             setError(null)
             setLoading(false)
             setConnected(true)
+            toast.info('Bienvenue ' + window.localStorage.getItem('authToken') + '.')
             history.push('/')
         } catch (e) {
             setError('Identifiant ou mot de passe invalide.')
@@ -52,7 +54,7 @@ export default function LoginPage({ history }) {
                             <Field name="password" label="Mot de passe" value={credentials.password} onChange={handleChange} placeholder="password123" type="password" />
 
                             <div className="form-group mt-3">
-                                <button className={"btn btn-primary " + (loading && "disabled")}>
+                                <button className={"btn btn-danger " + (loading && "disabled")}>
                                     Connexion
                                 </button>
                             </div>

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -32,12 +33,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['recipes_read'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    #[Groups(['customer:read', 'invoices_read'])]
+    #[Groups(['recipes_read'])]
     #[Assert\NotBlank(message: "This field can't be null")]
     #[Assert\Email(message: 'The email {{ value }} is not a valid email.')]
     private $email;
@@ -63,7 +65,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['customer:read', 'invoices_read'])]
+    #[Groups(['recipes_read'])]
     #[Assert\NotBlank(message: "This field can't be null")]
     #[Assert\Length(
         min: 2,
@@ -76,7 +78,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['customer:read', 'invoices_read'])]
+    #[Groups(['recipes_read'])]
     #[Assert\NotBlank(message: "This field can't be null")]
     #[Assert\Length(
         min: 2,
@@ -91,9 +93,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $customers;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Recipe::class, mappedBy="User", orphanRemoval=true)
+     */
+    #[ApiSubresource()]
+    private $recipes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $likes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=BookMark::class, mappedBy="user", orphanRemoval=true)
+     */
+    #[ApiSubresource()]
+    private $bookMarks;
+
     public function __construct()
     {
         $this->customers = new ArrayCollection();
+        $this->recipes = new ArrayCollection();
+        $this->likes = new ArrayCollection();
+        $this->bookMarks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -233,6 +255,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($customer->getUser() === $this) {
                 $customer->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Recipe[]
+     */
+    public function getRecipes(): Collection
+    {
+        return $this->recipes;
+    }
+
+    public function addRecipe(Recipe $recipe): self
+    {
+        if (!$this->recipes->contains($recipe)) {
+            $this->recipes[] = $recipe;
+            $recipe->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipe(Recipe $recipe): self
+    {
+        if ($this->recipes->removeElement($recipe)) {
+            // set the owning side to null (unless already changed)
+            if ($recipe->getUser() === $this) {
+                $recipe->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BookMark[]
+     */
+    public function getBookMarks(): Collection
+    {
+        return $this->bookMarks;
+    }
+
+    public function addBookMark(BookMark $bookMark): self
+    {
+        if (!$this->bookMarks->contains($bookMark)) {
+            $this->bookMarks[] = $bookMark;
+            $bookMark->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBookMark(BookMark $bookMark): self
+    {
+        if ($this->bookMarks->removeElement($bookMark)) {
+            // set the owning side to null (unless already changed)
+            if ($bookMark->getUser() === $this) {
+                $bookMark->setUser(null);
             }
         }
 

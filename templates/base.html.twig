@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com/ '; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' 'unsafe-eval';">
-        <title>{% block title %}{% endblock %}</title>
-        {% block stylesheets %}
-        {% endblock %}
+	<head class="h-100">
+		<meta charset="UTF-8">
+		<meta http-equiv="Content-Security-Policy" content="none"> {% block stylesheets %}{% endblock %}{% block javascripts %}{% endblock %}
 
-        {% block javascripts %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
-</html>
+		<title>
+			{% block title %}{% endblock %}
+		</title>
+
+	</head>
+
+	<body class="h-100 d-flex justify-content-center"> {% block body %}{% endblock %}
+
+		</body>
+
+	</html>

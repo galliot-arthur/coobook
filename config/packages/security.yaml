@@ -52,8 +52,8 @@ security:
         - { path: ^/api/register, roles: PUBLIC_ACCESS }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         # - { path: ^/api,       roles: PUBLIC_ACCESS }
-        - { path: ^/api/users,       roles: ROLE_USER }
-        - { path: ^/api/customers,       roles: ROLE_USER }
-        - { path: ^/api/invoices,       roles: ROLE_USER }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/api/users, roles: ROLE_USER }
+        - { path: ^/api/customers, roles: ROLE_USER }
+        - { path: ^/api/invoices, roles: ROLE_USER }
+        - { path: ^/api/recipes, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }

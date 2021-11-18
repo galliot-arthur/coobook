@@ -1,10 +1,13 @@
 import React from 'react'
 
-export default function Field({ name, label, value, onChange, placeholder, type = "text", error = "", minLength = "0" }) {
+export default function Field({ name, label, value, onChange, placeholder, type = "text", error = "", minLength = "0", required = true }) {
     return (
         <div className="form-group">
-            <label htmlFor={name}>
-                {label}</label>
+            {
+                label &&
+                <label htmlFor={name}>
+                    {label}</label>
+            }
             <input
                 type={type}
                 className={"form-control" + (error && " is-invalid")}
@@ -13,7 +16,7 @@ export default function Field({ name, label, value, onChange, placeholder, type 
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
-                required
+                required={required}
                 minLength={minLength}
             />
             {error && <p className="invalid-feedback">{error}</p>}

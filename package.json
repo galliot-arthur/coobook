@@ -23,6 +23,9 @@
         "moment": "^2.29.1",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
-        "react-router-dom": "^5.0.0"
+        "react-images-upload": "^1.2.8",
+        "react-router-dom": "^5.0.0",
+        "react-select": "^5.2.1",
+        "react-toastify": "^8.1.0"
     }
 }

@@ -1,4 +1,6 @@
 import React, { useContext, useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import Field from '../components/forms/Field'
 import AuthContext from '../context/AuthContext'
 import authAPI from '../services/authAPI'
@@ -30,6 +32,7 @@ export default function RegisterPage({ history }) {
             await authAPI.register(user)
             setError(null)
             setLoading(false)
+            toast.info('Inscription réussie. Merci de vous connecter.')
             history.replace('/login')
         } catch (e) {
             const { violations } = e.response.data
@@ -63,9 +66,10 @@ export default function RegisterPage({ history }) {
                             <Field name="password" label="Mot de passe" value={user.password} onChange={handleChange} placeholder="votre/mot2passe" type="password" minLength="8" />
 
                             <div className="form-group mt-3">
-                                <button className={"btn btn-primary " + (loading && "disabled")}>
+                                <button className={"btn btn-danger " + (loading && "disabled")}>
                                     Inscription
                                 </button>
+                                <NavLink to="/login" className="link-primary text-decoration-none ms-4">Déja membre ?</NavLink>
                             </div>
                         </form>
                 }

@@ -14,6 +14,14 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 
+
+/* @import url('./GT-MARU.woff2'); */
+
+@font-face {
+    font-family: "MARU";
+    src: url("./GT-MARU.woff2") format("woff2");
+}
+
 :root {
     --bs-blue: #eb6864;
     --bs-indigo: #6610f2;
@@ -38,8 +46,8 @@
     --bs-gray-800: #333;
     --bs-gray-900: #222;
     --bs-primary: #eb6864;
-    --bs-secondary: #aaa;
-    --bs-success: #22b24c;
+    --bs-secondary: #c4c4c4;
+    --bs-success: #55c276;
     --bs-info: #369;
     --bs-warning: #f5e625;
     --bs-danger: #f57a00;
@@ -93,12 +101,16 @@ body {
     -webkit-tap-highlight-color: transparent
 }
 
+.maru {
+    font-family: 'MARU';
+}
+
 hr {
     margin: 1rem 0;
     color: inherit;
-    background-color: currentColor;
-    border: 0;
-    opacity: .25
+    background-color: transparent;
+    border: none;
+    border-top: 1px solid #dee2e6!important;
 }
 
 hr:not([size]) {
@@ -563,7 +575,7 @@ progress {
 
 .display-4 {
     font-size: calc(1.475rem + 2.7vw);
-    font-weight: 300;
+    font-weight: 600;
     line-height: 1.1
 }
 
@@ -646,12 +658,25 @@ progress {
 }
 
 .img-thumbnail {
-    padding: .25rem;
-    background-color: #fff;
     border: 1px solid #dee2e6;
     border-radius: .25rem;
     max-width: 100%;
     height: auto
+}
+
+.img-thumbnail-small {
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    width: calc(4.75rem + 8.7vw);
+    height: calc(4.75rem + 8.7vw);
+    object-fit: cover;
+}
+
+.img-thumbnail-small>img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .figure {
@@ -7709,7 +7734,7 @@ fieldset:disabled .btn {
 }
 
 .border {
-    border: 1px solid #dee2e6!important
+    border: 1px solid #dee2e6 !important
 }
 
 .border-0 {
@@ -7717,7 +7742,7 @@ fieldset:disabled .btn {
 }
 
 .border-top {
-    border-top: 1px solid #dee2e6!important
+    border-top: 1px solid #dee2e6 !important
 }
 
 .border-top-0 {
@@ -8567,6 +8592,10 @@ fieldset:disabled .btn {
 
 .lh-lg {
     line-height: 2!important
+}
+
+.text-small {
+    font-size: .875rem!important
 }
 
 .text-start {
@@ -11680,4 +11709,18 @@ fieldset:disabled .btn {
 
 .pagination a:hover {
     text-decoration: none
+}
+
+.fade-start {
+    opacity: 1;
+    animation: fade-start linear 1 .3s;
+}
+
+@keyframes fade-start {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

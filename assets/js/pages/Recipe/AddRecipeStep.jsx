@@ -1,0 +1,81 @@
+import React, { useContext, useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import TextArea from '../../components/forms/TextArea'
+import AddRecipeContext from '../../context/AddRecipeContext'
+import API from '../../services/API'
+import { Loader } from '../../ui/Loader'
+
+export default function AddRecipeStep({ match, history }) {
+
+    const { IRI } = useContext(AddRecipeContext);
+    const [step, setStep] = useState({
+        recipe: IRI,
+        content: ""
+    })
+    console.log(IRI)
+    const instruction = [
+        "Faire chauffer de l'eau...",
+        "Epplucher les carottes",
+        "Etaler la farine...",
+        "Allumer le four...",
+        "Vérifier l'assaisonnement...",
+    ]
+
+    const [loading, setLoading] = useState(false)
+
+    /* HANDLE DATA */
+    const handleChange = ({ currentTarget }) => {
+        const { value } = currentTarget
+        setStep({
+            recipe: IRI,
+            content: value
+        })
+    }
+    const handleSubmit = async e => {
+        e.preventDefault()
+        setLoading(true)
+        try {
+            console.log(step)
+            await API.post(step, 'steps')
+            toast.info('Etape enregistrée.')
+            setStep({ ...step, content: "" })
+            setLoading(false)
+        } catch (e) {
+            toast.warning("Erreur ! Merci d'essayer à nouveau.")
+            setLoading(false)
+        }
+    }
+
+    return (
+        <div>
+            <h1 className="display-4">Ajout d'une étape</h1>
+            <p className="lead">{instruction[(Math.floor(Math.random() * 5))]}</p>
+            <hr className="my-4" />
+            {/* THEN */}
+            {
+                loading ?
+                    <Loader />
+                    :
+                    <form onSubmit={handleSubmit} className="form-group">
+                        <TextArea
+                            name="content"
+                            label="Dites moi tout..."
+                            value={step.content}
+                            onChange={handleChange}
+                            placeholder="Bon apétit !"
+                            minLength="5"
+                            required={false}
+                        />
+                        <div className="form-group mt-3">
+                            <button className={"btn btn-primary " + (loading && "disabled")}>
+                                Enregistrer
+                            </button>
+                            <NavLink to={"/ajout-photo"} className="ms-3 btn btn-outline-danger">Passer à l'étape suivante</NavLink>
+                        </div>
+                    </form>
+            }
+        </div>
+
+    )
+}

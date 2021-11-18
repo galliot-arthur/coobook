@@ -10,7 +10,10 @@ const authenticate = (credentials) => {
             if (token) {
                 const data = jwtDecode(token)
                 window.localStorage.setItem(
-                    'authToken', data.firstName + " " + data.lastName
+                    'authToken', data.firstName
+                )
+                window.localStorage.setItem(
+                    'authId', data.id
                 )
             }
         }).then(() => {

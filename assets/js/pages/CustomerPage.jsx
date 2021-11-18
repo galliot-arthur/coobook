@@ -1,7 +1,12 @@
+import Axios from 'axios'
+import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import Field from '../components/forms/Field'
 import Pagination from '../components/Pagination'
 import customersAPI from '../services/customersAPI'
-import { CompanyIcons, InvoiceIcons, SearchIcons, TrashIcons, UserIcons } from '../ui/Icons'
+import { AddFileIcons, CompanyIcons, EditIcons, InvoiceIcons, SearchIcons, TrashIcons, UserCircleIcons, UserIcons } from '../ui/Icons'
 import { Loader } from '../ui/Loader'
 
 export function CustomerPage() {
@@ -16,7 +21,7 @@ export function CustomerPage() {
             setCustomers(data)
         } catch (e) { console.log(e.response) }
     }
-    useEffect( () => { fetchCustomers() }, [])
+    useEffect(() => { fetchCustomers() }, [])
 
     /* HANDLE DELETING CUSTOMER */
     const handleDelete = async (id) => {
@@ -28,17 +33,17 @@ export function CustomerPage() {
             setCustomers(originalCustomers)
         }
     }
-    
+
     /* PAGINATION */
     const handlePageChanged = page => setCurrentPage(page);
     const itemsPerPage = 11;
-    
+
     /* SEARCH */
-    const handleSearch = ({currentTarget}) => {
+    const handleSearch = ({ currentTarget }) => {
         setSearch(currentTarget.value)
         setCurrentPage(1)
     }
-    /* FILTERING CUSTOMERS BY SEARCH */
+    /* FILTERING RECIPES BY SEARCH */
     const filteredCustomers = customers.filter(c =>
         c.firstName.toLowerCase().includes(search.toLowerCase()) ||
         c.lastName.toLowerCase().includes(search.toLowerCase()) ||
@@ -50,8 +55,15 @@ export function CustomerPage() {
 
     return (
         <div>
-            <h1 className="display-4">Clients</h1>
-            <p className="lead">Vos clients en un clin d'oeuil</p>
+            <div className="d-flex justify-content-between align-items-start">
+                <div>
+                    <h1 className="display-4">Clients</h1>
+                    <p className="lead">Vos clients en un clin d'œil</p>
+                </div>
+                <NavLink to="/client/ajout" className="text-decoration-none" >
+                    <AddFileIcons className="text-decoration-none" /> Nouveau
+                </NavLink>
+            </div>
             <hr className="my-4" />
 
             <div className="input-group mb-3">
@@ -70,32 +82,32 @@ export function CustomerPage() {
                 />
             </div>
             <div className="container mb-5">
-            {
+                {
 
-                customers.length == 0 ?
-                    <div>
-                        <Loader look="d-flex justify-content-center my-3 align-items-center" />
-                    </div> :
+                    customers.length == 0 ?
+                        <div>
+                            <Loader look="d-flex justify-content-center my-3 align-items-center" />
+                        </div> :
 
-                    paginatedCustomers.map(customer =>
-                        <Customer
-                            key={customer.id}
-                            customer={customer}
-                            onDelete={() => handleDelete(customer.id)}
-                        />
-                    )
+                        paginatedCustomers.map(customer =>
+                            <Customer
+                                key={customer.id}
+                                customer={customer}
+                                onDelete={() => handleDelete(customer.id)}
+                            />
+                        )
 
-            }
+                }
 
-            {
-                itemsPerPage < filteredCustomers.length &&
-                <Pagination
-                    currentPage={currentPage}
-                    itemsPerPage={itemsPerPage}
-                    length={filteredCustomers.length}
-                    onPageChanged={handlePageChanged}
-                />
-            }
+                {
+                    itemsPerPage < filteredCustomers.length &&
+                    <Pagination
+                        currentPage={currentPage}
+                        itemsPerPage={itemsPerPage}
+                        length={filteredCustomers.length}
+                        onPageChanged={handlePageChanged}
+                    />
+                }
             </div>
         </div>
     )
@@ -103,8 +115,28 @@ export function CustomerPage() {
 
 
 const Customer = ({ customer, onDelete }) => {
+    const [details, setDetails] = useState(false)
+
+    const toggleDetails = () => {
+        setDetails(!details)
+        console.log(details)
+    }
+
+
+    const formatDate = str => moment(str).format('DD/MM/YYYY')
+    const STATUS_CLASSES = {
+        PAID: "success",
+        SENT: "primary",
+        CANCELLED: "secondary"
+    }
+    const STATUS_LABELS = {
+        PAID: "Payée",
+        SENT: "Envoyée",
+        CANCELLED: "Annulée"
+    }
+
     return (
-        <div className="row align-items-center">
+        <div className="row align-items-center fade-start">
             <div className="col-6 align-items-center">
                 <div>
                     <UserIcons /> <a href="#">{customer.firstName} {customer.lastName}</a>
@@ -127,14 +159,45 @@ const Customer = ({ customer, onDelete }) => {
                     </div>
                     <div className="ps-1">
                         <button
+                            onClick={() => toggleDetails()}
+                            className="ms-auto me-2">
+                            <UserCircleIcons />
+                        </button>
+                        <NavLink
+                            to={"/client/" + customer.id}
+                            className="ms-auto me-2">
+                            <EditIcons />
+                        </NavLink>
+                        <button
                             onClick={onDelete}
-                            //disabled={customer.invoices.length > 0}
                             className="ms-auto">
                             <TrashIcons />
                         </button>
                     </div>
                 </div>
             </div>
+            {
+                details &&
+                <ul className="list-group my-3 fade-start">
+                    <li className="list-group-item">
+                        <h5>Factures</h5>
+                    </li>
+                    {
+                        customer.invoices.map(invoice =>
+                            <li
+                                key={invoice.id}
+                                className="list-group-item fade show"
+                            >
+                                <strong>n° {invoice.chrono} </strong>: {invoice.amout.toLocaleString()} €<br />
+                                {formatDate(invoice.sentAt)} <br />
+                                <span className={"text-" + STATUS_CLASSES[invoice.status]}>
+                                    {STATUS_LABELS[invoice.status]}
+                                </span>
+                            </li>
+                        )
+                    }
+                </ul>
+            }
             <hr className="mt-1" />
         </div>)
 }
