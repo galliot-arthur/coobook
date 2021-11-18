@@ -29,6 +29,10 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+
+###< images ###
+/public/images/
 .png
 .jpg
 .jpeg
