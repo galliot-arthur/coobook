@@ -16,15 +16,15 @@ const apiDelete = (monitor, user, likes) => {
  * @param {number} user User's Id
  * @param {array} likes Represents all the likes
  */
-const toggleAffiliation = (state, monitor, recipe, user, likes) => {
+const toggleAffiliation = (state, monitor, recipe, likes) => {
     let data = {
         recipe: "api/recipes/" + recipe,
-        user: "api/users/" + user,
+        user: "api/users/" + window.localStorage.getItem('authId'),
     }
     if (!state) {
         API.post(data, monitor)
     } else {
-        apiDelete(monitor, user, likes)
+        apiDelete(monitor, window.localStorage.getItem('authId'), likes)
     }
 }
 
@@ -34,10 +34,10 @@ const toggleAffiliation = (state, monitor, recipe, user, likes) => {
  * @param {array} likes A collection of all current recipes' like 
  * @returns boolean
  */
-const isUserLike = (user, likes) => {
+const isUserLike = (likes) => {
     let rez
     likes.forEach(like => {
-        if (like.user.id == parseInt(user)) {
+        if (like.user.id == parseInt(window.localStorage.getItem('authId'))) {
             rez = true
             return rez
         }

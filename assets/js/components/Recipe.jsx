@@ -1,77 +1,14 @@
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import likeBookmark from '../services/like&bookmark'
-import { BookMarkFilledIcon, BookMarkIcon, CommentIcon, LikeFillIcon, LikeIcon, TreeDotsIcon, UserCircleIcons, UserFeedIcon } from '../ui/Icons'
+import { CommentIcon, TreeDotsIcon, UserCircleIcons } from '../ui/Icons'
+import BookMarkButton from './recipes/BookMarkButton'
+import LikeButton from './recipes/LikeButton'
 
 export default function Recipe({ recipe }) {
 
     /* FORMAT DATE */
     const formatDate = str => moment(str).format('DD/MM/YYYY')
-
-    /* HANDLE LIKE */
-    const [like, setLike] = useState(false)
-
-    /* INITIALIZE LIKE STATES */
-    useEffect(() => {
-        if (recipe.likes.length > 0) {
-            let rez = likeBookmark.isUserLike(
-                window.localStorage.getItem('authId'),
-                recipe.likes
-            )
-            setLike(rez)
-        }
-    }, [])
-
-    /* TOGGLE LIKE */
-    const toggleLike = async () => {
-        setLike(!like)
-        //console.log(like)
-        try {
-            likeBookmark.toggleAffiliation(
-                like,
-                'likes',
-                recipe.id,
-                window.localStorage.getItem('authId'),
-                recipe.likes
-            )
-        } catch (e) {
-            console.log(e)
-            toast.warning('Erreur, merci de réessayer.')
-            setLike(!like)
-        }
-    }
-
-    /* HANDLE BOOKMARS */
-    const [bookmark, setBookmark] = useState(false)
-    /* INITIALIZE BOOKMARKS */
-    useEffect(() => {
-        if (recipe.bookMarks.length > 0) {
-            let rez = likeBookmark.isUserLike(
-                window.localStorage.getItem('authId'),
-                recipe.bookMarks
-            )
-            setBookmark(rez)
-        }
-    }, [])
-    /* TOGGLE BOOKMARKS */
-    const toggleBookmark = async () => {
-        setBookmark(!bookmark)
-        try {
-            likeBookmark.toggleAffiliation(
-                bookmark,
-                'book_marks',
-                recipe.id,
-                window.localStorage.getItem('authId'),
-                recipe.bookMarks
-            )
-        } catch (e) {
-            console.log(e)
-            toast.warning('Erreur, merci de réessayer.')
-            setLike(!like)
-        }
-    }
 
     return (
         <div key={recipe.id} className="row fade-start">
@@ -101,27 +38,13 @@ export default function Recipe({ recipe }) {
                             <img className="img-thumbnail w-75" src={"images/recipes/default-placeholder.png"} alt="illustration recette par défault" />
                     }
                 </NavLink>
+                {/* ACTIONS */}
                 <div className="my-3">
-                    <button className="me-3" onClick={toggleLike}>
-                        {
-                            like ?
-                                <LikeFillIcon size="24" />
-                                :
-                                <LikeIcon size="24" />
-                        }
-                    </button>
+                    <LikeButton recipe={recipe} />
                     <button className="me-3">
                         <CommentIcon size="24" />
                     </button>
-                    <button className="me-3" onClick={toggleBookmark}>
-                        {
-                            bookmark ?
-                                <BookMarkFilledIcon size="24" />
-                                :
-                                <BookMarkIcon size="24" />
-                        }
-
-                    </button>
+                    <BookMarkButton recipe={recipe} />
                 </div>
 
                 <div className="align-items-start">

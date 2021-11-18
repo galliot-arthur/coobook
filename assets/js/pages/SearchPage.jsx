@@ -37,14 +37,11 @@ export default function SearchPage() {
 
         setSearch(currentTarget.value)
         setArrayTerms(terms)
-        //console.log(terms)
         setCurrentPage(1)
         filteredRecipes = []
-
-
     }
-    /* FILTERING RECIPES BY SEARCH */
 
+    /* FILTERING RECIPES BY SEARCH */
     recipes.map(recipe => {
         arrayTerms.map(term => {
             if (
@@ -59,7 +56,6 @@ export default function SearchPage() {
     const uniqueSet = new Set(filteredRecipes)
     const uniqueFilteredRecipes = [...uniqueSet]
 
-    console.log(uniqueFilteredRecipes)
     /* HANDLE PAGINATION */
     const paginatedRecipes = Pagination.getData(uniqueFilteredRecipes, currentPage, itemsPerPage)
 
