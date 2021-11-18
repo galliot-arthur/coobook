@@ -93,7 +93,7 @@ const useField = ({ history }) => {
             try {
                 await API.post(form, 'ingredients')
             } catch (e) {
-                console.log(form)
+                console.log(e.response)
             }
         })
     }

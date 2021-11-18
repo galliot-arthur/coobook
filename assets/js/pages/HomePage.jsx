@@ -2,14 +2,14 @@ import React, { useContext } from 'react'
 import AuthContext from '../context/AuthContext'
 import ConnectedHomePage from './ConnectedHomePage'
 
-export function HomePage() {
+export function HomePage({ history }) {
 
     const { connected } = useContext(AuthContext)
 
 
     return (
         connected ?
-            <ConnectedHomePage />
+            <ConnectedHomePage history={history} />
             :
             <StandardHomePage />
     )

@@ -13,7 +13,6 @@ export default function AddRecipeStep({ match, history }) {
         recipe: IRI,
         content: ""
     })
-    console.log(IRI)
     const instruction = [
         "Faire chauffer de l'eau...",
         "Epplucher les carottes",
@@ -36,7 +35,6 @@ export default function AddRecipeStep({ match, history }) {
         e.preventDefault()
         setLoading(true)
         try {
-            console.log(step)
             await API.post(step, 'steps')
             toast.info('Etape enregistrée.')
             setStep({ ...step, content: "" })

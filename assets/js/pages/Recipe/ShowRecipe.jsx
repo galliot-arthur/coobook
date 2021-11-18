@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import API from '../../services/API'
 import { Loader } from '../../ui/Loader'
-import { CommentIcon, TrashIcons } from '../../ui/Icons'
+import { TrashIcons } from '../../ui/Icons'
 import Ingredients from '../../components/recipes/Ingredients'
 import Images from '../../components/recipes/Images'
 import LikeButton from '../../components/recipes/LikeButton'
 import BookMarkButton from '../../components/recipes/BookMarkButton'
+import CommentButton from '../../components/recipes/CommentButton'
 
 export default function ShowRecipe({ match, history }) {
 
@@ -20,7 +21,7 @@ export default function ShowRecipe({ match, history }) {
     const { id } = match.params
 
     const [commenting, setCommenting] = useState(false)
-    console.log(commenting)
+
 
     /* GET THE RECIPE */
     const fetchRecipe = async id => {
@@ -81,16 +82,10 @@ export default function ShowRecipe({ match, history }) {
                         {/* ACTION */}
                         <div className="my-3">
                             {recipe.likes && <LikeButton recipe={recipe} />}
-                            <button className="me-3">
-                                <CommentIcon size="24" onClick={toggleComment} />
-                            </button>
+                            <CommentButton recipe={recipe} history={history} />
                             {recipe.bookMarks && <BookMarkButton recipe={recipe} />}
                         </div>
-                        {/* COMMENT */}
-                        {
-                            commenting &&
-                            <addComments recipe={recipe} />
-                        }
+
                         {/* INGREDIENTS */}
                         <Ingredients ingredients={ingredients} />
 

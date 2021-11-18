@@ -23,6 +23,7 @@ import ShowRecipe from './js/pages/Recipe/ShowRecipe';
 import AddRecipeContext from './js/context/AddRecipeContext';
 import BookmarkedRecipes from './js/pages/User/BookmarkedRecipes'
 import SearchPage from './js/pages/SearchPage';
+import AddComment from './js/pages/Comment/AddComment';
 
 const App = () => {
 
@@ -62,6 +63,8 @@ const App = () => {
                         <PrivateRoute path="/ajout-etape" component={AddRecipeStep} />
                         <PrivateRoute path="/ajout-photo" component={AddRecipeCover} />
                         <PrivateRoute path="/recette/:id" component={ShowRecipe} />
+                        {/* COMMENTS */}
+                        <PrivateRoute path="/commenter/:id" component={AddComment} />
 
                         {/* USER */}
                         <PrivateRoute path="/mes-recettes" component={MyRecipes} />

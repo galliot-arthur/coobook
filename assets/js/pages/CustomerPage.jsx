@@ -9,7 +9,7 @@ import customersAPI from '../services/customersAPI'
 import { AddFileIcons, CompanyIcons, EditIcons, InvoiceIcons, SearchIcons, TrashIcons, UserCircleIcons, UserIcons } from '../ui/Icons'
 import { Loader } from '../ui/Loader'
 
-export function CustomerPage() {
+export function CustomerPage({ history }) {
     const [customers, setCustomers] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [search, setSearch] = useState("")
@@ -119,7 +119,6 @@ const Customer = ({ customer, onDelete }) => {
 
     const toggleDetails = () => {
         setDetails(!details)
-        console.log(details)
     }
 
 

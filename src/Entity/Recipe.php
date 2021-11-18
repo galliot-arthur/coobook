@@ -167,6 +167,7 @@ class Recipe
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="recipe", orphanRemoval=true)
      */
+    #[Groups(['recipes_read'])]
     private $comments;
 
 

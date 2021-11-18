@@ -10,7 +10,7 @@ export default function AddRecipeCover({ match, history }) {
     /* GET THE RECIPE WE ARE CURRENTLY RECORDING */
     const { IRI, setIRI } = useContext(AddRecipeContext);
     if (IRI === "") setIRI(window.localStorage.getItem('IRI'))
-    console.log(IRI)
+
     /* HANDLE IMAGE DROP */
     const [picture, setPicture] = useState([])
     const onDrop = (picture) => {

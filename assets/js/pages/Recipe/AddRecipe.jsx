@@ -9,7 +9,7 @@ import { Loader } from '../../ui/Loader'
 export default function AddRecipe({ history }) {
 
     /* INITIALIZE RECIPE */
-    const [ingredient, setRecipe] = useState({
+    const [ingredient, setIngredient] = useState({
         title: "",
         intro: "",
         outro: "",
@@ -25,7 +25,7 @@ export default function AddRecipe({ history }) {
     /* HANDLE FORM CHANGES */
     const handleChange = ({ currentTarget }) => {
         const { value, name } = currentTarget
-        setRecipe({ ...ingredient, [name]: value })
+        setIngredient({ ...ingredient, [name]: value })
     }
 
     /* GET CONTEXT */

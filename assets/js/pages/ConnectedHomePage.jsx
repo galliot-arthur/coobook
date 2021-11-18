@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import API from '../services/API'
 import { Loader } from '../ui/Loader'
 import Recipe from '../components/Recipe'
-export default function ConnectedHomePage() {
+export default function ConnectedHomePage({ history }) {
 
     /* FETCHING DATA */
     const [feed, setFeed] = useState([])
@@ -20,7 +20,7 @@ export default function ConnectedHomePage() {
             <Loader look="d-flex justify-content-center my-5" />
             :
             feed.map(recipe =>
-                <Recipe recipe={recipe} key={recipe.id} />
+                <Recipe history={history} recipe={recipe} key={recipe.id} />
             )
     )
 }

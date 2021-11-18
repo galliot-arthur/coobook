@@ -1,11 +1,12 @@
 import moment from 'moment'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { CommentIcon, TreeDotsIcon, UserCircleIcons } from '../ui/Icons'
+import { TreeDotsIcon, UserCircleIcons } from '../ui/Icons'
 import BookMarkButton from './recipes/BookMarkButton'
 import LikeButton from './recipes/LikeButton'
+import CommentButton from './recipes/CommentButton'
 
-export default function Recipe({ recipe }) {
+export default function Recipe({ history, recipe }) {
 
     /* FORMAT DATE */
     const formatDate = str => moment(str).format('DD/MM/YYYY')
@@ -41,9 +42,7 @@ export default function Recipe({ recipe }) {
                 {/* ACTIONS */}
                 <div className="my-3">
                     <LikeButton recipe={recipe} />
-                    <button className="me-3">
-                        <CommentIcon size="24" />
-                    </button>
+                    <CommentButton recipe={recipe} history={history} />
                     <BookMarkButton recipe={recipe} />
                 </div>
 
