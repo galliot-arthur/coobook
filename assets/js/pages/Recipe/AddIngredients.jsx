@@ -56,7 +56,7 @@ export default function AddIngredients({ history }) {
                     >
                         <PlusIcons /> <small>Ajouter un ingrédient</small>
                     </button>
-                    < button className="btn btn-danger" type="submit" > Submit </button>
+                    < button className="btn btn-danger" type="submit" > Enregistrer</button>
                 </div>
             </form>
         </>
@@ -92,9 +92,7 @@ const useField = ({ history }) => {
         formValues.map(async form => {
             try {
                 await API.post(form, 'ingredients')
-            } catch (e) {
-                console.log(e.response)
-            }
+            } catch (e) { }
         })
     }
     const handleSubmit = async (e) => {

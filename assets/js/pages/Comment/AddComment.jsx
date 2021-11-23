@@ -25,12 +25,10 @@ export default function AddComment({ match, history }) {
         e.preventDefault()
         setLoading(true)
         try {
-            console.log(comment)
             await API.post(comment, 'comments')
             history.replace('/recette/' + match.params.id)
             toast.info('Commentaire publié')
         } catch (i) {
-            console.log(i.response)
             toast.warning('Erreur, merci de réessayer.')
             setLoading(false)
         }

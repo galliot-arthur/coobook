@@ -1,10 +1,12 @@
 import moment from 'moment'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { TreeDotsIcon, UserCircleIcons } from '../ui/Icons'
+import { ShareIcon, UserCircleIcons } from '../ui/Icons'
 import BookMarkButton from './recipes/BookMarkButton'
 import LikeButton from './recipes/LikeButton'
 import CommentButton from './recipes/CommentButton'
+import ThreeDots from './ThreeDots'
+import DeleteButton from './recipes/DeleteButton'
 
 export default function Recipe({ history, recipe }) {
 
@@ -26,10 +28,41 @@ export default function Recipe({ history, recipe }) {
                             <span className="text-small text-muted"> le {formatDate(recipe.createdAd)}</span>
                         </div>
                     </div>
-                    <button>
-                        <TreeDotsIcon size="24" />
-                    </button>
+
+                    {/* OPTIONS */}
+                    <ThreeDots >
+                        <h6 className="mx-3">{recipe.title}</h6>
+                        {/* <NavLink to='/' className="dropdown-item">
+                            Partager
+                            <span className="text-muted ms-2">
+                                <ShareIcon />
+                            </span>
+                        </NavLink> */}
+                        {
+                            (recipe.User.id == window.localStorage.getItem('authId')) &&
+                            <>
+                                <DeleteButton id={recipe.id} history={history} />
+                            </>
+                        }
+
+                        {/* IN THE TODO LIST (23/11/2021) */}
+
+                        {/* <NavLink to='/' className="dropdown-item">
+                            Signaler
+                            <span className="text-muted ms-2">
+                                <WarningIcon />
+                            </span>
+                        </NavLink> */}
+                        {/* <NavLink to='/' className="dropdown-item">
+                            Se désabonner
+                            <span className="text-muted ms-2">
+                                <StopIcon />
+                            </span>
+                        </NavLink> */}
+                    </ThreeDots>
+
                 </div>
+
                 {/* IMAGE */}
                 <NavLink to={"recette/" + recipe.id} className="d-flex justify-content-center">
                     {
@@ -60,7 +93,7 @@ export default function Recipe({ history, recipe }) {
 
                 <hr className="my-3" />
             </div>
-        </div>
+        </div >
     )
 
 }

@@ -60,16 +60,16 @@ export default function RegisterPage({ history }) {
                             <p>Merci de saisir vos données.</p>
                             {error && <div className="alert alert-danger">{error}</div>}
 
-                            <Field name="firstName" label="Prénom" value={user.firstName} onChange={handleChange} placeholder="Votre prénom" type="text" minLength="2" />
-                            <Field name="lastName" label="Nom" value={user.lastName} onChange={handleChange} placeholder="Votre Nom" type="text" minLength="2" />
-                            <Field name="email" label="Email" value={user.email} onChange={handleChange} placeholder="votre@email.com" type="email" minLength="4" />
-                            <Field name="password" label="Mot de passe" value={user.password} onChange={handleChange} placeholder="votre/mot2passe" type="password" minLength="8" />
+                            <Field name="firstName" label="Nom d'utilisateur" value={user.firstName} onChange={handleChange} placeholder="cooBook92" type="text" minLength="2" />
+                            <Field name="lastName" label="Nom complet" value={user.lastName} onChange={handleChange} placeholder="CooBook Official Account" type="text" minLength="2" />
+                            <Field name="email" label="Email" value={user.email} onChange={handleChange} placeholder="contact@coobook.com" type="email" minLength="4" />
+                            <Field name="password" label="Mot de passe" value={user.password} onChange={handleChange} placeholder="votre-mot2passe" type="password" minLength="8" />
 
                             <div className="form-group mt-3">
                                 <button className={"btn btn-danger " + (loading && "disabled")}>
                                     Inscription
                                 </button>
-                                <NavLink to="/login" className="link-primary text-decoration-none ms-4">Déja membre ?</NavLink>
+                                <NavLink to="/login" className="link-danger text-decoration-none ms-4">Déja membre ?</NavLink>
                             </div>
                         </form>
                 }

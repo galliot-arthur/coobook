@@ -19,7 +19,7 @@ export function CustomerPage({ history }) {
         try {
             const data = await customersAPI.findAll()
             setCustomers(data)
-        } catch (e) { console.log(e.response) }
+        } catch (e) { }
     }
     useEffect(() => { fetchCustomers() }, [])
 

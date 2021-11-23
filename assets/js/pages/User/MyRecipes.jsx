@@ -1,102 +1,86 @@
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import Pagination from '../../components/Pagination'
+import ThreeDots from '../../components/ThreeDots'
 import API from '../../services/API'
-import { EditIcons, SearchIcons, TreeDotsIcon } from '../../ui/Icons'
+import { UserCircleIcons, UserIcons } from '../../ui/Icons'
+
 import { Loader } from '../../ui/Loader'
 
 export default function MyRecipes({ match, history }) {
 
+    const [loading, setLoading] = useState(false)
     /* FETCH RECIPES */
     const [recipes, setRecipes] = useState([])
-    const [currentPage, setCurrentPage] = useState(1)
-    const [search, setSearch] = useState("")
-
-
-    const fetchRecipes = async () => {
+    const [user, setUser] = useState({
+        firstName: "",
+        lastName: "",
+        website: "",
+        bio: "",
+    })
+    const fetchRecipesAndUser = async () => {
+        setLoading(true)
         try {
-            const data = await API.findAll('users/' + window.localStorage.getItem('authId') + '/recipes')
-            setRecipes(data)
-        } catch (e) { console.log(e.response) }
+            const dataR = await API.findAll('users/' + window.localStorage.getItem('authId') + '/recipes')
+            setRecipes(dataR)
+            const dataU = await API.get(window.localStorage.getItem('authId'), 'users')
+            setUser({
+                firstName: dataU.firstName,
+                lastName: dataU.lastName,
+                website: dataU.website,
+                bio: dataU.bio,
+            })
+            setLoading(false)
+        } catch (e) {
+            setLoading(false)
+        }
     }
-    useEffect(() => { fetchRecipes() }, [])
-
-
-    /* PAGINATION */
-    const handlePageChanged = page => setCurrentPage(page);
-    const itemsPerPage = 11;
-    /* SEARCH */
-    const handleSearch = ({ currentTarget }) => {
-        setSearch(currentTarget.value)
-        setCurrentPage(1)
-    }
-    /* FILTERING CUSTOMERS BY SEARCH */
-    const filteredRecipes = recipes.filter(r =>
-        r.title.toLowerCase().includes(search.toLowerCase())
-    )
-    /* HANDLE PAGINATION */
-    const paginatedRecipes = Pagination.getData(filteredRecipes, currentPage, itemsPerPage)
-
+    useEffect(() => { fetchRecipesAndUser() }, [])
 
     return (
         <div>
-            <div className="d-flex justify-content-between align-items-start">
-                <div>
-                    <h1 className="display-4">
-                        {window.localStorage.getItem('authToken')}
-                    </h1>
-                    <p className="lead">/!\ TODO : Add Description /!\</p>
-                </div>
-                <button onClick={() => alert('todo : edit user profile')}>
-                    <TreeDotsIcon size="24" />
-                </button>
-            </div>
-            <hr className="my-4" />
-
-            {/* THEN */}
-            <div className="input-group mb-3">
-                <label
-                    className="input-group-text"
-                    htmlFor="search">
-                    <SearchIcons />
-                </label>
-                <input
-                    type="text"
-                    id="search"
-                    onChange={handleSearch}
-                    value={search}
-                    className="form-control"
-                    placeholder="Rechercher..."
-                />
-            </div>
-            <div className="container mb-5">
-                {
-
-                    recipes.length == 0 ?
+            {loading ?
+                <Loader />
+                :
+                <>
+                    <div className="d-flex justify-content-between align-items-start">
                         <div>
-                            <Loader look="d-flex justify-content-center my-3 align-items-center" />
-                        </div> :
+                            <strong>
+                                <span className="me-2">
+                                    <UserCircleIcons />
+                                </span>
+                                {user.firstName}
+                            </strong>
+                            <h1 className="display-4 mt-2">
+                                {user.lastName}
+                            </h1>
+                            <div >
+                                {user.bio} <br />
+                                <a href={user.website} target="_blank">{user.website}</a>
+                            </div>
+                        </div>
+                        <ThreeDots>
+                            <NavLink to='/editer-mon-profil' className="dropdown-item">Editer mon profil</NavLink>
+                            <NavLink to='/' className="dropdown-item">Paramêtres du compte</NavLink>
+                            <NavLink to='/' className="dropdown-item">Statistiques</NavLink>
+                        </ThreeDots>
+                    </div>
+                    <hr className="my-4" />
 
-                        paginatedRecipes.map(recipe =>
-                            <>
-                                <Recipe recipe={recipe} key={recipe.id} />
-                            </>
-                        )
+                    {/* THEN */}
+                    <div className="container mb-5">
+                        {
+                            recipes.length == 0 ?
+                                <div>
+                                    Vous n'avez pas encore ajouté de recette.
+                                </div> :
 
-                }
+                                recipes.map(recipe => <Recipe recipe={recipe} key={recipe.id} />)
+                        }
+                    </div>
+                </>
+            }
 
-                {
-                    itemsPerPage < filteredRecipes.length &&
-                    <Pagination
-                        currentPage={currentPage}
-                        itemsPerPage={itemsPerPage}
-                        length={filteredRecipes.length}
-                        onPageChanged={handlePageChanged}
-                    />
-                }
-            </div>
         </div>
     )
 }

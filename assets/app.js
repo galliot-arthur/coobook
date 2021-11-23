@@ -24,6 +24,7 @@ import AddRecipeContext from './js/context/AddRecipeContext';
 import BookmarkedRecipes from './js/pages/User/BookmarkedRecipes'
 import SearchPage from './js/pages/SearchPage';
 import AddComment from './js/pages/Comment/AddComment';
+import EditProfile from './js/pages/User/EditProfile';
 
 const App = () => {
 
@@ -50,12 +51,16 @@ const App = () => {
         <AddRecipeContext.Provider value={addRecipeValue}>
             <HashRouter >
                 <NavbarWithRouter />
+
+                {/* MAIN */}
                 <main className="container" >
                     <Switch >
+
 
                         {/* SECURITY */}
                         <Route path="/login" component={LoginPage} />
                         <Route path="/register" component={RegisterPage} />
+
 
                         {/* RECIPES */}
                         <PrivateRoute path="/ajout-recette" component={AddRecipe} />
@@ -63,20 +68,30 @@ const App = () => {
                         <PrivateRoute path="/ajout-etape" component={AddRecipeStep} />
                         <PrivateRoute path="/ajout-photo" component={AddRecipeCover} />
                         <PrivateRoute path="/recette/:id" component={ShowRecipe} />
+
+
                         {/* COMMENTS */}
                         <PrivateRoute path="/commenter/:id" component={AddComment} />
+
 
                         {/* USER */}
                         <PrivateRoute path="/mes-recettes" component={MyRecipes} />
                         <PrivateRoute path="/marques-pages" component={BookmarkedRecipes} />
+                        <PrivateRoute path="/editer-mon-profil" component={EditProfile} />
+
+
                         {/* SEARCH */}
                         <PrivateRoute path="/rechercher" component={SearchPage} />
 
+
                         {/* HOME */}
                         <Route path="/" component={HomePage} />
+
+
                     </Switch>
                 </main>
                 <Footer />
+
             </HashRouter>
             <ToastContainer
                 position={toast.POSITION.BOTTOM_RIGHT}

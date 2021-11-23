@@ -18,6 +18,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 #[ApiResource(
+    normalizationContext: ['groups' => [
+        'user_read'
+    ]],
     collectionOperations: [
         'get',
         'post' => [
@@ -33,13 +36,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    #[Groups(['recipes_read'])]
+    #[Groups(['recipes_read', 'user_read'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    #[Groups(['recipes_read'])]
+    #[Groups(['recipes_read', 'user_read'])]
     #[Assert\NotBlank(message: "This field can't be null")]
     #[Assert\Email(message: 'The email {{ value }} is not a valid email.')]
     private $email;
@@ -65,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['recipes_read'])]
+    #[Groups(['recipes_read', 'user_read'])]
     #[Assert\NotBlank(message: "This field can't be null")]
     #[Assert\Length(
         min: 2,
@@ -78,7 +81,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['recipes_read'])]
+    #[Groups(['recipes_read', 'user_read'])]
     #[Assert\NotBlank(message: "This field can't be null")]
     #[Assert\Length(
         min: 2,
@@ -115,6 +118,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    #[Groups(['recipes_read', 'user_read'])]
+    private $website;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    #[Groups(['recipes_read', 'user_read'])]
+    private $bio;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="follows")
+     */
+    #[Groups(['recipes_read'])]
+    private $following;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="following")
+     */
+    #[Groups(['recipes_read'])]
+    private $follows;
+
     public function __construct()
     {
         $this->customers = new ArrayCollection();
@@ -122,6 +149,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->likes = new ArrayCollection();
         $this->bookMarks = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->following = new ArrayCollection();
+        $this->follows = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -382,6 +411,81 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($comment->getUser() === $this) {
                 $comment->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    public function setWebsite(?string $website): self
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    public function getBio(): ?string
+    {
+        return $this->bio;
+    }
+
+    public function setBio(?string $bio): self
+    {
+        $this->bio = $bio;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getFollowing(): Collection
+    {
+        return $this->following;
+    }
+
+    public function addFollowing(self $following): self
+    {
+        if (!$this->following->contains($following)) {
+            $this->following[] = $following;
+        }
+
+        return $this;
+    }
+
+    public function removeFollowing(self $following): self
+    {
+        $this->following->removeElement($following);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getFollows(): Collection
+    {
+        return $this->follows;
+    }
+
+    public function addFollow(self $follow): self
+    {
+        if (!$this->follows->contains($follow)) {
+            $this->follows[] = $follow;
+            $follow->addFollowing($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFollow(self $follow): self
+    {
+        if ($this->follows->removeElement($follow)) {
+            $follow->removeFollowing($this);
         }
 
         return $this;

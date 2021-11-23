@@ -22,7 +22,6 @@ export default function LikeButton({ recipe }) {
                 recipe.likes
             )
         } catch (e) {
-            console.log(e.response)
             toast.warning('Erreur, merci de réessayer.')
             setLike(!like)
         }

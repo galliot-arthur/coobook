@@ -15,7 +15,6 @@ export default function BookmarkedRecipes() {
             setFeed(data)
         } catch (e) {
             toast.warning('Erreur, merci de vous reconnecter.')
-            console.log(e.response)
         }
     }
     useEffect(() => {

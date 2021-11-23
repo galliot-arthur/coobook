@@ -1,7 +1,7 @@
 import Axios from "axios";
 import jwtDecode from "jwt-decode";
 
-const authenticate = (credentials) => {
+const authenticate = async(credentials) => {
     return Axios
         .post('http://127.0.0.1:8000/api/login_check', credentials)
         .then(r => r.data.token)
@@ -21,7 +21,7 @@ const authenticate = (credentials) => {
         })
 }
 
-const register = (user) => {
+const register = async(user) => {
     return Axios
         .post('http://127.0.0.1:8000/api/register', user)
         .then(r => r)

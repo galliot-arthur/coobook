@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { CommentIcon } from '../../ui/Icons'
 import AddRecipeContext from '../../context/AddRecipeContext';
 
-export default function CommentButton({ recipe, history }) {
+export default function CommentButton({ recipe, history, text = null }) {
     /* SET IRI  */
     const { setIRI } = useContext(AddRecipeContext);
 
@@ -14,7 +14,7 @@ export default function CommentButton({ recipe, history }) {
 
     return (
         <button onClick={handleClick} className="me-3">
-            <CommentIcon size={24} />
+            <CommentIcon size={24} />{text && <span className="text-decoration-underline ms-2">{text}</span>}
         </button>
     )
 }

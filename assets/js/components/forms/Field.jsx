@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Field({ name, label, value, onChange, placeholder, type = "text", error = "", minLength = "0", required = true }) {
+export default function Field({ name, label, value, onChange, placeholder, type = "text", error = "", minLength = "2", required = true, maxLength = 255 }) {
     return (
         <div className="form-group">
             {
@@ -18,6 +18,7 @@ export default function Field({ name, label, value, onChange, placeholder, type 
                 onChange={onChange}
                 required={required}
                 minLength={minLength}
+                maxLength={maxLength}
             />
             {error && <p className="invalid-feedback">{error}</p>}
         </div>
