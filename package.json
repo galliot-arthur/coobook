@@ -1,4 +1,11 @@
 {
+    "name": "myapp",
+    "description": "a really cool app",
+    "version": "0.0.1",
+    "engines": {
+        "node": "14.x",
+        "npm": "6.x"
+    },
     "devDependencies": {
         "@babel/preset-react": "^7.0.0",
         "@symfony/stimulus-bridge": "^2.0.0",
@@ -17,7 +24,6 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "node": "14.16.1",
         "axios": "^0.18.0",
         "bootstrap-icons": "^1.7.0",
         "dotenv": "^10.0.0",
