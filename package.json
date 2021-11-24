@@ -1,6 +1,6 @@
 {
-    "name": "myapp",
-    "description": "a really cool app",
+    "name": "coobook",
+    "description": "online recipe book",
     "version": "0.0.1",
     "engines": {
         "node": "14.16.1"
