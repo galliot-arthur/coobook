@@ -11,7 +11,9 @@ import CommentButton from '../../components/recipes/CommentButton'
 import Comments from '../Comment/Comments'
 import ThreeDots from '../../components/ThreeDots'
 import DeleteButton from '../../components/recipes/DeleteButton'
+import EditButton from '../../components/recipes/EditButton'
 import { NavLink } from 'react-router-dom'
+import EditCoverButton from '../../components/recipes/EditCoverButton'
 
 
 export default function ShowRecipe({ match, history }) {
@@ -78,10 +80,17 @@ export default function ShowRecipe({ match, history }) {
                                 </NavLink> */}
                                 {
                                     ((recipe.User) && (recipe.User.id == window.localStorage.getItem('authId'))) &&
-                                    <>
-                                        <DeleteButton id={recipe.id} history={history} />
-                                    </>
+                                    <EditButton recipe={recipe} history={history} />
                                 }
+                                {
+                                    ((recipe.User) && (recipe.User.id == window.localStorage.getItem('authId'))) &&
+                                    <EditCoverButton recipe={recipe} history={history} />
+                                }
+                                {
+                                    ((recipe.User) && (recipe.User.id == window.localStorage.getItem('authId'))) &&
+                                    <DeleteButton id={recipe.id} history={history} />
+                                }
+
                             </ThreeDots>
                         </div>
 

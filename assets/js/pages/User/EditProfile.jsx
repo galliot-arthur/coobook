@@ -83,6 +83,7 @@ export default function EditProfile({ history }) {
                             value={user.website}
                             onChange={handleChange}
                             placeholder="https://www.cookbook.com"
+                            required={false}
                         />
                         <Field
                             name="bio"
@@ -90,6 +91,7 @@ export default function EditProfile({ history }) {
                             value={user.bio}
                             onChange={handleChange}
                             placeholder="We love to cook, we love to share."
+                            required={false}
                         />
                         <button className="btn btn-danger mt-2">
                             Enregistrer

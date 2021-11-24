@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import Recipe from '../../components/Recipe'
 import API from '../../services/API'
 
-export default function BookmarkedRecipes() {
+export default function BookmarkedRecipes({ history }) {
     /* FETCHING DATA */
     const [feed, setFeed] = useState([])
 
@@ -26,6 +26,6 @@ export default function BookmarkedRecipes() {
         feed.length == 0 ?
             <Loader look="d-flex justify-content-center my-5" />
             :
-            feed.map(recipe => <Recipe recipe={recipe} key={recipe.id} />)
+            feed.map(recipe => <Recipe history={history} recipe={recipe} key={recipe.id} />)
     )
 }

@@ -8,7 +8,7 @@ export default function Comments({ recipe }) {
         <div>
             <h3>Commentaires :</h3>
             {recipe.comments.map(comment =>
-                <div className="my-2">
+                <div className="my-2" key={comment.id}>
                     <div className="d-flex justify-content-between align-items-center">
                         <strong className="text-muted d-block">
                             <UserIcons />

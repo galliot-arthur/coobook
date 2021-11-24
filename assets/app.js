@@ -25,6 +25,7 @@ import BookmarkedRecipes from './js/pages/User/BookmarkedRecipes'
 import SearchPage from './js/pages/SearchPage';
 import AddComment from './js/pages/Comment/AddComment';
 import EditProfile from './js/pages/User/EditProfile';
+import EditRecipe from './js/pages/Recipe/EditRecipe';
 
 const App = () => {
 
@@ -63,10 +64,10 @@ const App = () => {
 
 
                         {/* RECIPES */}
-                        <PrivateRoute path="/ajout-recette" component={AddRecipe} />
-                        <PrivateRoute path="/ajout-ingredients" component={AddIngredients} />
-                        <PrivateRoute path="/ajout-etape" component={AddRecipeStep} />
-                        <PrivateRoute path="/ajout-photo" component={AddRecipeCover} />
+                        <PrivateRoute path="/enregistrer-recette/:id" component={AddRecipe} />
+                        <PrivateRoute path="/enregistrer-ingredients/:id" component={AddIngredients} />
+                        <PrivateRoute path="/enregistrer-etape/:id" component={AddRecipeStep} />
+                        <PrivateRoute path="/enregistrer-photo/" component={AddRecipeCover} />
                         <PrivateRoute path="/recette/:id" component={ShowRecipe} />
 
 

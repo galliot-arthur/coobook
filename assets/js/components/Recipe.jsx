@@ -7,6 +7,8 @@ import LikeButton from './recipes/LikeButton'
 import CommentButton from './recipes/CommentButton'
 import ThreeDots from './ThreeDots'
 import DeleteButton from './recipes/DeleteButton'
+import EditButton from './recipes/EditButton'
+import EditCoverButton from './recipes/EditCoverButton'
 
 export default function Recipe({ history, recipe }) {
 
@@ -41,6 +43,8 @@ export default function Recipe({ history, recipe }) {
                         {
                             (recipe.User.id == window.localStorage.getItem('authId')) &&
                             <>
+                                <EditButton recipe={recipe} history={history} />
+                                <EditCoverButton recipe={recipe} history={history} />
                                 <DeleteButton id={recipe.id} history={history} />
                             </>
                         }

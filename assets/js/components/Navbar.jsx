@@ -50,7 +50,7 @@ export const NavBar = ({ history }) => {
                                     </NavLink>
                                 </li>
                                 <li className="nav-item px-1">
-                                    <NavLink className="nav-link text-black-50" to="/ajout-recette">
+                                    <NavLink className="nav-link text-black-50" to="/enregistrer-recette/nouveau">
                                         <AddFileIcons size="20" />
                                     </NavLink>
                                 </li>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Field from '../../components/forms/Field'
 import TextArea from '../../components/forms/TextArea'
@@ -6,10 +6,14 @@ import AddRecipeContext from '../../context/AddRecipeContext'
 import API from '../../services/API'
 import { Loader } from '../../ui/Loader'
 
-export default function AddRecipe({ history }) {
+export default function AddRecipe({ match, history }) {
+    const [editing, setEditing] = useState(false)
+
+    /* ADDING OR EDITING ? */
+    const id = match.params.id
 
     /* INITIALIZE RECIPE */
-    const [ingredient, setIngredient] = useState({
+    const [recipeData, setRecipeData] = useState({
         title: "",
         intro: "",
         outro: "",
@@ -19,28 +23,64 @@ export default function AddRecipe({ history }) {
     /* HANDLE LOADING */
     const [loading, setLoading] = useState(false)
 
-    /* HANDLE ERROR */
-    const [error, setError] = useState(false)
+    /* GET RECIPE */
+    const fetchRecipe = async (id) => {
+        try {
+            setLoading(true)
+            const recipe = await API.get(id, 'recipes')
+            const User = '/api/users/' + recipe.User.id
+            setRecipeData({
+                title: recipe.title,
+                intro: recipe.intro,
+                outro: recipe.outro,
+                author: recipe.author,
+                User: User,
+            })
+            setLoading(false)
+            if (recipe.User.id != window.localStorage.getItem('authId')) {
+                toast.warning('Erreur, element inconnu')
+                history.replace('/')
+            }
+        } catch (e) {
+            toast.warning('Erreur, element inconnu')
+            setLoading(false)
+            history.replace('/')
+        }
+    }
+    useEffect(() => {
+        if (id != 'nouveau') {
+            setEditing(true)
+            fetchRecipe(id)
+        }
+    }, [])
 
     /* HANDLE FORM CHANGES */
-    const handleChange = ({ currentTarget }) => {
+    function handleChange({ currentTarget }) {
         const { value, name } = currentTarget
-        setIngredient({ ...ingredient, [name]: value })
+        setRecipeData({ ...recipeData, [name]: value })
     }
 
-    /* GET CONTEXT */
-    const { setIRI } = useContext(AddRecipeContext);
+    /* SET CONTEXT */
+    const { setIRI } = useContext(AddRecipeContext)
 
     /* HANDLE SUBMIT */
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
         try {
-            const { id } = await API.post(ingredient, 'recipes')
-            setIRI(id)
+            if (!editing) {
+                const { id } = await API.post(recipeData, 'recipes')
+                setIRI(id)
+            } else {
+                await API.put(id, recipeData, 'recipes')
+                setIRI(id)
+            }
             window.localStorage.setItem('IRI', id)
             setLoading(false)
-            history.replace('/ajout-ingredients')
+            editing ?
+                history.replace('/recette/' + id)
+                :
+                history.replace('/enregistrer-ingredients/nouveau')
         } catch (e) {
             toast.warning("Erreur ! Merci d'essayer à nouveau.")
             setLoading(false)
@@ -59,11 +99,10 @@ export default function AddRecipe({ history }) {
                     <Loader />
                     :
                     <form onSubmit={handleSubmit} className="form-group">
-                        {error && <div className="alert alert-danger">{error}</div>}
                         <Field
                             name="title"
                             label="Titre"
-                            value={ingredient.title}
+                            value={recipeData.title}
                             onChange={handleChange}
                             placeholder="Baba Ganoush"
                             type="text"
@@ -72,7 +111,7 @@ export default function AddRecipe({ history }) {
                         <TextArea
                             name="intro"
                             label="Introduction"
-                            value={ingredient.intro}
+                            value={recipeData.intro}
                             onChange={handleChange}
                             placeholder="Un plat traditionnel qui réchauffe les coeurs."
                             minLength="5"
@@ -80,7 +119,7 @@ export default function AddRecipe({ history }) {
                         <TextArea
                             name="outro"
                             label="Note de fin"
-                            value={ingredient.outro}
+                            value={recipeData.outro}
                             onChange={handleChange}
                             placeholder="Bon apétit !"
                             minLength="5"
@@ -89,7 +128,7 @@ export default function AddRecipe({ history }) {
                         <Field
                             name="author"
                             label="Auteur"
-                            value={ingredient.author}
+                            value={recipeData.author}
                             onChange={handleChange}
                             placeholder="Préciser si la recette vient de quelqu'un d'autre !"
                             type="text"
