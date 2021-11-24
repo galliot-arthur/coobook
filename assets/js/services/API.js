@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import Cache from './cache'
+import { API_URL } from '../config'
 
 /**
  * @param {string} entity The name of the ORM entity
@@ -10,7 +11,7 @@ async function findAll(entity) {
     if (cachedData) return cachedData
         /* if not */
     return Axios
-        .get('http://127.0.0.1:8000/api/' + entity + '?order%5BcreatedAt%5D=desc')
+        .get(API_URL + entity + '?order%5BcreatedAt%5D=desc')
         .then(response => response.data)
 }
 
@@ -20,7 +21,7 @@ async function findAll(entity) {
  */
 function deleteById(id, entity) {
     return Axios
-        .delete('http://127.0.0.1:8000/api/' + entity + '/' + id)
+        .delete(API_URL + entity + '/' + id)
         .then(async response => response.data)
 }
 
@@ -30,7 +31,7 @@ function deleteById(id, entity) {
  */
 const post = (data, entity) => {
     return Axios
-        .post('http://127.0.0.1:8000/api/' + entity, data)
+        .post(API_URL + entity, data)
         .then(async response => response.data)
 }
 
@@ -41,7 +42,7 @@ const post = (data, entity) => {
  */
 const put = async(id, data, entity) => {
     return Axios
-        .put('http://127.0.0.1:8000/api/' + entity + '/' + id, data)
+        .put(API_URL + entity + '/' + id, data)
         .then(response => response.data)
 }
 
@@ -51,7 +52,7 @@ const put = async(id, data, entity) => {
  */
 const get = (id, entity) => {
     return Axios
-        .get('http://127.0.0.1:8000/api/' + entity + '/' + id)
+        .get(API_URL + entity + '/' + id)
         .then(response => response.data)
 }
 
@@ -61,7 +62,7 @@ const findMarkedRecipes = async(id) => {
     if (cachedData) return cachedData
 
     return Axios
-        .get('http://127.0.0.1:8000/api/recipes/' + id + '/rec?order%5BcreatedAt%5D=desc')
+        .get(API_URL + id + '/rec?order%5BcreatedAt%5D=desc')
         .then(response => response.data)
 }
 

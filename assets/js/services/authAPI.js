@@ -1,9 +1,10 @@
 import Axios from "axios";
 import jwtDecode from "jwt-decode";
+import { API_URL } from "../config";
 
 const authenticate = async(credentials) => {
     return Axios
-        .post('http://127.0.0.1:8000/api/login_check', credentials)
+        .post(API_URL + 'login_check', credentials)
         .then(r => r.data.token)
         .then(token => {
             Axios.defaults.headers["Authorization"] = "Bearer " + token
@@ -23,13 +24,13 @@ const authenticate = async(credentials) => {
 
 const register = async(user) => {
     return Axios
-        .post('http://127.0.0.1:8000/api/register', user)
+        .post(API_URL + 'register', user)
         .then(r => r)
 }
 
 const logout = () => {
     Axios
-        .post('http://127.0.0.1:8000/api/logout')
+        .post(API_URL + 'logout')
         .then(r => {
             window.localStorage.removeItem('authToken')
             delete Axios.defaults.headers['Authorization']
