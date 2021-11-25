@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import API from '../../services/API'
 import { Loader } from '../../ui/Loader'
-import { ShareIcon, TrashIcons, TreeDotsIcon } from '../../ui/Icons'
 import Ingredients from '../../components/recipes/Ingredients'
 import Images from '../../components/recipes/Images'
 import LikeButton from '../../components/recipes/LikeButton'
@@ -12,14 +11,21 @@ import Comments from '../Comment/Comments'
 import ThreeDots from '../../components/ThreeDots'
 import DeleteButton from '../../components/recipes/DeleteButton'
 import EditButton from '../../components/recipes/EditButton'
-import { NavLink } from 'react-router-dom'
 import EditCoverButton from '../../components/recipes/EditCoverButton'
+import ShareButton from '../../components/recipes/ShareButton'
+import moment from 'moment'
+import { UserCircleIcons } from '../../ui/Icons'
 
 
 export default function ShowRecipe({ match, history }) {
 
+    /* FORMAT DATE */
+    const formatDate = str => moment(str).locale('fr').fromNow(true)
+
     /* STATES AND */
-    const [recipe, setRecipe] = useState([])
+    const [recipe, setRecipe] = useState({
+        User: ''
+    })
     const [steps, setSteps] = useState([])
     const [ingredients, setIngredients] = useState([])
 
@@ -56,6 +62,15 @@ export default function ShowRecipe({ match, history }) {
                             <div>
                                 <h1 className="display-4">{recipe.title}</h1>
                                 <p className="lead">{recipe.intro}</p>
+                                <div className="d-flex align-items-center">
+                                    <div>
+                                        <UserCircleIcons size="24" />
+                                    </div>
+                                    <div className="ps-2">
+                                        <span className="lead me-1">{recipe.User.firstName}</span>
+                                        <span className="text-small text-muted"> il y a {formatDate(recipe.createdAt)}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -72,12 +87,7 @@ export default function ShowRecipe({ match, history }) {
                                 {recipe.bookMarks && <BookMarkButton recipe={recipe} />}
                             </div>
                             <ThreeDots >
-                                {/* <NavLink to='/' className="dropdown-item">
-                                    Partager
-                                    <span className="text-muted ms-2">
-                                        <ShareIcon />
-                                    </span>
-                                </NavLink> */}
+                                <ShareButton recipe={recipe} />
                                 {
                                     ((recipe.User) && (recipe.User.id == window.localStorage.getItem('authId'))) &&
                                     <EditButton recipe={recipe} history={history} />

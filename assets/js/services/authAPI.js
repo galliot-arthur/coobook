@@ -4,7 +4,7 @@ import { API_URL } from "../config";
 
 const authenticate = async(credentials) => {
     return Axios
-        .post(API_URL + 'login_check', credentials)
+        .post(API_URL + 'api/' + 'login_check', credentials)
         .then(r => r.data.token)
         .then(token => {
             Axios.defaults.headers["Authorization"] = "Bearer " + token
@@ -24,13 +24,13 @@ const authenticate = async(credentials) => {
 
 const register = async(user) => {
     return Axios
-        .post(API_URL + 'register', user)
+        .post(API_URL + 'api/' + 'register', user)
         .then(r => r)
 }
 
 const logout = () => {
     Axios
-        .post(API_URL + 'logout')
+        .post(API_URL + 'api/' + 'logout')
         .then(r => {
             window.localStorage.removeItem('authToken')
             delete Axios.defaults.headers['Authorization']

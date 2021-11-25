@@ -1,5 +1,5 @@
 import moment from 'moment'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ShareIcon, UserCircleIcons } from '../ui/Icons'
 import BookMarkButton from './recipes/BookMarkButton'
@@ -9,12 +9,20 @@ import ThreeDots from './ThreeDots'
 import DeleteButton from './recipes/DeleteButton'
 import EditButton from './recipes/EditButton'
 import EditCoverButton from './recipes/EditCoverButton'
+import ShareButton from './recipes/ShareButton'
 
 export default function Recipe({ history, recipe }) {
 
     /* FORMAT DATE */
-    const formatDate = str => moment(str).format('DD/MM/YYYY')
+    const formatDate = str => moment(str).locale('fr').fromNow(true)
 
+
+    const [likes, setLikes] = useState(recipe.likes.length)
+
+
+    const onLike = (state) => {
+        !state ? setLikes(likes + 1) : setLikes(likes - 1)
+    }
     return (
         <div key={recipe.id} className="row fade-start">
             <div className="col-12 col-lg-6 col-md-10 col-sm-10 mx-auto">
@@ -26,45 +34,42 @@ export default function Recipe({ history, recipe }) {
                             <UserCircleIcons size="24" />
                         </div>
                         <div className="ps-2">
-                            <span className="lead">{recipe.User.firstName}</span>
-                            <span className="text-small text-muted"> le {formatDate(recipe.createdAd)}</span>
+                            <span className="lead me-1">{recipe.User.firstName}</span>
+                            <i className="text-small text-muted"> il y a {formatDate(recipe.createdAt)}</i>
                         </div>
                     </div>
 
                     {/* OPTIONS */}
-                    <ThreeDots >
-                        <h6 className="mx-3">{recipe.title}</h6>
-                        {/* <NavLink to='/' className="dropdown-item">
-                            Partager
-                            <span className="text-muted ms-2">
-                                <ShareIcon />
-                            </span>
-                        </NavLink> */}
-                        {
-                            (recipe.User.id == window.localStorage.getItem('authId')) &&
-                            <>
-                                <EditButton recipe={recipe} history={history} />
-                                <EditCoverButton recipe={recipe} history={history} />
-                                <DeleteButton id={recipe.id} history={history} />
-                            </>
-                        }
+                    <div>
+                        <ThreeDots >
+                            <h6 className="mx-3">{recipe.title}</h6>
+                            <ShareButton recipe={recipe} />
+                            {
+                                (recipe.User.id == window.localStorage.getItem('authId')) &&
+                                <>
+                                    <EditButton recipe={recipe} history={history} />
+                                    <EditCoverButton recipe={recipe} history={history} />
+                                    <DeleteButton id={recipe.id} history={history} />
+                                </>
+                            }
 
-                        {/* IN THE TODO LIST (23/11/2021) */}
+                            {/* IN THE TODO LIST (23/11/2021) */}
 
-                        {/* <NavLink to='/' className="dropdown-item">
+                            {/* <NavLink to='/' className="dropdown-item">
                             Signaler
                             <span className="text-muted ms-2">
                                 <WarningIcon />
                             </span>
                         </NavLink> */}
-                        {/* <NavLink to='/' className="dropdown-item">
+                            {/* <NavLink to='/' className="dropdown-item">
                             Se désabonner
                             <span className="text-muted ms-2">
                                 <StopIcon />
                             </span>
                         </NavLink> */}
-                    </ThreeDots>
+                        </ThreeDots>
 
+                    </div>
                 </div>
 
                 {/* IMAGE */}
@@ -77,10 +82,11 @@ export default function Recipe({ history, recipe }) {
                     }
                 </NavLink>
                 {/* ACTIONS */}
-                <div className="my-3">
-                    <LikeButton recipe={recipe} />
+                <div className="my-3 d-flex align-items-end">
+                    <LikeButton recipe={recipe} onLike={onLike} />
                     <CommentButton recipe={recipe} history={history} />
                     <BookMarkButton recipe={recipe} />
+                    <i className="text-muted text-small">{likes} j'aime{likes > 1 && 's'}</i>
                 </div>
 
                 <div className="align-items-start">
@@ -93,6 +99,7 @@ export default function Recipe({ history, recipe }) {
                 </div>
                 <div className="text-small text-muted mt-2">
                     {recipe.intro}
+                    <NavLink to={"recette/" + recipe.id} className="ms-1 text-decoration-none text-muted" >Voir plus...</NavLink>
                 </div>
 
                 <hr className="my-3" />

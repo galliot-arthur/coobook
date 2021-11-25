@@ -11,7 +11,7 @@ async function findAll(entity) {
     if (cachedData) return cachedData
         /* if not */
     return Axios
-        .get(API_URL + entity + '?order%5BcreatedAt%5D=desc')
+        .get(API_URL + 'api/' + entity + '?order%5BcreatedAt%5D=desc')
         .then(response => response.data)
 }
 
@@ -21,7 +21,7 @@ async function findAll(entity) {
  */
 function deleteById(id, entity) {
     return Axios
-        .delete(API_URL + entity + '/' + id)
+        .delete(API_URL + 'api/' + entity + '/' + id)
         .then(async response => response.data)
 }
 
@@ -31,7 +31,7 @@ function deleteById(id, entity) {
  */
 const post = (data, entity) => {
     return Axios
-        .post(API_URL + entity, data)
+        .post(API_URL + 'api/' + entity, data)
         .then(async response => response.data)
 }
 
@@ -42,7 +42,7 @@ const post = (data, entity) => {
  */
 const put = async(id, data, entity) => {
     return Axios
-        .put(API_URL + entity + '/' + id, data)
+        .put(API_URL + 'api/' + entity + '/' + id, data)
         .then(response => response.data)
 }
 
@@ -52,17 +52,13 @@ const put = async(id, data, entity) => {
  */
 const get = (id, entity) => {
     return Axios
-        .get(API_URL + entity + '/' + id)
+        .get(API_URL + 'api/' + entity + '/' + id)
         .then(response => response.data)
 }
 
 const findMarkedRecipes = async(id) => {
-    const cachedData = await Cache.get('recipes')
-
-    if (cachedData) return cachedData
-
     return Axios
-        .get(API_URL + id + '/rec?order%5BcreatedAt%5D=desc')
+        .get(API_URL + 'api/recipes/' + id + '/rec?order%5BcreatedAt%5D=desc')
         .then(response => response.data)
 }
 

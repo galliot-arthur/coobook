@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import likeBookmark from '../../services/like&bookmark'
 import { LikeFillIcon, LikeIcon } from '../../ui/Icons'
 
-export default function LikeButton({ recipe }) {
+export default function LikeButton({ recipe, onLike }) {
     const [like, setLike] = useState(false)
 
     useEffect(() => {
@@ -14,6 +14,7 @@ export default function LikeButton({ recipe }) {
 
     const toggleLike = async () => {
         setLike(!like)
+        onLike(like)
         try {
             likeBookmark.toggleAffiliation(
                 like,
