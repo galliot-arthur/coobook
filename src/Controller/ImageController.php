@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Recipe;
 use App\Entity\RecipesImage;
+use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,8 +14,6 @@ class ImageController extends AbstractController
 {
     public function __invoke(Recipe $recipe, Request $request, EntityManagerInterface $em)
     {
-
-        /* THEN */
         $file = $request->files->get('file');
         if (
             $file->isValid() and

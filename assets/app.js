@@ -66,7 +66,7 @@ const App = () => {
                         {/* RECIPES */}
                         <PrivateRoute path="/enregistrer-recette/:id" component={AddRecipe} />
                         <PrivateRoute path="/enregistrer-ingredients/:id" component={AddIngredients} />
-                        <PrivateRoute path="/enregistrer-etape/:id" component={AddRecipeStep} />
+                        <PrivateRoute path="/enregistrer-etape/" component={AddRecipeStep} />
                         <PrivateRoute path="/enregistrer-photo/" component={AddRecipeCover} />
                         <PrivateRoute path="/recette/:id" component={ShowRecipe} />
 

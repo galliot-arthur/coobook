@@ -71,6 +71,7 @@ export default function AddRecipe({ match, history }) {
             if (!editing) {
                 const { id } = await API.post(recipeData, 'recipes')
                 setIRI(id)
+                console.log(id)
             } else {
                 await API.put(id, recipeData, 'recipes')
                 setIRI(id)
