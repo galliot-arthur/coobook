@@ -3,7 +3,8 @@
     "description": "online recipe book",
     "version": "1.0.0",
     "engines": {
-        "node": "14.16.1"
+        "node": "14.16.1",
+        "npm": "6.14.12"
     },
     "devDependencies": {
         "@babel/preset-react": "^7.0.0",
