@@ -3,12 +3,13 @@ import API from '../services/API'
 import { Loader } from '../ui/Loader'
 import Recipe from '../components/Recipe'
 import axios from 'axios'
+import { API_URL } from '../config'
 export default function ConnectedHomePage({ history }) {
 
     /* FETCHING DATA */
     const [feed, setFeed] = useState([])
     const fetchRecipes = async () => {
-        let data = await axios.get('http://127.0.0.1:8000/api/feed')
+        let data = await axios.get(API_URL + 'api/feed')
             .then(r => r.data)
         setFeed(data)
     }
