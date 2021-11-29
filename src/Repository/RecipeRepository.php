@@ -19,30 +19,18 @@ class RecipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipe::class);
     }
 
-    // /**
-    //  * @return Recipe[] Returns an array of Recipe objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-
-    public function findBookmarkedRecipes($id)
+    /**
+     * @param int $id User's ID
+     */
+    public function getFeedRecipes($id)
     {
         return $this
             ->createQueryBuilder('r')
-            ->where('r.User = :id')
+            ->leftJoin('r.User', 'u')
+            ->leftJoin('u.follows', 'f')
+            ->where('f.id = :id')
             ->setParameter('id', $id)
+            ->orderBy('r.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
     }

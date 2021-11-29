@@ -1,8 +1,9 @@
+import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import Pagination from '../components/Pagination'
 import API from '../services/API'
-import { SearchIcons } from '../ui/Icons'
+import { SearchIcons, UserCircleIcons } from '../ui/Icons'
 import { Loader } from '../ui/Loader'
 
 export default function SearchPage() {
@@ -118,13 +119,15 @@ export default function SearchPage() {
 
 const Recipe = ({ recipe }) => {
 
+    const formatDate = str => moment(str).locale('fr').fromNow(true)
+
     return (
         <div key={recipe.id} className="row align-items-center fade-start">
             <div className="col-6 align-items-center">
                 <div>
                     <NavLink
                         to={"/recette/" + recipe.id}
-                        className="lead text-decoration-none"
+                        className="h3 link-primary text-decoration-none"
                     >{recipe.title}</NavLink>
                 </div>
             </div>
@@ -140,6 +143,17 @@ const Recipe = ({ recipe }) => {
                                     <img className="img-thumbnail-small" src={"images/recipes/default-placeholder.png"} alt="illustration recette par défault" />
                             }
                         </NavLink>
+                    </div>
+                    <div>
+                        <NavLink to={"/profil/" + recipe.User.id} className="link-dark text-decoration-none me-2">
+                            <UserCircleIcons /> {recipe.User.firstName}
+                        </NavLink>
+                        <span className="text-muted text-small">
+                            il y a {formatDate(recipe.createdAt)}
+                        </span>
+                    </div>
+                    <div>
+                        <i className="text-muted text-small">{recipe.likes.length} j'aime{recipe.likes.length > 1 && 's'}</i>
                     </div>
                 </div>
             </div>

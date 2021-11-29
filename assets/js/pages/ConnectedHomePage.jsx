@@ -2,18 +2,19 @@ import React, { useEffect, useState } from 'react'
 import API from '../services/API'
 import { Loader } from '../ui/Loader'
 import Recipe from '../components/Recipe'
+import axios from 'axios'
 export default function ConnectedHomePage({ history }) {
 
     /* FETCHING DATA */
     const [feed, setFeed] = useState([])
     const fetchRecipes = async () => {
-        let data = await API.findAll('recipes')
+        let data = await axios.get('http://127.0.0.1:8000/api/feed')
+            .then(r => r.data)
         setFeed(data)
     }
     useEffect(() => {
         fetchRecipes()
     }, [])
-
     /* RETURN PART */
     return (
         feed.length == 0 ?

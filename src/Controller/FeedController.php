@@ -12,24 +12,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Security;
 
-class MyRecipeController extends AbstractController
+class FeedController extends AbstractController
 {
-    /** @var User */
-    private $user;
-
-    private $auth;
-
-    public function __construct(Security $security, AuthorizationCheckerInterface $checker)
-    {
-        $this->user = $security->getUser();
-        $this->auth = $checker;
-    }
 
     public function __invoke(RecipeRepository $recipeRepo)
     {
-        return $recipeRepo->findBy(
-            ['user' => $this->user->getId()],
-            ['created_at' => 'DESC']
-        );
+        return $recipeRepo->getFeedRecipes($this->getUser()->getId());
     }
 }

@@ -8,7 +8,6 @@ export default function FollowButton({ target, user }) {
     const [follow, setFollow] = useState(false)
     const getFollow = (user) => {
         user.follows.map(sources => {
-            console.log(sources)
             sources.id == window.localStorage.getItem('authId')
                 && setFollow(true)
         })
@@ -30,7 +29,7 @@ export default function FollowButton({ target, user }) {
         } catch (e) { }
     }
     return (
-        <button onClick={handleFollow} className="btn btn-dark">
+        <button onClick={handleFollow} className={`btn btn-${follow ? 'outline-' : ''}dark`}>
             {follow ? 'Ne plus suivre' : 'Suivre'}
         </button>
     )
