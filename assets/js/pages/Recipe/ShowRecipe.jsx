@@ -15,6 +15,7 @@ import EditCoverButton from '../../components/recipes/EditCoverButton'
 import ShareButton from '../../components/recipes/ShareButton'
 import moment from 'moment'
 import { UserCircleIcons } from '../../ui/Icons'
+import { NavLink } from 'react-router-dom'
 
 
 export default function ShowRecipe({ match, history }) {
@@ -67,7 +68,7 @@ export default function ShowRecipe({ match, history }) {
                                         <UserCircleIcons size="24" />
                                     </div>
                                     <div className="ps-2">
-                                        <span className="lead me-1">{recipe.User.firstName}</span>
+                                        <NavLink to={"/profil/" + recipe.User.id} className="lead me-1">{recipe.User.firstName}</NavLink>
                                         <span className="text-small text-muted"> il y a {formatDate(recipe.createdAt)}</span>
                                     </div>
                                 </div>

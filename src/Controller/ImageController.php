@@ -15,11 +15,7 @@ class ImageController extends AbstractController
     public function __invoke(Recipe $recipe, Request $request, EntityManagerInterface $em)
     {
         $file = $request->files->get('file');
-        if (
-            $file->isValid() and
-            !empty($file->getExtension())
-        ) {
-
+        if ($file->isValid()) {
             [$originalWidth, $originalHeight] = getimagesize($file->getPathname());
 
             // Check px size
@@ -33,7 +29,6 @@ class ImageController extends AbstractController
                     $file->getMimeType(),
                     "image"
                 )
-
             ) {
                 $id = $request->attributes->get('id');
                 $dossier = __DIR__ . "/../../public/images/recipes";
@@ -46,9 +41,10 @@ class ImageController extends AbstractController
                     ->setRecipe($recipe);
                 $em->persist($image);
                 $em->flush();
-
                 return true;
             }
+            return false;
         }
+        return false;
     }
 }

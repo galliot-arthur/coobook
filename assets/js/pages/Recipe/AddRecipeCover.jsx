@@ -9,7 +9,9 @@ export default function AddRecipeCover({ match, history }) {
 
     /* GET THE RECIPE WE ARE CURRENTLY RECORDING */
     const { IRI, setIRI } = useContext(AddRecipeContext);
-    if (IRI === "") setIRI(window.localStorage.getItem('IRI'))
+    useEffect(() => {
+        if (IRI === "") setIRI(window.localStorage.getItem('recipeIRI'))
+    }, [])
 
     /* HANDLE IMAGE DROP */
     const [picture, setPicture] = useState([])
@@ -17,14 +19,15 @@ export default function AddRecipeCover({ match, history }) {
         setPicture(picture)
     }
     const handleSubmit = async () => {
+        console.log(IRI)
         const formData = new FormData()
         formData.append('file', picture[0], picture[0].name)
         formData.append('recipe', IRI)
         try {
             await Axios.post(IRI + '/image', formData)
             toast.info('Félicitation, votre recette à bien été sauvegardée !')
-            history.push('/')
             window.localStorage.removeItem('IRI')
+            history.push('/')
         } catch (e) {
             toast.warning('Erreur, merci de réessayer.')
         }

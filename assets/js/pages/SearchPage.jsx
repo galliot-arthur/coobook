@@ -123,7 +123,7 @@ const Recipe = ({ recipe }) => {
             <div className="col-6 align-items-center">
                 <div>
                     <NavLink
-                        to={"recette/" + recipe.id}
+                        to={"/recette/" + recipe.id}
                         className="lead text-decoration-none"
                     >{recipe.title}</NavLink>
                 </div>
@@ -132,7 +132,7 @@ const Recipe = ({ recipe }) => {
             <div className="col-6">
                 <div className="d-flex flex-column justify-content-between align-items-end">
                     <div className="ps-1">
-                        <NavLink to={"recette/" + recipe.id} >
+                        <NavLink to={"/recette/" + recipe.id} >
                             {
                                 recipe.recipesImages[0] ?
                                     <img className="img-thumbnail-small" src={"images/recipes/" + recipe.recipesImages[0].path} alt={recipe.slug} />

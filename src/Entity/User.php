@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use App\Controller\FollowController;
+use App\Controller\UnFollowController;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -25,6 +27,20 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'get',
         'post' => [
             'path' => '/register',
+        ],
+        'follow' => [
+            'method' => 'POST',
+            'path' => '/users/{id}/follow',
+            'deserialize' => false,
+            'validate' => false,
+            'controller' => FollowController::class,
+        ],
+        'unFollow' => [
+            'method' => 'POST',
+            'path' => '/users/{id}/unfollow',
+            'deserialize' => false,
+            'validate' => false,
+            'controller' => UnFollowController::class,
         ],
     ]
 )]
@@ -139,7 +155,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="following")
      */
-    #[Groups(['recipes_read'])]
+    #[Groups(['user_read'])]
     private $follows;
 
     public function __construct()

@@ -18,14 +18,13 @@ import AddRecipe from './js/pages/Recipe/AddRecipe';
 import AddRecipeStep from './js/pages/Recipe/AddRecipeStep';
 import AddIngredients from './js/pages/Recipe/AddIngredients';
 import AddRecipeCover from './js/pages/Recipe/AddRecipeCover';
-import MyRecipes from './js/pages/User/MyRecipes';
 import ShowRecipe from './js/pages/Recipe/ShowRecipe';
 import AddRecipeContext from './js/context/AddRecipeContext';
 import BookmarkedRecipes from './js/pages/User/BookmarkedRecipes'
 import SearchPage from './js/pages/SearchPage';
 import AddComment from './js/pages/Comment/AddComment';
 import EditProfile from './js/pages/User/EditProfile';
-import EditRecipe from './js/pages/Recipe/EditRecipe';
+import Profile from './js/pages/User/Profile';
 
 const App = () => {
 
@@ -76,7 +75,7 @@ const App = () => {
 
 
                         {/* USER */}
-                        <PrivateRoute path="/mes-recettes" component={MyRecipes} />
+                        <PrivateRoute path="/profil/:id" component={Profile} />
                         <PrivateRoute path="/marques-pages" component={BookmarkedRecipes} />
                         <PrivateRoute path="/editer-mon-profil" component={EditProfile} />
 

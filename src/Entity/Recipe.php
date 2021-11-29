@@ -27,7 +27,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
         'recipes_read'
     ]],
     denormalizationContext: [
-        "disable_type_enforcement" => true
+        'disable_type_enforcement' => true
     ],
     collectionOperations: [
         'get',
@@ -36,7 +36,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
             'method' => 'POST',
             'path' => '/recipes/{id}/image',
             'deserialize' => false,
-            "validate" => false,
+            'validate' => false,
             'controller' => ImageController::class,
         ],
         'bookmark' => [

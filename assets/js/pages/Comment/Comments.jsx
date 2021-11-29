@@ -1,5 +1,6 @@
 import moment from 'moment'
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import { InfoIcons, UserIcons } from '../../ui/Icons'
 
 export default function Comments({ recipe }) {
@@ -15,9 +16,12 @@ export default function Comments({ recipe }) {
             {recipe.comments.map(comment =>
                 <div className="my-2" key={comment.id}>
                     <div className="d-flex justify-content-between align-items-center">
-                        <strong className="text-muted d-block">
-                            <UserIcons />
-                            {comment.user.firstName}</strong>
+                        <NavLink to={"/profil/" + comment.user.id} className="text-muted d-block text-decoration-none">
+                            <strong>
+                                <UserIcons />
+                                {comment.user.firstName}
+                            </strong>
+                        </NavLink>
                         <div className="text-muted">il y a {formatDate(comment.createdAt)}</div>
                     </div>
                     {comment.content}

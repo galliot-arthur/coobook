@@ -34,7 +34,7 @@ export default function Recipe({ history, recipe }) {
                             <UserCircleIcons size="24" />
                         </div>
                         <div className="ps-2">
-                            <span className="lead me-1">{recipe.User.firstName}</span>
+                            <NavLink to={"/profil/" + recipe.User.id} className="lead me-1">{recipe.User.firstName}</NavLink>
                             <i className="text-small text-muted"> il y a {formatDate(recipe.createdAt)}</i>
                         </div>
                     </div>
@@ -73,7 +73,7 @@ export default function Recipe({ history, recipe }) {
                 </div>
 
                 {/* IMAGE */}
-                <NavLink to={"recette/" + recipe.id} className="d-flex justify-content-center">
+                <NavLink to={"/recette/" + recipe.id} className="d-flex justify-content-center">
                     {
                         recipe.recipesImages[0] ?
                             <img className="img-thumbnail w-75" src={"images/recipes/" + recipe.recipesImages[0].path} alt={recipe.slug} />
@@ -91,7 +91,7 @@ export default function Recipe({ history, recipe }) {
 
                 <div className="align-items-start">
                     <NavLink
-                        to={"recette/" + recipe.id}
+                        to={"/recette/" + recipe.id}
                         className="lead text-decoration-none display-5 text-break"
                     >
                         {recipe.title}
@@ -99,7 +99,7 @@ export default function Recipe({ history, recipe }) {
                 </div>
                 <div className="text-small text-muted mt-2">
                     {recipe.intro}
-                    <NavLink to={"recette/" + recipe.id} className="ms-1 text-decoration-none text-muted" >Voir plus...</NavLink>
+                    <NavLink to={"/recette/" + recipe.id} className="ms-1 text-decoration-none text-muted" >Voir plus...</NavLink>
                 </div>
 
                 <hr className="my-3" />
