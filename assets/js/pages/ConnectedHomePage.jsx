@@ -8,7 +8,7 @@ export default function ConnectedHomePage({ history }) {
     /* FETCHING DATA */
     const [feed, setFeed] = useState([])
     const fetchRecipes = async () => {
-        let data = await axios.get('http://127.0.0.1:8000/api/feed')
+        let data = await axios.get(API_URL + 'api/feed')
             .then(r => r.data)
         setFeed(data)
     }

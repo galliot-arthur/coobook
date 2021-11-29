@@ -8,9 +8,9 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use App\Controller\FeedController;
 use App\Controller\GetBookmarkController;
 use App\Controller\ImageController;
-use App\Controller\MyRecipeController;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -44,7 +44,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
             'path' => '/recipes/{id}/rec',
             'deserialize' => false,
             'controller' => GetBookmarkController::class,
-        ]
+        ],
+        'feed' => [
+            'method' => 'GET',
+            'path' => '/feed',
+            'controller' => FeedController::class,
+        ],
     ]
 )]
 #[ApiFilter(
