@@ -16,6 +16,7 @@ export default function ConnectedHomePage({ history }) {
     useEffect(() => {
         fetchRecipes()
     }, [])
+
     /* RETURN PART */
     return (
         feed.length == 0 ?

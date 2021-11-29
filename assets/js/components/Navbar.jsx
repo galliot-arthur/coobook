@@ -55,7 +55,7 @@ export const NavBar = ({ history }) => {
                                     </NavLink>
                                 </li>
                                 <li className="nav-item px-1">
-                                    <NavLink className="nav-link text-black-50" to={"/profil/" + window.localStorage.getItem('authId')}>
+                                    <NavLink className="nav-link text-black-50" to="/mes-recettes">
                                         <UserCircleIcons size="20" />
                                     </NavLink>
                                 </li>

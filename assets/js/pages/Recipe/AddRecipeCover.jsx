@@ -19,6 +19,7 @@ export default function AddRecipeCover({ match, history }) {
         setPicture(picture)
     }
     const handleSubmit = async () => {
+        console.log(IRI)
         const formData = new FormData()
         formData.append('file', picture[0], picture[0].name)
         formData.append('recipe', IRI)
