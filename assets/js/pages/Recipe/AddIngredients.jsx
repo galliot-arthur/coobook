@@ -45,7 +45,6 @@ export default function AddIngredients({ match, history }) {
     }, [])
 
     const loadInputs = (ingredientsData) => {
-        //console.log(ingredientsData)
         ingredientsData.forEach(i => {
             addFormFields(i.amount, i.name)
         })

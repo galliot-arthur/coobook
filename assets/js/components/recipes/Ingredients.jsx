@@ -12,12 +12,9 @@ export default function Ingredients({ ingredients }) {
     if (proportion == 0) setProportion(0.5)
 
     useEffect(() => {
-
-        console.log(proportion)
         ingredients.map((v, k) => {
             ingredients[k] = { ...ingredients[k], tempAmount: v.amount * proportion }
         })
-
     }, [proportion])
 
 

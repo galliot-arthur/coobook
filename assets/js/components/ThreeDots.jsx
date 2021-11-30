@@ -21,11 +21,11 @@ export default function ThreeDots({ children }) {
             </button>
             {
                 display &&
-                <button className="dropdown-context fade-start" onClick={toggle}>
+                <div className="dropdown-context fade-start" onClick={toggle}>
                     <ul className="dropdown-menu fade-start">
-                        {children.map(child => <li>{child}</li>)}
+                        {children.map((child, key) => <li key={key}>{child}</li>)}
                     </ul>
-                </button>
+                </div>
             }
         </>
     )

@@ -25,6 +25,8 @@ import SearchPage from './js/pages/SearchPage';
 import AddComment from './js/pages/Comment/AddComment';
 import EditProfile from './js/pages/User/EditProfile';
 import Profile from './js/pages/User/Profile';
+import About from './js/pages/infos/About';
+import Contact from './js/pages/infos/Contact';
 
 const App = () => {
 
@@ -85,6 +87,8 @@ const App = () => {
 
 
                         {/* HOME */}
+                        <Route path="/contact" component={Contact} />
+                        <Route path="/a-propos" component={About} />
                         <Route path="/" component={HomePage} />
 
 

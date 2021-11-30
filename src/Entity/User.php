@@ -149,7 +149,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="follows")
      */
-    #[Groups(['recipes_read'])]
     private $following;
 
     /**

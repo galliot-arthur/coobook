@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 export default function Footer() {
     return (
@@ -8,12 +9,11 @@ export default function Footer() {
                     <a href="#" className="me-2 text-muted text-decoration-none lh-1 maru">
                         CooBook
                     </a>
-                    <span className="text-muted small">© 2021</span>
+                    <span className="text-muted small">TM 2021</span>
                 </div>
                 <ul className="nav col-12 col-md-4 justify-content-center justify-content-md-end list-unstyled d-flex">
-                    <li className="ms-3">A propops</li>
-                    <li className="ms-3">Contact</li>
-                    <li className="ms-3">RGPD</li>
+                    <NavLink to="/a-propos" className="ms-3">A propos</NavLink>
+                    <NavLink to="/contact" className="ms-3">Contact</NavLink>
                 </ul>
             </footer>
         </div>

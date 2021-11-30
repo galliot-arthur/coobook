@@ -15,7 +15,7 @@ class JWTAuthenticationSuccessListener
     /**
      * @var int
      */
-    private $tokenLifetime;
+    private $tokenLifetime = 3600000;
 
     public function __construct(int $tokenLifetime)
     {

@@ -7356,7 +7356,7 @@ fieldset:disabled .btn {
 
 .link-dark:focus,
 .link-dark:hover {
-    color: #1b1b1b
+    color: #000;
 }
 
 .ratio {

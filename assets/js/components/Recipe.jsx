@@ -82,7 +82,7 @@ export default function Recipe({ history, recipe }) {
                     }
                 </NavLink>
                 {/* ACTIONS */}
-                <div className="my-3 d-flex align-items-end">
+                <div className="mt-3 mb-2 d-flex align-items-end">
                     <LikeButton recipe={recipe} onLike={onLike} />
                     <CommentButton recipe={recipe} history={history} />
                     <BookMarkButton recipe={recipe} />
@@ -97,7 +97,7 @@ export default function Recipe({ history, recipe }) {
                         {recipe.title}
                     </NavLink>
                 </div>
-                <div className="text-small text-muted mt-2">
+                <div className="text-muted mt-2">
                     {recipe.intro}
                     <NavLink to={"/recette/" + recipe.id} className="ms-1 text-decoration-none text-muted" >Voir plus...</NavLink>
                 </div>

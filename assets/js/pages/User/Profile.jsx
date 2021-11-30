@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import ThreeDots from '../../components/ThreeDots'
 import FollowButton from '../../components/user/FollowButton'
+import MessageButton from '../../components/user/MessageButton'
 import API from '../../services/API'
 import { UserCircleIcons } from '../../ui/Icons'
 
@@ -13,6 +14,7 @@ export default function Profile({ match, history }) {
     const [loading, setLoading] = useState(false)
     /* FETCH RECIPES */
     const [recipes, setRecipes] = useState([])
+
     const [user, setUser] = useState({
         firstName: "",
         lastName: "",
@@ -38,7 +40,8 @@ export default function Profile({ match, history }) {
             setLoading(false)
         }
     }
-    useEffect(() => { fetchRecipesAndUser() }, [])
+    //useEffect(() => { fetchRecipesAndUser() }, [])
+    useEffect(() => { fetchRecipesAndUser() }, [match.params.id])
 
     return (
         <div>
@@ -61,9 +64,13 @@ export default function Profile({ match, history }) {
                                 {user.bio} <br />
                                 <a href={user.website} target="_blank">{user.website}</a>
                             </div>
-                            <div className="mt-3">
-                                <FollowButton target={match.params.id} user={user} />
-                            </div>
+                            {
+                                match.params.id != window.localStorage.getItem('authId') &&
+                                <div className="mt-3">
+                                    <FollowButton target={match.params.id} user={user} />
+                                    <MessageButton />
+                                </div>
+                            }
                         </div>
                         <ThreeDots>
                             <h6 className="mx-3">{user.firstName}</h6>
