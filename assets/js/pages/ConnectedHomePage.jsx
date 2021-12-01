@@ -1,20 +1,25 @@
-import React, { useEffect, useState } from 'react'
-import API from '../services/API'
+import React, { useContext, useEffect, useState } from 'react'
 import { Loader } from '../ui/Loader'
 import Recipe from '../components/Recipe'
+import { useFeed } from '../hooks/feedReducer'
+import FeedContext from '../context/FeedContext'
 export default function ConnectedHomePage({ history }) {
 
-    /* FETCHING DATA */
-    const [feed, setFeed] = useState([])
-    const fetchRecipes = async () => {
-        try {
-            let data = await API.findAll('recipes')
-            if (data) setFeed(data)
-        } catch (e) { }
+    const { feedCxt, setFeed } = useContext(FeedContext)
+
+    const {
+        feed,
+        fetchFeed,
+    } = useFeed()
+
+    const setData = async () => {
+        const cxt = await fetchFeed(feedCxt)
+        setFeed(cxt)
     }
     useEffect(() => {
-        fetchRecipes()
+        setData()
     }, [])
+
     /* RETURN PART */
     return (
         feed.length == 0 ?

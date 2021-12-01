@@ -3,6 +3,8 @@ import { toast } from 'react-toastify'
 import Field from '../../components/forms/Field'
 import TextArea from '../../components/forms/TextArea'
 import AddRecipeContext from '../../context/AddRecipeContext'
+import FeedContext from '../../context/FeedContext'
+import { useFeed } from '../../hooks/feedReducer'
 import API from '../../services/API'
 import { Loader } from '../../ui/Loader'
 
@@ -23,7 +25,7 @@ export default function AddRecipe({ match, history }) {
     /* HANDLE LOADING */
     const [loading, setLoading] = useState(false)
 
-    /* GET RECIPE */
+    /* IF EDIT MODE, GET RECIPE */
     const fetchRecipe = async (id) => {
         try {
             setLoading(true)
@@ -60,28 +62,36 @@ export default function AddRecipe({ match, history }) {
         setRecipeData({ ...recipeData, [name]: value })
     }
 
-    /* SET CONTEXT */
+    /* SET THE ADDING RECIPE CONTEXT */
     const { setIRI } = useContext(AddRecipeContext)
+
+    /* HANDLE REDUCER & CONTEXT MANIPULATION  */
+    const { updateItem, addItem } = useFeed()
+    const { feedCxt, setFeed } = useContext(FeedContext)
 
     /* HANDLE SUBMIT */
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
+
         try {
             if (!editing) {
-                const { id } = await API.post(recipeData, 'recipes')
+                const { id } = await addItem(recipeData, 'recipes')
+                /* FORCE FEED TO REFETCH DATA */
+                setFeed([])
+                /* SET IRI RECIPE SAVE POINT WITH CONTEXT AND COOKIE */
                 setIRI(id)
-            } else {
-                await API.put(id, recipeData, 'recipes')
-                setIRI(id)
-            }
-            window.localStorage.setItem('IRI', id)
-            setLoading(false)
-            editing ?
-                history.replace('/recette/' + id)
-                :
+                window.localStorage.setItem('IRI', id)
                 history.replace('/enregistrer-ingredients/nouveau')
-        } catch (e) {
+                setLoading(false)
+            } else {
+                const item = await updateItem(id, recipeData, 'recipes')
+                setFeed(feedCxt.map(e => e.id == id ? item : e))
+                setLoading(false)
+                history.replace('/recette/' + id)
+            }
+        } catch (i) {
+            console.log(i)
             toast.warning("Erreur ! Merci d'essayer à nouveau.")
             setLoading(false)
         }
@@ -137,7 +147,7 @@ export default function AddRecipe({ match, history }) {
                         />
 
                         <div className="form-group mt-3">
-                            <button className={"btn btn-primary " + (loading && "disabled")}>
+                            <button className={"btn btn-danger " + (loading && "disabled")}>
                                 Enregistrer
                             </button>
                         </div>

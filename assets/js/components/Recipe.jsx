@@ -16,13 +16,17 @@ export default function Recipe({ history, recipe }) {
     /* FORMAT DATE */
     const formatDate = str => moment(str).locale('fr').fromNow(true)
 
-
+    /* HANDLE LIKE */
     const [likes, setLikes] = useState(recipe.likes.length)
-
-
     const onLike = (state) => {
         !state ? setLikes(likes + 1) : setLikes(likes - 1)
     }
+
+    /* HANDLE DELETE */
+    const [deleted, setDeleted] = useState(false)
+    const onDelete = () => setDeleted(true)
+    if (deleted) return <></>
+
     return (
         <div key={recipe.id} className="row fade-start">
             <div className="col-12 col-lg-6 col-md-10 col-sm-10 mx-auto">
@@ -49,7 +53,7 @@ export default function Recipe({ history, recipe }) {
                                 <>
                                     <EditButton recipe={recipe} history={history} />
                                     <EditCoverButton recipe={recipe} history={history} />
-                                    <DeleteButton id={recipe.id} history={history} />
+                                    <DeleteButton id={recipe.id} history={history} onDelete={onDelete} />
                                 </>
                             }
 

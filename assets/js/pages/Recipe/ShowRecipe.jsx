@@ -52,6 +52,9 @@ export default function ShowRecipe({ match, history }) {
 
     useEffect(() => { fetchRecipe(id) }, [])
 
+
+    const onDelete = () => { }
+
     return (
         <div>
             {
@@ -99,7 +102,7 @@ export default function ShowRecipe({ match, history }) {
                                 }
                                 {
                                     ((recipe.User) && (recipe.User.id == window.localStorage.getItem('authId'))) &&
-                                    <DeleteButton id={recipe.id} history={history} />
+                                    <DeleteButton id={recipe.id} history={history} onDelete={onDelete} />
                                 }
 
                             </ThreeDots>

@@ -54,7 +54,7 @@ export default function AddRecipeCover({ match, history }) {
                     fileTypeError="Ce format n'est pas pris en charge. Types: JPG, JPEG, GIF, PNG."
                 />
                 <div className="form-group mt-3">
-                    <button className={"btn btn-primary " + (loading && "disabled")}>
+                    <button className={"btn btn-danger " + (loading && "disabled")}>
                         Enregistrer
                     </button>
                 </div>

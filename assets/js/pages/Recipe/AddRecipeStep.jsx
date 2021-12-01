@@ -66,7 +66,7 @@ export default function AddRecipeStep({ match, history }) {
                             required={false}
                         />
                         <div className="form-group mt-3">
-                            <button className={"btn btn-primary " + (loading && "disabled")}>
+                            <button className={"btn btn-danger " + (loading && "disabled")}>
                                 Enregistrer
                             </button>
                             <NavLink to={"/enregistrer-photo"} className="ms-3 btn btn-outline-danger">Passer à l'étape suivante</NavLink>

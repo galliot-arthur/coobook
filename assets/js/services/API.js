@@ -16,7 +16,7 @@ async function findAll(entity) {
 }
 
 /**
- * @param {int} id Id of the element 
+ * @param {number} id Id of the element 
  * @param {string} entity The name of the ORM entity
  */
 function deleteById(id, entity) {
@@ -26,7 +26,7 @@ function deleteById(id, entity) {
 }
 
 /**
- * @param {*} data Id of the element 
+ * @param {Object} data Id of the element 
  * @param {string} entity The name of the ORM entity
  */
 const post = (data, entity) => {
@@ -36,8 +36,8 @@ const post = (data, entity) => {
 }
 
 /**
- * @param {int} id Id of the element 
- * @param {*} data The data to modify
+ * @param {number} id Id of the element 
+ * @param {Object} data The data to modify
  * @param {string} entity The name of the ORM entity
  */
 const put = async(id, data, entity) => {
@@ -47,7 +47,7 @@ const put = async(id, data, entity) => {
 }
 
 /**
- * @param {int} id Id of the element 
+ * @param {number} id Id of the element 
  * @param {string} entity The name of the ORM entity
  */
 const get = (id, entity) => {
