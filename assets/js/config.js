@@ -1,2 +1,2 @@
-export const API_URL = 'http://127.0.0.1:8000/'
-    //export const API_URL = 'https://coobook.arthur-galliot.com/'
+//export const API_URL = 'http://127.0.0.1:8000/'
+export const API_URL = 'https://coobook.arthur-galliot.com/'

@@ -38,7 +38,7 @@ export default function Recipe({ history, recipe }) {
                             <UserCircleIcons size="24" />
                         </div>
                         <div className="ps-2">
-                            <NavLink to={"/profil/" + recipe.User.id} className="lead me-1">{recipe.User.firstName}</NavLink>
+                            <NavLink to={"/profil/" + recipe.User.id} className="me-1">{recipe.User.firstName}</NavLink>
                             <i className="text-small text-muted"> il y a {formatDate(recipe.createdAt)}</i>
                         </div>
                     </div>

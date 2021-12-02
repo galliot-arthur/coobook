@@ -55,23 +55,24 @@ export default function AddRecipeStep({ match, history }) {
                 loading ?
                     <Loader />
                     :
-                    <form onSubmit={handleSubmit} className="form-group">
-                        <TextArea
-                            name="content"
-                            label="Dites moi tout..."
-                            value={step.content}
-                            onChange={handleChange}
-                            placeholder="Bon apétit !"
-                            minLength="5"
-                            required={false}
-                        />
-                        <div className="form-group mt-3">
-                            <button className={"btn btn-danger " + (loading && "disabled")}>
+                    <div className="d-flex flex-column justify-content-center align-items-center">
+
+                        <form onSubmit={handleSubmit} className="form-group d-flex flex-column">
+                            <TextArea
+                                name="content"
+                                label="Dites moi tout..."
+                                value={step.content}
+                                onChange={handleChange}
+                                placeholder="Bon apétit !"
+                                minLength="5"
+                                required={false}
+                            />
+                            <button className={"my-2 mx-auto btn btn-danger " + (loading && "disabled")}>
                                 Enregistrer
                             </button>
-                            <NavLink to={"/enregistrer-photo"} className="ms-3 btn btn-outline-danger">Passer à l'étape suivante</NavLink>
-                        </div>
-                    </form>
+                            <NavLink to={"/enregistrer-photo"} className="mx-auto btn">Passer à l'étape suivante</NavLink>
+                        </form>
+                    </div>
             }
         </div>
 

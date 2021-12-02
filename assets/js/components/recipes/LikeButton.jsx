@@ -32,9 +32,9 @@ export default function LikeButton({ recipe, onLike }) {
         <button className="me-3" onClick={toggleLike}>
             {
                 like ?
-                    <LikeFillIcon size="24" />
+                    <LikeFillIcon size="22" />
                     :
-                    <LikeIcon size="24" />
+                    <LikeIcon size="22" />
             }
         </button>
     )

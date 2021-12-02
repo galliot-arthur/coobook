@@ -41,26 +41,26 @@ export default function LoginPage({ history }) {
             <h1 className="display-4">Connexion</h1>
             <p className="lead">Merci de saisir vos identiants</p>
             <hr className="my-4" />
-            <div className=" w-lg-20 w-sm-50">
-                {
-                    loading ?
-                        <Loader look="d-flex justify-content-center my-5" />
-                        :
-                        <form onSubmit={handleSubmit} className="form-group">
+            {
+                loading ?
+                    <Loader />
+                    :
+                    <div className="d-flex flex-column justify-content-center align-items-center">
+                        <form onSubmit={handleSubmit} className="form-group d-flex flex-column">
 
                             {error && <div className="alert alert-danger">{error}</div>}
 
                             <Field name="username" label="Email" value={credentials.username} onChange={handleChange} placeholder="vous@email.fr" type="email" />
                             <Field name="password" label="Mot de passe" value={credentials.password} onChange={handleChange} placeholder="password123" type="password" />
 
-                            <div className="form-group mt-3">
+                            <div className="mt-3 mx-auto">
                                 <button className={"btn btn-danger " + (loading && "disabled")}>
                                     Connexion
                                 </button>
                             </div>
                         </form>
-                }
-            </div>
+                    </div>
+            }
         </>
     )
 }

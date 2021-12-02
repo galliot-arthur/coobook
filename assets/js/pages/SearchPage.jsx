@@ -2,6 +2,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import Pagination from '../components/Pagination'
+import RecipeSmall from '../components/RecipeSmall'
 import API from '../services/API'
 import { SearchIcons, UserCircleIcons } from '../ui/Icons'
 import { Loader } from '../ui/Loader'
@@ -97,7 +98,7 @@ export default function SearchPage() {
                             :
                             paginatedRecipes.map(recipe =>
                                 <>
-                                    <Recipe recipe={recipe} key={recipe.id} />
+                                    <RecipeSmall recipe={recipe} key={recipe.id} />
                                 </>
                             )
 
@@ -115,44 +116,4 @@ export default function SearchPage() {
             </div>
         </div>
     )
-}
-
-const Recipe = ({ recipe }) => {
-
-    const formatDate = str => moment(str).locale("fr").fromNow(true)
-
-    return (
-        <div key={recipe.id} className="row align-items-center fade-start">
-            <div className="col-6 align-items-center">
-                <div>
-                    <NavLink
-                        to={"/recette/" + recipe.id}
-                        className="lead text-decoration-none"
-                    >{recipe.title}</NavLink>
-                </div>
-            </div>
-
-            <div className="col-6">
-                <div className="d-flex flex-column justify-content-between align-items-end">
-                    <div className="ps-1">
-                        <NavLink to={"/recette/" + recipe.id} >
-                            {
-                                recipe.recipesImages[0] ?
-                                    <img className="img-thumbnail-small" src={"images/recipes/" + recipe.recipesImages[0].path} alt={recipe.slug} />
-                                    :
-                                    <img className="img-thumbnail-small" src={"images/recipes/default-placeholder.png"} alt="illustration recette par défault" />
-                            }
-                        </NavLink>
-                    </div>
-                    <div className="text-end">
-                        <UserCircleIcons />
-                        <strong className="ms-1">{recipe.User.firstName}</strong> <br />
-                        <i className="text-muted">il y a {formatDate(recipe.createdAt)}</i>
-                    </div>
-                </div>
-            </div>
-            <hr className="mt-1" />
-        </div>
-    )
-
 }

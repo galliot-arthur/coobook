@@ -66,44 +66,47 @@ export default function AddIngredients({ match, history }) {
             <p className="lead">Des poireaux, du lard, de la crème...</p>
             <hr className="my-4" />
             {/* THEN */}
-            <form onSubmit={handleSubmit}>
-                {formValues.map((element, index) => (
-                    <div className="input-group mb-1" key={index}>
-                        <RawField
-                            name="amount"
-                            value={element.amount || 0}
-                            onChange={e => handleChange(index, e)}
-                            placeholder="150"
-                            type="number"
-                        />
-                        <RawField
-                            name="name"
-                            value={element.name || ""}
-                            onChange={e => handleChange(index, e)}
-                            placeholder="gr de Farine"
-                            type="text"
-                        />
-                        {
-                            index ?
-                                <button className="btn btn-outline-dark" onClick={() => removeFormFields(index)}>
-                                    <MinusIcons />
-                                </button>
-                                : null
-                        }
-                    </div>
-                ))}
+            <div className="d-flex flex-column justify-content-center align-items-center">
 
-                <div className="">
+                <form onSubmit={handleSubmit} className="form-group d-flex flex-column">
+                    {formValues.map((element, index) => (
+                        <div className="input-group mb-1" key={index}>
+                            <RawField
+                                name="amount"
+                                value={element.amount || 0}
+                                onChange={e => handleChange(index, e)}
+                                placeholder="150"
+                                type="number"
+                            />
+                            <RawField
+                                name="name"
+                                value={element.name || ""}
+                                onChange={e => handleChange(index, e)}
+                                placeholder="gr de Farine"
+                                type="text"
+                            />
+                            {
+                                index ?
+                                    <button className="btn btn-outline-dark" onClick={() => removeFormFields(index)}>
+                                        <MinusIcons />
+                                    </button>
+                                    : null
+                            }
+                        </div>
+                    ))}
+
+
                     <button
-                        className="btn btn-outline-dark me-2"
+                        className="btn btn-outline-dark my-2 mx-auto"
                         type="button"
                         onClick={() => addFormFields()}
                     >
                         <PlusIcons /> <small>Ajouter un ingrédient</small>
                     </button>
-                    < button className="btn btn-danger" type="submit" > Enregistrer</button>
-                </div>
-            </form>
+                    <br />
+                    < button className="btn btn-danger mx-auto" type="submit" > Enregistrer</button>
+                </form>
+            </div>
         </>
     )
 }

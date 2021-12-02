@@ -14,7 +14,7 @@ export default function CommentButton({ recipe, history, text = null }) {
 
     return (
         <button onClick={handleClick} className="me-3">
-            <CommentIcon size={24} />{text && <span className="text-decoration-underline ms-2">{text}</span>}
+            <CommentIcon size={22} />{text && <span className="text-decoration-underline ms-2">{text}</span>}
         </button>
     )
 }

@@ -17,7 +17,7 @@ export default function ThreeDots({ children }) {
     return (
         <>
             <button onClick={toggle}>
-                <TreeDotsIcon size="24" />
+                <TreeDotsIcon size="22" />
             </button>
             {
                 display &&

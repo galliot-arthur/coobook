@@ -1,6 +1,6 @@
-import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import RecipeSmall from '../../components/RecipeSmall'
 import ThreeDots from '../../components/ThreeDots'
 import FollowButton from '../../components/user/FollowButton'
 import MessageButton from '../../components/user/MessageButton'
@@ -9,7 +9,7 @@ import { UserCircleIcons } from '../../ui/Icons'
 
 import { Loader } from '../../ui/Loader'
 
-export default function Profile({ match, history }) {
+export default function Profile({ match }) {
 
     const [loading, setLoading] = useState(false)
     /* FETCH RECIPES */
@@ -40,7 +40,7 @@ export default function Profile({ match, history }) {
             setLoading(false)
         }
     }
-    //useEffect(() => { fetchRecipesAndUser() }, [])
+
     useEffect(() => { fetchRecipesAndUser() }, [match.params.id])
 
     return (
@@ -97,7 +97,7 @@ export default function Profile({ match, history }) {
                                     Vous n'avez pas encore ajouté de recette.
                                 </div> :
 
-                                recipes.map(recipe => <Recipe recipe={recipe} key={recipe.id} />)
+                                recipes.map(recipe => <RecipeSmall recipe={recipe} key={recipe.id} />)
                         }
                     </div>
                 </>
@@ -105,39 +105,4 @@ export default function Profile({ match, history }) {
 
         </div>
     )
-}
-
-const Recipe = ({ recipe }) => {
-
-    const formatDate = str => moment(str).format('DD/MM/YYYY')
-
-    return (
-        <div key={recipe.id} className="row align-items-center fade-start">
-            <div className="col-6 align-items-center">
-                <div>
-                    <NavLink
-                        to={"/recette/" + recipe.id}
-                        className="lead text-decoration-none"
-                    >{recipe.title}</NavLink>
-                </div>
-            </div>
-
-            <div className="col-6">
-                <div className="d-flex flex-column justify-content-between align-items-end">
-                    <div className="ps-1">
-                        <NavLink to={"/recette/" + recipe.id} >
-                            {
-                                recipe.recipesImages[0] ?
-                                    <img className="img-thumbnail-small" src={"images/recipes/" + recipe.recipesImages[0].path} alt={recipe.slug} />
-                                    :
-                                    <img className="img-thumbnail-small" src={"images/recipes/default-placeholder.png"} alt="illustration recette par défault" />
-                            }
-                        </NavLink>
-                    </div>
-                </div>
-            </div>
-            <hr className="mt-1" />
-        </div>
-    )
-
 }

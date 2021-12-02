@@ -37,28 +37,29 @@ export default function AddRecipeCover({ match, history }) {
             <p className="lead">C'est cette photo qui sera l'illustration de votre recette</p>
             <hr className="my-4" />
             {/* THEN */}
+            <div className="d-flex flex-column justify-content-center align-items-center">
 
-            <form onSubmit={handleSubmit} className="form-group">
+                <form onSubmit={handleSubmit} className="form-group d-flex flex-column">
 
-                <ImageUploader
-                    buttonText='Télécharger une photo'
-                    onChange={onDrop}
-                    imgExtension={['.jpg', '.gif', '.png', '.jpeg']}
-                    maxFileSize={5242880}
-                    buttonClassName='btn btn-outline-danger'
-                    label="Taille max : 5mo. Types: JPG, JPEG, GIF, PNG."
-                    singleImage={true}
-                    fileSizeError="Taille max : 5mo"
-                    withIcon={false}
-                    withPreview={true}
-                    fileTypeError="Ce format n'est pas pris en charge. Types: JPG, JPEG, GIF, PNG."
-                />
-                <div className="form-group mt-3">
-                    <button className={"btn btn-danger " + (loading && "disabled")}>
+                    <ImageUploader
+                        buttonText='Télécharger une photo'
+                        onChange={onDrop}
+                        imgExtension={['.jpg', '.gif', '.png', '.jpeg']}
+                        maxFileSize={5242880}
+                        buttonClassName='btn btn-outline-danger'
+                        label="Taille max : 5mo. Types: JPG, JPEG, GIF, PNG."
+                        singleImage={true}
+                        fileSizeError="Taille max : 5mo"
+                        withIcon={false}
+                        withPreview={true}
+                        fileTypeError="Ce format n'est pas pris en charge. Types: JPG, JPEG, GIF, PNG."
+                    />
+                    <button className={"btn mx-auto " + (loading && "disabled")}>
                         Enregistrer
                     </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
+
     )
 }

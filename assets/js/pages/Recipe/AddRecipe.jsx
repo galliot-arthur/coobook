@@ -108,50 +108,53 @@ export default function AddRecipe({ match, history }) {
                 loading ?
                     <Loader />
                     :
-                    <form onSubmit={handleSubmit} className="form-group">
-                        <Field
-                            name="title"
-                            label="Titre"
-                            value={recipeData.title}
-                            onChange={handleChange}
-                            placeholder="Baba Ganoush"
-                            type="text"
-                            minLength="5"
-                        />
-                        <TextArea
-                            name="intro"
-                            label="Introduction"
-                            value={recipeData.intro}
-                            onChange={handleChange}
-                            placeholder="Un plat traditionnel qui réchauffe les coeurs."
-                            minLength="5"
-                        />
-                        <TextArea
-                            name="outro"
-                            label="Note de fin"
-                            value={recipeData.outro}
-                            onChange={handleChange}
-                            placeholder="Bon apétit !"
-                            minLength="5"
-                            required={false}
-                        />
-                        <Field
-                            name="author"
-                            label="Auteur"
-                            value={recipeData.author}
-                            onChange={handleChange}
-                            placeholder="Préciser si la recette vient de quelqu'un d'autre !"
-                            type="text"
-                            minLength="2"
-                            required={false}
-                        />
+                    <div className="d-flex flex-column justify-content-center align-items-center">
 
-                        <div className="form-group mt-3">
-                            <button className={"btn btn-danger " + (loading && "disabled")}>
-                                Enregistrer
-                            </button>
-                        </div>
-                    </form>
+                        <form onSubmit={handleSubmit} className="form-group d-flex flex-column">
+                            <Field
+                                name="title"
+                                label="Titre"
+                                value={recipeData.title}
+                                onChange={handleChange}
+                                placeholder="Baba Ganoush"
+                                type="text"
+                                minLength="5"
+                            />
+                            <TextArea
+                                name="intro"
+                                label="Introduction"
+                                value={recipeData.intro}
+                                onChange={handleChange}
+                                placeholder="Un plat traditionnel qui réchauffe les coeurs."
+                                minLength="5"
+                            />
+                            <TextArea
+                                name="outro"
+                                label="Note de fin"
+                                value={recipeData.outro}
+                                onChange={handleChange}
+                                placeholder="Bon apétit !"
+                                minLength="5"
+                                required={false}
+                            />
+                            <Field
+                                name="author"
+                                label="Auteur"
+                                value={recipeData.author}
+                                onChange={handleChange}
+                                placeholder="Préciser si la recette vient de quelqu'un d'autre !"
+                                type="text"
+                                minLength="2"
+                                required={false}
+                            />
+
+                            <div className="mt-3 mx-auto">
+                                <button className={"btn btn-danger " + (loading && "disabled")}>
+                                    Enregistrer
+                                </button>
+                            </div>
+                        </form>
+                    </div>
             }
         </div>
     )

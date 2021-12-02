@@ -30,9 +30,9 @@ export default function BookMarkButton({ recipe }) {
     return (
         <button className="me-3" onClick={toggleBookmark}>
             {bookmark ?
-                <BookMarkFilledIcon size="24" />
+                <BookMarkFilledIcon size="22" />
                 :
-                <BookMarkIcon size="24" />}
+                <BookMarkIcon size="22" />}
         </button>
     )
 }

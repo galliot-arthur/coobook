@@ -51,12 +51,12 @@ export default function RegisterPage({ history }) {
             <h1 className="display-4">Inscription</h1>
             <p className="lead">Bienvenue sur CooBook</p>
             <hr className="my-4" />
-            <div className=" w-lg-20 w-sm-50">
-                {
-                    loading ?
-                        <Loader look="d-flex justify-content-center my-5" />
-                        :
-                        <form onSubmit={handleSubmit} className="form-group">
+            {
+                loading ?
+                    <Loader />
+                    :
+                    <div className="d-flex flex-column justify-content-center align-items-center">
+                        <form onSubmit={handleSubmit} className="form-group d-flex flex-column">
                             <p>Merci de saisir vos données.</p>
                             {error && <div className="alert alert-danger">{error}</div>}
 
@@ -65,15 +65,15 @@ export default function RegisterPage({ history }) {
                             <Field name="email" label="Email" value={user.email} onChange={handleChange} placeholder="contact@coobook.com" type="email" minLength="4" />
                             <Field name="password" label="Mot de passe" value={user.password} onChange={handleChange} placeholder="votre-mot2passe" type="password" minLength="8" />
 
-                            <div className="form-group mt-3">
+                            <div className="mt-3 mx-auto">
                                 <button className={"btn btn-danger " + (loading && "disabled")}>
                                     Inscription
                                 </button>
                                 <NavLink to="/login" className="link-danger text-decoration-none ms-4">Déja membre ?</NavLink>
                             </div>
                         </form>
-                }
-            </div>
+                    </div>
+            }
         </>
     )
 }

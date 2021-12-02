@@ -75,6 +75,13 @@ export function useFeed() {
             const item = await API.post(data, 'recipes')
             dispatch({ type: 'ADD_ITEM', payload: item })
             return item
+        },
+
+
+        updateImageItem: async(id, data) => {
+            const item = await API.put(id, data, 'recipes')
+            dispatch({ type: 'UPDATE_ITEM', payload: item, target: id })
+            return item
         }
     }
 }
