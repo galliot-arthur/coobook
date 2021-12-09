@@ -18,19 +18,20 @@ export default function Ingredients({ ingredients }) {
     }, [proportion])
 
 
-    return (<>
-        <div className="d-flex justify-content-between align-items-center mb-3">
-            <div className="lead">Ingrédients :</div>
-            <div>
-                <button className="" onClick={() => setProportion(proportion + 0.5)}>
+    return (<div className="d-flex flex-column flex-sm-row justify-content-between mt-3">
+        <div className="d-flex flex-row flex-sm-column justify-content-between align-items-center justify-content-sm-start align-items-sm-start mb-3 my-sm-0 me-sm-3">
+            <h4 className="lead">Ingrédients :</h4>
+            <div className="d-flex">
+                <span className="text-small text-muted me-2">Modifier les proportions</span>
+                <button className="rounded-btn me-2" aria-label="augmenter les proportions" onClick={() => setProportion(proportion + 0.5)}>
                     <PlusIcons />
                 </button>
-                <button onClick={() => setProportion(proportion - 0.5)}>
+                <button className="rounded-btn" aria-label="diminuer les proportions" onClick={() => setProportion(proportion - 0.5)}>
                     <MinusIcons />
                 </button>
             </div>
         </div>
-        <ul className="list-group mb-3">
+        <ul className="list-group mb-3 w-sm-50">
             {
                 ingredients.map(i =>
                     <li className="list-group-item fade-start" key={i.id} >
@@ -39,6 +40,6 @@ export default function Ingredients({ ingredients }) {
                 )
             }
         </ul>
-    </>)
+    </div>)
 
 }

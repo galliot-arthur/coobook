@@ -21,7 +21,7 @@ export default function ThreeDots({ children }) {
             </button>
             {
                 display &&
-                <div className="dropdown-context fade-start" onClick={toggle}>
+                <div className="dropdown-context fade-start" onClick={toggle} role="button" aria-label="close">
                     <ul className="dropdown-menu fade-start">
                         {children.map((child, key) => <li key={key}>{child}</li>)}
                     </ul>

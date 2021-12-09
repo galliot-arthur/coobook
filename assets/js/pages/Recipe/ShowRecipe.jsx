@@ -114,12 +114,12 @@ export default function ShowRecipe({ match, history }) {
                         {/* INGREDIENTS */}
                         <Ingredients ingredients={ingredients} />
 
-                        <p className="lead">Instructions :</p>
+                        <h4 className="lead">Instructions :</h4>
                         <Steps steps={steps} />
                         {
                             recipe.outro &&
                             <>
-                                <p className="lead">Le mot de la fin :</p>
+                                <h4 className="lead">Le mot de la fin :</h4>
                                 <p>
                                     {recipe.outro}
                                 </p>

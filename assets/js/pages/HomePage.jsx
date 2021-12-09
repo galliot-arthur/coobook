@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import AuthContext from '../context/AuthContext'
+import Counter from '../features/counter/Counter'
 import ConnectedHomePage from './ConnectedHomePage'
 
 export function HomePage({ history }) {
@@ -27,6 +28,8 @@ const StandardHomePage = () => {
             <p>CooBook est un livre de cuisine interactif vous permettant de sauvegarder, consulter et partager vos meilleurs recettes de cuisine, ou celles de vos amis.</p>
             <h5 className="text-muted">Comment ça marche ?</h5>
             <p>Inscrivez-vous d'abord, nous vous expliquons tout ensuite !</p>
+
+            <Counter />
         </div>
     )
 }
