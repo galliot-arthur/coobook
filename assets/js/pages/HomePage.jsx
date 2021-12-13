@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
-import AuthContext from '../context/AuthContext'
-import Counter from '../features/counter/Counter'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import ConnectedHomePage from './ConnectedHomePage'
+import { isConnected } from '../services/authSlice'
 
 export function HomePage({ history }) {
 
-    const { connected } = useContext(AuthContext)
+    const { connected } = useSelector(isConnected)
 
 
     return (
@@ -29,7 +29,6 @@ const StandardHomePage = () => {
             <h5 className="text-muted">Comment ça marche ?</h5>
             <p>Inscrivez-vous d'abord, nous vous expliquons tout ensuite !</p>
 
-            <Counter />
         </div>
     )
 }

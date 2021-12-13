@@ -33,10 +33,7 @@ import { Provider } from 'react-redux';
 
 const App = () => {
 
-    /* AUTH CONTEXT */
-    const [connected, setConnected] = useState(authAPI.setUp())
     const NavbarWithRouter = withRouter(NavBar)
-    const contextValue = { connected, setConnected }
 
     /* ADDING RECIPE CONTEXT */
     const [IRI, setRecipe] = useState("")
@@ -55,63 +52,61 @@ const App = () => {
 
     return (
         <Provider store={store}>
-            <AuthContext.Provider value={contextValue} >
-                <AddRecipeContext.Provider value={addRecipeValue}>
-                    <FeedContext.Provider value={FeedContextValue} >
-                        <HashRouter >
-                            <NavbarWithRouter />
+            <AddRecipeContext.Provider value={addRecipeValue}>
+                <FeedContext.Provider value={FeedContextValue} >
+                    <HashRouter >
+                        <NavbarWithRouter />
 
-                            {/* MAIN */}
-                            <main className="container" >
-                                <Switch >
-
-
-                                    {/* SECURITY */}
-                                    <Route path="/login" component={LoginPage} />
-                                    <Route path="/register" component={RegisterPage} />
+                        {/* MAIN */}
+                        <main className="container" >
+                            <Switch >
 
 
-                                    {/* RECIPES */}
-                                    <PrivateRoute path="/enregistrer-recette/:id" component={AddRecipe} />
-                                    <PrivateRoute path="/enregistrer-ingredients/:id" component={AddIngredients} />
-                                    <PrivateRoute path="/enregistrer-etape/" component={AddRecipeStep} />
-                                    <PrivateRoute path="/enregistrer-photo/" component={AddRecipeCover} />
-                                    <PrivateRoute path="/recette/:id" component={ShowRecipe} />
+                                {/* SECURITY */}
+                                <Route path="/login" component={LoginPage} />
+                                <Route path="/register" component={RegisterPage} />
 
 
-                                    {/* COMMENTS */}
-                                    <PrivateRoute path="/commenter/:id" component={AddComment} />
+                                {/* RECIPES */}
+                                <PrivateRoute path="/enregistrer-recette/:id" component={AddRecipe} />
+                                <PrivateRoute path="/enregistrer-ingredients/:id" component={AddIngredients} />
+                                <PrivateRoute path="/enregistrer-etape/" component={AddRecipeStep} />
+                                <PrivateRoute path="/enregistrer-photo/" component={AddRecipeCover} />
+                                <PrivateRoute path="/recette/:id" component={ShowRecipe} />
 
 
-                                    {/* USER */}
-                                    <PrivateRoute path="/profil/:id" component={Profile} />
-                                    <PrivateRoute path="/marques-pages" component={BookmarkedRecipes} />
-                                    <PrivateRoute path="/editer-mon-profil" component={EditProfile} />
+                                {/* COMMENTS */}
+                                <PrivateRoute path="/commenter/:id" component={AddComment} />
 
 
-                                    {/* SEARCH */}
-                                    <PrivateRoute path="/rechercher" component={SearchPage} />
+                                {/* USER */}
+                                <PrivateRoute path="/profil/:id" component={Profile} />
+                                <PrivateRoute path="/marques-pages" component={BookmarkedRecipes} />
+                                <PrivateRoute path="/editer-mon-profil" component={EditProfile} />
 
 
-                                    {/* HOME */}
-                                    <Route path="/contact" component={Contact} />
-                                    <Route path="/a-propos" component={About} />
-                                    <Route path="/" component={HomePage} />
+                                {/* SEARCH */}
+                                <PrivateRoute path="/rechercher" component={SearchPage} />
 
 
-                                </Switch>
-                            </main>
-                            <Footer />
+                                {/* HOME */}
+                                <Route path="/contact" component={Contact} />
+                                <Route path="/a-propos" component={About} />
+                                <Route path="/" component={HomePage} />
 
-                        </HashRouter>
-                        <ToastContainer
-                            position={toast.POSITION.BOTTOM_RIGHT}
-                            autoClose={2000}
-                            hideProgressBar={true}
-                        />
-                    </FeedContext.Provider>
-                </AddRecipeContext.Provider>
-            </AuthContext.Provider>
+
+                            </Switch>
+                        </main>
+                        <Footer />
+
+                    </HashRouter>
+                    <ToastContainer
+                        position={toast.POSITION.BOTTOM_RIGHT}
+                        autoClose={2000}
+                        hideProgressBar={true}
+                    />
+                </FeedContext.Provider>
+            </AddRecipeContext.Provider>
         </Provider>
     )
 }

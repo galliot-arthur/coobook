@@ -3,10 +3,10 @@ import axios from "axios"
 import jwtDecode from "jwt-decode"
 import { API_URL } from "../config"
 
-export const login = createAsyncThunk(
+export const authLogin = createAsyncThunk(
     'auth/login',
     async (credentials) => {
-        const response = await axios
+        return await axios
             .post(API_URL + 'api/' + 'login_check', credentials)
             .then(r => r.data.token)
             .then(token => {
@@ -24,19 +24,17 @@ export const login = createAsyncThunk(
                     )
                 }
             })
-        console.log(response)
-        return response
     }
 )
 
-export const logout = createAsyncThunk(
+export const authLogout = createAsyncThunk(
     'auth/logout',
     async () => {
-        return axios
+        return await axios
             .post(API_URL + 'api/' + 'logout')
             .then(r => {
                 window.localStorage.removeItem('authToken')
-                delete Axios.defaults.headers['Authorization']
+                delete axios.defaults.headers['Authorization']
                 window.localStorage.clear()
                 return r.ok
             })
@@ -49,13 +47,21 @@ export const authSlice = createSlice({
     reducers: {},
     extraReducers(builder) {
         builder
-            .addCase(login.fulfilled, (state, action) => {
-                state.auth = action.payload
+            .addCase(authLogin.fulfilled, (state, action) => {
+                state.connected = true
+            })
+            .addCase(authLogin.rejected, (state, action) => {
+                console.log('rejected', action.error.message)
+                state.error = action.error.message
+            })
+            .addCase(authLogout.fulfilled, (state, action) => {
+                console.log('stateSliceLogout', state.auth)
+                state.connected = false
             })
     }
 })
 
 
-
+export const isConnected = state => state.auth
 
 export default authSlice.reducer

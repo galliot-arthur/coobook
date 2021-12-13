@@ -1,16 +1,21 @@
-import React, { useContext, useState } from 'react'
-import authAPI from '../services/authAPI'
-import AuthContext from '../context/AuthContext'
+import React, { useContext, useEffect, useState } from 'react'
 import { Loader } from '../ui/Loader'
 import Field from '../components/forms/Field'
 import { toast } from 'react-toastify'
+import { authLogin, isConnected } from '../services/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function LoginPage({ history }) {
-    const { connected, setConnected } = useContext(AuthContext)
+    const { connected } = useSelector(isConnected)
+    useEffect(() => {
+        if (connected) history.replace('/')
+    })
+
     const [credentials, setCredentials] = useState({
         username: "",
         password: ""
     })
+
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 
@@ -20,21 +25,22 @@ export default function LoginPage({ history }) {
         setCredentials({ ...credentials, [name]: value })
     }
 
+    const dispatch = useDispatch()
     /* HANDLE SUBMIT */
     const handleSubmit = async e => {
         e.preventDefault()
         setLoading(true)
-        try {
-            await authAPI.authenticate(credentials)
-            setError(null)
-            setLoading(false)
-            setConnected(true)
-            toast.info('Bienvenue ' + window.localStorage.getItem('authToken') + '.')
-            history.push('/')
-        } catch (e) {
-            setError('Identifiant ou mot de passe invalide.')
-            setLoading(false)
-        }
+        dispatch(authLogin(credentials)).then(result => {
+            if (!connected) {
+                setError('Identifiant ou mot de passe invalide.')
+                setLoading(false)
+            } else if (connected) {
+                setError(null)
+                setLoading(false)
+                toast.info('Bienvenue ' + window.localStorage.getItem('authToken') + '.')
+                history.push('/')
+            }
+        })
     }
     return (
         <>
@@ -48,7 +54,7 @@ export default function LoginPage({ history }) {
                     <div className="d-flex flex-column justify-content-center align-items-center">
                         <form onSubmit={handleSubmit} className="form-group d-flex flex-column">
 
-                            {error && <div className="alert alert-danger">{error}</div>}
+                            {error && <div className="text-danger">{error}</div>}
 
                             <Field name="username" label="Email" value={credentials.username} onChange={handleChange} placeholder="vous@email.fr" type="email" />
                             <Field name="password" label="Mot de passe" value={credentials.password} onChange={handleChange} placeholder="password123" type="password" />

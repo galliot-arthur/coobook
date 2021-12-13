@@ -1,19 +1,20 @@
 import React, { useContext, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
-import authAPI from '../services/authAPI'
-import AuthContext from '../context/AuthContext'
+import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { AddFileIcons, BookMarkFilledIcon, DoorIcons, HomeIcons, SearchIcons, UserCircleIcons } from '../ui/Icons'
+import { useSelector } from 'react-redux'
+import { isConnected, authLogout } from '../services/authSlice'
+import { useDispatch } from 'react-redux'
 
 
 export const NavBar = ({ history }) => {
-    const { connected, setConnected } = useContext(AuthContext)
+    const { connected } = useSelector(isConnected)
+    const dispatch = useDispatch()
 
-    const handleLogOut = () => {
+    const handleLogOut = async () => {
         div.remove()
         legend.remove()
-        authAPI.logout()
-        setConnected(false)
+        await dispatch(authLogout())
         toast.info('Vous êtes désormais déconnecté.')
         history.push('/login')
     }
@@ -41,33 +42,33 @@ export const NavBar = ({ history }) => {
     return (
         <div className="container">
             <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-                <NavLink to="/" className="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+                <Link to="/" className="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
                     <h2 className="display-3 maru text-danger fade-start">CooBook</h2>
-                </NavLink>
+                </Link>
                 <nav >
                     <ul className="nav col-12 col-md-auto mb-2 justify-content-center justify-content-md-end mb-md-0">
                         {
                             !connected ?
                                 <>
                                     <li className="nav-item">
-                                        <NavLink
+                                        <Link
                                             to="/login"
                                             className="btn">
                                             Connexion
-                                        </NavLink>
+                                        </Link>
                                     </li>
                                     <li className="nav-item px-1">
-                                        <NavLink
+                                        <Link
                                             to="/register"
                                             className="btn btn-danger">
                                             Inscription
-                                        </NavLink>
+                                        </Link>
                                     </li>
                                 </>
                                 :
                                 <>
                                     <li className="nav-item px-0 px-sm-1">
-                                        <NavLink
+                                        <Link
                                             aria-label="accueil"
                                             className="nav-link text-black-50"
                                             to="/"
@@ -76,10 +77,10 @@ export const NavBar = ({ history }) => {
                                             onClick={handleMouseLeave}
                                         >
                                             <HomeIcons size="20" />
-                                        </NavLink>
+                                        </Link>
                                     </li>
                                     <li className="nav-item px-0 px-sm-1">
-                                        <NavLink
+                                        <Link
                                             aria-label="rechercher"
                                             className="nav-link text-black-50"
                                             to="/rechercher"
@@ -88,10 +89,10 @@ export const NavBar = ({ history }) => {
                                             onClick={handleMouseLeave}
                                         >
                                             <SearchIcons size="20" />
-                                        </NavLink>
+                                        </Link>
                                     </li>
                                     <li className="nav-item px-0 px-sm-1">
-                                        <NavLink
+                                        <Link
                                             aria-label="enregistrer"
                                             className="nav-link text-black-50"
                                             to="/enregistrer-recette/nouveau"
@@ -100,10 +101,10 @@ export const NavBar = ({ history }) => {
                                             onClick={handleMouseLeave}
                                         >
                                             <AddFileIcons size="20" />
-                                        </NavLink>
+                                        </Link>
                                     </li>
                                     <li className="nav-item px-0 px-sm-1">
-                                        <NavLink
+                                        <Link
                                             aria-label="mon profil"
                                             className="nav-link text-black-50"
                                             to={"/profil/" + window.localStorage.getItem('authId')}
@@ -111,10 +112,10 @@ export const NavBar = ({ history }) => {
                                             onMouseLeave={handleMouseLeave} onClick={handleMouseLeave}
                                         >
                                             <UserCircleIcons size="20" />
-                                        </NavLink>
+                                        </Link>
                                     </li>
                                     <li className="nav-item px-0 px-sm-1">
-                                        <NavLink
+                                        <Link
                                             aria-label="marques pages"
                                             className="nav-link text-black-50"
                                             to="/marques-pages"
@@ -123,7 +124,7 @@ export const NavBar = ({ history }) => {
                                             onClick={handleMouseLeave}
                                         >
                                             <BookMarkFilledIcon size="20" />
-                                        </NavLink>
+                                        </Link>
                                     </li>
                                     <li className="nav-item px-0 px-sm-1">
                                         <button
