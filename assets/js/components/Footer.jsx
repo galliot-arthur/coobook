@@ -1,19 +1,24 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import useWindowDimensions from '../hooks/useWindowDimensions'
 
 export default function Footer() {
+
+    const { height, width } = useWindowDimensions()
+
     return (
-        <div className="container mt-auto">
-            <footer className="d-flex flex-wrap justify-content-md-center justify-content-md-between align-items-center py-3 mt-2 border-top">
-                <div className="col-12 col-md-4 d-flex align-items-center justify-content-center justify-content-md-start ">
+        <div className={width > 992 ? 'mt-auto' : "container mt-auto"}>
+            <footer className={'d-flex border-top ' + (width > 992 ? 'flex-column justify-content-center' : "flex-wrap justify-content-md-center justify-content-md-between align-items-center py-3 mt-2")}>
+                <div className={width > 992 ? 'text-center' : "col-12 col-md-4 d-flex align-items-center justify-content-center justify-content-md-start"}>
                     <a href="#" className="me-2 text-muted text-decoration-none lh-1 maru">
                         CooBook
-                    </a>
+                    </a>{width > 992 && <br />}
                     <span className="text-muted small">TM 2021</span>
                 </div>
-                <ul className="nav col-12 col-md-4 justify-content-center justify-content-md-end list-unstyled d-flex">
+                <ul className={'list-unstyled ms-0 text-center' + (width > 992 ? '' : "nav col-12 col-md-4 justify-content-center justify-content-md-end d-flex")}>
                     <NavLink to="/a-propos" className="">A propos</NavLink>
-                    <NavLink to="/contact" className="ms-3">Contact</NavLink>
+                    {width > 992 && <br />}
+                    <NavLink to="/contact" className={width > 992 ? '' : "ms-3"}>Contact</NavLink>
                 </ul>
             </footer>
         </div>

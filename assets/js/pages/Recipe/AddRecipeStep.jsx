@@ -46,7 +46,7 @@ export default function AddRecipeStep({ match, history }) {
     }
 
     return (
-        <div>
+        <div className='fade-left'>
             <h1 className="display-4">Ajout d'une étape</h1>
             <p className="lead">{instruction[(Math.floor(Math.random() * 5))]}</p>
             <hr className="my-4" />

@@ -43,7 +43,7 @@ export default function LoginPage({ history }) {
         })
     }
     return (
-        <>
+        <div className='fade-left'>
             <h1 className="display-4">Connexion</h1>
             <p className="lead">Merci de saisir vos identiants</p>
             <hr className="my-4" />
@@ -67,6 +67,6 @@ export default function LoginPage({ history }) {
                         </form>
                     </div>
             }
-        </>
+        </div>
     )
 }

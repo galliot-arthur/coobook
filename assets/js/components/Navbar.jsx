@@ -1,30 +1,43 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { AddFileIcons, BookMarkFilledIcon, DoorIcons, HomeIcons, SearchIcons, UserCircleIcons } from '../ui/Icons'
 import { useSelector } from 'react-redux'
-import { isConnected, authLogout } from '../services/authSlice'
+import { isConnected, authLogout, checkConnectedStatus } from '../services/authSlice'
 import { useDispatch } from 'react-redux'
+import useWindowDimensions from '../hooks/useWindowDimensions'
+import Footer from './Footer'
 
 
 export const NavBar = ({ history }) => {
-    const { connected } = useSelector(isConnected)
-    const dispatch = useDispatch()
 
+
+
+    const dispatch = useDispatch()
+    dispatch(checkConnectedStatus())
+    const { connected } = useSelector(isConnected)
+
+    /* HANDLE USER LOG OUT */
     const handleLogOut = async () => {
         div.remove()
         legend.remove()
-        await dispatch(authLogout())
+        dispatch(authLogout())
         toast.info('Vous êtes désormais déconnecté.')
         history.push('/login')
     }
 
+    /* HANDLE WINDOW RESIZE */
+    const { height, width } = useWindowDimensions()
+
+    /* HANDLE NAV LINKS ANIMATION  */
     let div = document.createElement('div')
     div.classList.add('nav-link-animation')
     let legend = document.createElement('div')
     legend.classList.add('nav-link-legend')
 
     const handleMouseOver = ({ currentTarget }) => {
+        if (width > 992) return null
+
         currentTarget.appendChild(div)
         currentTarget.appendChild(legend)
 
@@ -34,19 +47,32 @@ export const NavBar = ({ history }) => {
         legend.style.left = currentTarget.getBoundingClientRect().left + (currentTarget.getBoundingClientRect().width / 2) - (legend.getBoundingClientRect().width / 2) + 'px'
     }
 
-    const handleMouseLeave = ({ currentTarget }) => {
+    const handleMouseLeave = () => {
+        if (width > 992) return null
+
         div.remove()
         legend.remove()
     }
 
+
     return (
-        <div className="container">
-            <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-                <Link to="/" className="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                    <h2 className="display-3 maru text-danger fade-start">CooBook</h2>
+        <div className={width < 992 ? 'col-12 container' : 'col-3 nav-head'}>
+            <header
+                className={
+                    "d-flex py-3" + (
+                        width > 992
+                            ? ' flex-column'
+                            : ' flex-wrap align-items-center justify-content-center justify-content-md-between mb-4 border-bottom'
+                    )}>
+                <Link to="/" className={"mb-2 mb-md-0 text-decoration-none" + (width > 992 ? '' : ' col-md-3')}>
+                    <h2 className={"maru text-danger fade-start" + (width > 992 ? ' display-5' : ' display-3')}>CooBook</h2>
                 </Link>
                 <nav >
-                    <ul className="nav col-12 col-md-auto mb-2 justify-content-center justify-content-md-end mb-md-0">
+                    <ul className={
+                        width < 992
+                            ? "nav col-12 col-md-auto mb-2 justify-content-center justify-content-md-end mb-md-0"
+                            : 'nav flex-column justify-content-start'
+                    }>
                         {
                             !connected ?
                                 <>
@@ -77,6 +103,9 @@ export const NavBar = ({ history }) => {
                                             onClick={handleMouseLeave}
                                         >
                                             <HomeIcons size="20" />
+                                            {width > 992 &&
+                                                <span className="nav-link-legend ms-2">Accueil</span>
+                                            }
                                         </Link>
                                     </li>
                                     <li className="nav-item px-0 px-sm-1">
@@ -89,6 +118,9 @@ export const NavBar = ({ history }) => {
                                             onClick={handleMouseLeave}
                                         >
                                             <SearchIcons size="20" />
+                                            {width > 992 &&
+                                                <span className="nav-link-legend ms-2">Rechercher</span>
+                                            }
                                         </Link>
                                     </li>
                                     <li className="nav-item px-0 px-sm-1">
@@ -101,6 +133,9 @@ export const NavBar = ({ history }) => {
                                             onClick={handleMouseLeave}
                                         >
                                             <AddFileIcons size="20" />
+                                            {width > 992 &&
+                                                <span className="nav-link-legend ms-2">Enregistrer</span>
+                                            }
                                         </Link>
                                     </li>
                                     <li className="nav-item px-0 px-sm-1">
@@ -112,6 +147,9 @@ export const NavBar = ({ history }) => {
                                             onMouseLeave={handleMouseLeave} onClick={handleMouseLeave}
                                         >
                                             <UserCircleIcons size="20" />
+                                            {width > 992 &&
+                                                <span className="nav-link-legend ms-2">Mon Profil</span>
+                                            }
                                         </Link>
                                     </li>
                                     <li className="nav-item px-0 px-sm-1">
@@ -124,6 +162,9 @@ export const NavBar = ({ history }) => {
                                             onClick={handleMouseLeave}
                                         >
                                             <BookMarkFilledIcon size="20" />
+                                            {width > 992 &&
+                                                <span className="nav-link-legend ms-2">Marques Pages</span>
+                                            }
                                         </Link>
                                     </li>
                                     <li className="nav-item px-0 px-sm-1">
@@ -135,6 +176,9 @@ export const NavBar = ({ history }) => {
                                             onMouseLeave={handleMouseLeave}
                                         >
                                             <DoorIcons size="20" />
+                                            {width > 992 &&
+                                                <span className="nav-link-legend ms-2">Déconnexion</span>
+                                            }
                                         </button>
                                     </li>
                                 </>
@@ -142,7 +186,9 @@ export const NavBar = ({ history }) => {
                     </ul>
 
                 </nav>
+                {width > 992 && <Footer />}
             </header>
+
         </div>
     )
 }

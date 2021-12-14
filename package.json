@@ -11,6 +11,7 @@
         "@symfony/stimulus-bridge": "^2.0.0",
         "@symfony/webpack-encore": "^1.0.0",
         "core-js": "^3.0.0",
+        "jest": "^27.4.4",
         "regenerator-runtime": "^0.13.2",
         "stimulus": "^2.0.0",
         "webpack-notifier": "^1.6.0"
@@ -21,7 +22,8 @@
         "dev-server": "encore dev-server --port 8085",
         "dev": "encore dev",
         "watch": "encore dev --watch",
-        "build": "encore production --progress"
+        "build": "encore production --progress",
+        "sass": "sass --watch ./public/sass/main.scss:./public/style.css"
     },
     "dependencies": {
         "@reduxjs/toolkit": "^1.6.2",
@@ -38,6 +40,7 @@
         "react-router-dom": "^5.0.0",
         "react-select": "^5.2.1",
         "react-toastify": "^8.1.0",
+        "redux-thunk": "^2.4.1",
         "redux-toolkit": "^1.1.2"
     }
 }

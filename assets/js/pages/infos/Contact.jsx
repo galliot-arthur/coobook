@@ -3,7 +3,7 @@ import { GitHubIcon, LinkedInIcon } from '../../ui/Icons'
 
 export default function Contact() {
     return (
-        <div>
+        <div className='fade-left'>
             <h1 className="display-4">Contact</h1>
             <hr className="my-4" />
             {/* THEN */}

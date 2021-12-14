@@ -55,7 +55,7 @@ export default function EditProfile({ history }) {
         }
     }
     return (
-        <div>
+        <div className='fade-left'>
             {loading ?
                 <Loader />
                 :

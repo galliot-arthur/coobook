@@ -32,7 +32,7 @@ export default function AddRecipeCover({ match, history }) {
         }
     }
     return (
-        <div>
+        <div className='fade-left'>
             <h1 className="display-4">Ajouter une photo de couverture</h1>
             <p className="lead">C'est cette photo qui sera l'illustration de votre recette</p>
             <hr className="my-4" />

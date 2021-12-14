@@ -47,7 +47,7 @@ export default function RegisterPage({ history }) {
 
     }
     return (
-        <>
+        <div className='fade-left'>
             <h1 className="display-4">Inscription</h1>
             <p className="lead">Bienvenue sur CooBook</p>
             <hr className="my-4" />
@@ -74,6 +74,6 @@ export default function RegisterPage({ history }) {
                         </form>
                     </div>
             }
-        </>
+        </div>
     )
 }

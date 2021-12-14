@@ -10,6 +10,7 @@ import DeleteButton from './recipes/DeleteButton'
 import EditButton from './recipes/EditButton'
 import EditCoverButton from './recipes/EditCoverButton'
 import ShareButton from './recipes/ShareButton'
+import useWindowDimensions from '../hooks/useWindowDimensions'
 
 export default function Recipe({ history, recipe }) {
 
@@ -27,66 +28,68 @@ export default function Recipe({ history, recipe }) {
     const onDelete = () => setDeleted(true)
     if (deleted) return <></>
 
+    const { height, width } = useWindowDimensions()
+
     return (
-        <div key={recipe.id} className="row fade-start">
-            <div className="col-12 col-lg-6 col-md-10 col-sm-10 mx-auto">
+        <div key={recipe.id} className="row fade-left">
 
-                {/* HEADER */}
-                <div className="d-flex align-items-center justify-content-between py-3">
-                    <div className="d-flex align-items-center justify-content-start">
-                        <div>
-                            <UserCircleIcons size="24" />
-                        </div>
-                        <div className="ps-2">
-                            <NavLink to={"/profil/" + recipe.User.id} className="me-1">{recipe.User.firstName}</NavLink>
-                            <i className="text-small text-muted"> il y a {formatDate(recipe.createdAt)}</i>
-                        </div>
-                    </div>
-
-                    {/* OPTIONS */}
+            {/* HEADER */}
+            <div className="d-flex align-items-center justify-content-between py-3">
+                <div className="d-flex align-items-center justify-content-start">
                     <div>
-                        <ThreeDots >
-                            <h6 className="mx-3">{recipe.title}</h6>
-                            <ShareButton recipe={recipe} />
-                            {
-                                (recipe.User.id == window.localStorage.getItem('authId')) &&
-                                <>
-                                    <EditButton recipe={recipe} history={history} />
-                                    <EditCoverButton recipe={recipe} history={history} />
-                                    <DeleteButton id={recipe.id} history={history} onDelete={onDelete} />
-                                </>
-                            }
+                        <UserCircleIcons size="24" />
+                    </div>
+                    <div className="ps-2">
+                        <NavLink to={"/profil/" + recipe.User.id} className="me-1">{recipe.User.firstName}</NavLink>
+                        <i className="text-small text-muted"> il y a {formatDate(recipe.createdAt)}</i>
+                    </div>
+                </div>
 
-                            {/* IN THE TODO LIST (23/11/2021) */}
+                {/* OPTIONS */}
+                <div>
+                    <ThreeDots >
+                        <h6 className="mx-3">{recipe.title}</h6>
+                        <ShareButton recipe={recipe} />
+                        {
+                            (recipe.User.id == window.localStorage.getItem('authId')) &&
+                            <>
+                                <EditButton recipe={recipe} history={history} />
+                                <EditCoverButton recipe={recipe} history={history} />
+                                <DeleteButton id={recipe.id} onDelete={onDelete} />
+                            </>
+                        }
 
-                            {/* <NavLink to='/' className="dropdown-item">
+                        {/* IN THE TODO LIST (23/11/2021) */}
+
+                        {/* <NavLink to='/' className="dropdown-item">
                             Signaler
                             <span className="text-muted ms-2">
                                 <WarningIcon />
                             </span>
                         </NavLink> */}
-                            {/* <NavLink to='/' className="dropdown-item">
+                        {/* <NavLink to='/' className="dropdown-item">
                             Se désabonner
                             <span className="text-muted ms-2">
                                 <StopIcon />
                             </span>
                         </NavLink> */}
-                        </ThreeDots>
+                    </ThreeDots>
 
-                    </div>
                 </div>
+            </div>
 
-                {/* IMAGE */}
-                <NavLink to={"/recette/" + recipe.id} className="d-flex justify-content-center">
-                    {
-                        recipe.recipesImages[0] ?
-                            <img className="img-thumbnail w-75" src={"images/recipes/" + recipe.recipesImages[0].path} alt={recipe.slug} />
-                            :
-                            <img className="img-thumbnail w-75" src={"images/recipes/default-placeholder.png"} alt="illustration recette par défault" />
-                    }
-                </NavLink>
+            {/* IMAGE */}
+            <NavLink to={"/recette/" + recipe.id} className={"d-flex justify-content-center" + (width > 992 ? ' col-5' : '')}>
+                {
+                    recipe.recipesImages[0] ?
+                        <img className="img-thumbnail w-75" src={"images/recipes/" + recipe.recipesImages[0].path} alt={recipe.slug} />
+                        :
+                        <img className="img-thumbnail w-75" src={"images/recipes/default-placeholder.png"} alt="illustration recette par défault" />
+                }
+            </NavLink>
+            <div className={width > 992 ? 'col-7' : ''}>
                 {/* ACTIONS */}
-                <div className="mt-3 mb-2 d-flex align-items-end">
+                <div className="mt-lg-3 mb-2 d-flex align-items-end">
                     <LikeButton recipe={recipe} onLike={onLike} />
                     <CommentButton recipe={recipe} history={history} />
                     <BookMarkButton recipe={recipe} />
@@ -101,13 +104,13 @@ export default function Recipe({ history, recipe }) {
                         {recipe.title}
                     </NavLink>
                 </div>
-                <div className="text-muted mt-2">
+                <div className="text-dark mt-2">
                     {recipe.intro}
                     <NavLink to={"/recette/" + recipe.id} className="ms-1 text-decoration-none text-muted" >Voir plus...</NavLink>
                 </div>
-
-                <hr className="my-3" />
             </div>
+
+            <hr className={width > 992 ? 'my-5' : 'my-3'} />
         </div >
     )
 

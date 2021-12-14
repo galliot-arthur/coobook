@@ -39,7 +39,7 @@ export default function EditRecipe({ match, history }) {
 
     }
     return (
-        <div>
+        <div className='fade-left'>
             <Field
                 name="title"
                 label="Titre"

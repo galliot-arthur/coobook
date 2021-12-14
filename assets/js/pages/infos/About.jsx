@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function About() {
     return (
-        <div>
+        <div className='fade-left'>
             <h1 className="display-4">À propos</h1>
             <p className="lead">
                 CooBook est le projet de fin de formation d'Arthur Galliot en vue de passer le titre de Développeur Web et Web Mobile (RNCP31114).</p>

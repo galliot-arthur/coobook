@@ -35,7 +35,7 @@ export default function AddComment({ match, history }) {
     }
 
     return (
-        <div>
+        <div className='fade-left'>
             {
                 loading ?
                     <Loader />

@@ -1,6 +1,6 @@
 import moment from 'moment'
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { UserCircleIcons } from '../ui/Icons'
 
 export default function RecipeSmall({ recipe }) {
@@ -8,16 +8,20 @@ export default function RecipeSmall({ recipe }) {
     const formatDate = str => moment(str).locale('fr').fromNow(true)
 
     return (
-        <div key={recipe.id} className="row align-items-center fade-start">
+        <div key={recipe.id} className="row align-items-center fade-left">
             <div className="col-6 align-items-center">
                 <div>
                     <NavLink
                         to={"/recette/" + recipe.id}
-                        className="display-6"
+                        className="h5"
                     >
                         {recipe.title}
                     </NavLink>
                 </div>
+                <div>
+                    {recipe.intro.substring(0, 150)}... <Link to={"/recette/" + recipe.id} >Lire plus</Link>
+                </div>
+                {recipe.selected}
             </div>
 
             <div className="col-6">

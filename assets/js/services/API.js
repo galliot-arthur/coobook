@@ -1,17 +1,22 @@
 import Axios from 'axios'
-import Cache from './cache'
 import { API_URL } from '../config'
 
 /**
  * @param {string} entity The name of the ORM entity
  */
-async function findAll(entity) {
-    /* avoid request if we already get it via cache */
-    const cachedData = await Cache.get(entity)
-    if (cachedData) return cachedData
-        /* if not */
+const findAll = async (entity) => {
     return Axios
         .get(API_URL + 'api/' + entity + '?order%5BcreatedAt%5D=desc')
+        .then(response => response.data)
+}
+
+/**
+ * @param {string} entity The name of the ORM entity
+* @param {number} id Id of the element 
+ */
+const find = async (entity, id) => {
+    return Axios
+        .get(API_URL + 'api/' + entity + '/' + id)
         .then(response => response.data)
 }
 
@@ -19,7 +24,7 @@ async function findAll(entity) {
  * @param {number} id Id of the element 
  * @param {string} entity The name of the ORM entity
  */
-function deleteById(id, entity) {
+const deleteById = async (id, entity) => {
     return Axios
         .delete(API_URL + 'api/' + entity + '/' + id)
         .then(async response => response.data)
@@ -29,7 +34,7 @@ function deleteById(id, entity) {
  * @param {Object} data Id of the element 
  * @param {string} entity The name of the ORM entity
  */
-const post = (data, entity) => {
+const post = async (data, entity) => {
     return Axios
         .post(API_URL + 'api/' + entity, data)
         .then(async response => response.data)
@@ -40,7 +45,7 @@ const post = (data, entity) => {
  * @param {Object} data The data to modify
  * @param {string} entity The name of the ORM entity
  */
-const put = async(id, data, entity) => {
+const put = async (id, data, entity) => {
     return Axios
         .put(API_URL + 'api/' + entity + '/' + id, data)
         .then(response => response.data)
@@ -50,13 +55,13 @@ const put = async(id, data, entity) => {
  * @param {number} id Id of the element 
  * @param {string} entity The name of the ORM entity
  */
-const get = (id, entity) => {
+const get = async (id, entity) => {
     return Axios
         .get(API_URL + 'api/' + entity + '/' + id)
         .then(response => response.data)
 }
 
-const findMarkedRecipes = async(id) => {
+const findMarkedRecipes = async (id) => {
     return Axios
         .get(API_URL + 'api/recipes/' + id + '/rec?order%5BcreatedAt%5D=desc')
         .then(response => response.data)
@@ -64,6 +69,7 @@ const findMarkedRecipes = async(id) => {
 
 export default {
     findAll,
+    find,
     deleteById,
     post,
     put,

@@ -1,28 +1,21 @@
-import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import Pagination from '../components/Pagination'
+import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import RecipeSmall from '../components/RecipeSmall'
-import API from '../services/API'
-import { SearchIcons, UserCircleIcons } from '../ui/Icons'
+import { isConnected } from '../services/authSlice'
+import { fetchRecipes, selectAllRecipes } from '../services/recipeSlice'
+import { SearchIcons } from '../ui/Icons'
 import { Loader } from '../ui/Loader'
 
 export default function SearchPage() {
 
-    /* FETCHING DATA */
-    const [recipes, setRecipes] = useState([])
-    const fetchRecipes = async () => {
-        let data = await API.findAll('recipes')
-        setRecipes(data)
-    }
-    useEffect(() => {
-        fetchRecipes()
-    }, [])
+    const { connected } = useSelector(isConnected)
+    const feed = useSelector(selectAllRecipes)
 
-    /* PAGINATION */
-    const [currentPage, setCurrentPage] = useState(1)
-    const handlePageChanged = page => setCurrentPage(page);
-    const itemsPerPage = 11;
+    if (connected && feed.length < 1) {
+        const dispatch = useDispatch()
+        dispatch(fetchRecipes())
+    }
 
     /* SEARCH */
     const [search, setSearch] = useState("")
@@ -30,39 +23,45 @@ export default function SearchPage() {
     let filteredRecipes = []
 
     const handleSearch = ({ currentTarget }) => {
+        /* NORMALIZE SEARCH TERMS */
         const terms = currentTarget
             .value
             .normalize("NFD").replace(/\p{Diacritic}/gu, "")
             .replace(/[.,\/#!?$%\^&\*;:{}=\-_`"'~()]/g, ' ')
             .replace(/\s+/g, " ")
+            .toLowerCase()
             .split(' ')
-
         setSearch(currentTarget.value)
         setArrayTerms(terms)
-        setCurrentPage(1)
         filteredRecipes = []
     }
 
     /* FILTERING RECIPES BY SEARCH */
-    recipes.map(recipe => {
+    const recipesCopies = feed
+
+    recipesCopies.map(recipe => {
+        recipe = { ...recipe, selected: 0 }
         arrayTerms.map(term => {
             if (
                 recipe.title
                     .toLowerCase()
                     .normalize("NFD").replace(/\p{Diacritic}/gu, "")
-                    .includes(term.toLowerCase())) {
-                filteredRecipes.unshift(recipe)
+                    .includes(term) &&
+                recipe.intro
+                    .toLowerCase()
+                    .normalize("NFD").replace(/\p{Diacritic}/gu, "")
+                    .includes(term)
+            ) {
+                recipe.selected += 1
             }
         })
+        if (recipe.selected > 0) filteredRecipes.push(recipe)
     })
-    const uniqueSet = new Set(filteredRecipes)
-    const uniqueFilteredRecipes = [...uniqueSet]
 
-    /* HANDLE PAGINATION */
-    const paginatedRecipes = Pagination.getData(uniqueFilteredRecipes, currentPage, itemsPerPage)
+    filteredRecipes.sort((a, b) => a.selected < b.selected)
 
     return (
-        <div>
+        <div className='fade-left'>
             <div className="d-flex justify-content-between align-items-start">
                 <div>
                     <h1 className="display-4">Rechercher</h1>
@@ -89,29 +88,17 @@ export default function SearchPage() {
             <div className="container mb-5">
                 {
 
-                    recipes.length == 0 ?
+                    feed.length == 0 ?
                         <div>
                             <Loader look="d-flex justify-content-center my-3 align-items-center" />
                         </div> :
-                        paginatedRecipes.length == 0 ?
+                        filteredRecipes.length == 0 ?
                             <p className="fade-start">Nous ne trouvons aucuns résultats. Merci de préciser votre recherche.</p>
                             :
-                            paginatedRecipes.map(recipe =>
-                                <>
-                                    <RecipeSmall recipe={recipe} key={recipe.id} />
-                                </>
+                            filteredRecipes.map(recipe =>
+                                <RecipeSmall recipe={recipe} key={recipe.id} />
                             )
 
-                }
-
-                {
-                    itemsPerPage < filteredRecipes.length &&
-                    <Pagination
-                        currentPage={currentPage}
-                        itemsPerPage={itemsPerPage}
-                        length={filteredRecipes.length}
-                        onPageChanged={handlePageChanged}
-                    />
                 }
             </div>
         </div>

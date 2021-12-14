@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import API from '../../services/API'
 import { Loader } from '../../ui/Loader'
 import Ingredients from '../../components/recipes/Ingredients'
 import Images from '../../components/recipes/Images'
@@ -16,6 +14,10 @@ import ShareButton from '../../components/recipes/ShareButton'
 import moment from 'moment'
 import { UserCircleIcons } from '../../ui/Icons'
 import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { fetchRecipes, selectAllRecipes, selectOneRecipeById } from '../../services/recipeSlice'
+import { useDispatch } from 'react-redux'
+import API from '../../services/API'
 
 
 export default function ShowRecipe({ match, history }) {
@@ -23,46 +25,29 @@ export default function ShowRecipe({ match, history }) {
     /* FORMAT DATE */
     const formatDate = str => moment(str).locale('fr').fromNow(true)
 
-    /* STATES AND */
-    const [recipe, setRecipe] = useState({
-        User: ''
-    })
-    const [steps, setSteps] = useState([])
-    const [ingredients, setIngredients] = useState([])
-
     /* UTILITIES */
     const [loading, setLoading] = useState(false)
     const { id } = match.params
 
-    /* GET THE RECIPE */
-    const fetchRecipe = async id => {
-        try {
-            setLoading(true)
-            const data = await API.get(id, 'recipes')
-            setRecipe(data)
-            setSteps(data.steps)
-            setIngredients(data.ingredients)
-            setLoading(false)
-        } catch (e) {
-            toast.warning('Element inconnu')
-            history.push('/')
-            setLoading(false)
-        }
-    }
+    let recipe
 
-    useEffect(() => { fetchRecipe(id) }, [])
+    recipe = useSelector(state => selectOneRecipeById(state, id))
+        ?
+        useSelector(state => selectOneRecipeById(state, id))
+        :
+        JSON.parse(localStorage.getItem('recipesState')).find(r => r.id == id)
 
+    if (recipe.length < 1) { return <Loader /> }
 
     const onDelete = () => { }
-
     return (
-        <div>
+        <div className='fade-left'>
             {
                 loading ?
                     <Loader />
                     :
                     <>
-                        <div className="d-flex justify-content-between align-items-start">
+                        <div className="d-flex justify-content-between align-items-start fade-start">
                             <div>
                                 <h1 className="display-4">{recipe.title}</h1>
                                 <p className="lead">{recipe.intro}</p>
@@ -102,7 +87,7 @@ export default function ShowRecipe({ match, history }) {
                                 }
                                 {
                                     ((recipe.User) && (recipe.User.id == window.localStorage.getItem('authId'))) &&
-                                    <DeleteButton id={recipe.id} history={history} onDelete={onDelete} />
+                                    <DeleteButton id={recipe.id} onDelete={onDelete} />
                                 }
 
                             </ThreeDots>
@@ -112,10 +97,10 @@ export default function ShowRecipe({ match, history }) {
                         {/* TITLE */}
                         <h3 className="mt-3">{recipe.title}</h3>
                         {/* INGREDIENTS */}
-                        <Ingredients ingredients={ingredients} />
+                        <Ingredients ingredients={recipe.ingredients} />
 
                         <h4 className="lead">Instructions :</h4>
-                        <Steps steps={steps} />
+                        <Steps steps={recipe.steps} />
                         {
                             recipe.outro &&
                             <>

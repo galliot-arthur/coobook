@@ -1,12 +1,18 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ConnectedHomePage from './ConnectedHomePage'
 import { isConnected } from '../services/authSlice'
+import { fetchRecipes, selectAllRecipes } from '../services/recipeSlice'
 
 export function HomePage({ history }) {
 
     const { connected } = useSelector(isConnected)
+    const feed = useSelector(selectAllRecipes)
 
+    if (connected && feed.length < 1) {
+        const dispatch = useDispatch()
+        dispatch(fetchRecipes())
+    }
 
     return (
         connected ?
@@ -18,7 +24,7 @@ export function HomePage({ history }) {
 
 const StandardHomePage = () => {
     return (
-        <div>
+        <div className='fade-left'>
 
             <h1 className="display-4">Bienvenue</h1>
             <p className="lead">Bienvenue sur CooBook, le reseau social de votre cuisine.</p>
