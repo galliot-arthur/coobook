@@ -41,7 +41,7 @@ class ImageController extends AbstractController
                     ->setRecipe($recipe);
                 $em->persist($image);
                 $em->flush();
-                return true;
+                return $id;
             }
             return false;
         }

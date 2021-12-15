@@ -54,7 +54,7 @@ export default function LoginPage({ history }) {
                     <div className="d-flex flex-column justify-content-center align-items-center">
                         <form onSubmit={handleSubmit} className="form-group d-flex flex-column">
 
-                            {error && <div className="text-danger">{error}</div>}
+                            {error && <div className="text-primary">{error}</div>}
 
                             <Field name="username" label="Email" value={credentials.username} onChange={handleChange} placeholder="vous@email.fr" type="email" />
                             <Field name="password" label="Mot de passe" value={credentials.password} onChange={handleChange} placeholder="password123" type="password" />

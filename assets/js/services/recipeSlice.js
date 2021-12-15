@@ -25,7 +25,18 @@ export const deleteRecipe = createAsyncThunk(
         await API.deleteById(id, 'recipes')
         return id
     })
-
+export const addStep = createAsyncThunk(
+    'recipes/addStep',
+    async (data) => {
+        return await API.post(data, 'steps')
+    }
+)
+export const addCover = createAsyncThunk(
+    'recipes/addCover',
+    async (data) => {
+        return data
+    }
+)
 export const recipeSlice = createSlice({
     name: 'recipes',
     initialState: { feed: [], currentUpdate: [] },
@@ -37,7 +48,7 @@ export const recipeSlice = createSlice({
             */
             .addCase(fetchRecipes.fulfilled, (state, action) => {
                 state.feed = action.payload
-                const serializedState = JSON.stringify([...state.feed, action.payload])
+                const serializedState = JSON.stringify(state.feed)
                 localStorage.setItem('recipesState', serializedState)
             })
             .addCase(fetchRecipes.rejected, (state, action) => {
@@ -51,7 +62,7 @@ export const recipeSlice = createSlice({
                 state.currentUpdate = action.payload
                 state.feed = [action.payload, ...state.feed]
                 localStorage.setItem('IRI', '/api/recipes/' + action.payload.id)
-                const serializedState = JSON.stringify([action.payload, ...state.feed])
+                const serializedState = JSON.stringify(state.feed)
                 window.localStorage.setItem('recipesState', serializedState)
                 console.log('test')
             })
@@ -60,22 +71,47 @@ export const recipeSlice = createSlice({
                 state.error = action.error.message
             })
             /*
-            ADDING INGREDIENTS
+            ADDING INGREDIENT
             */
             .addCase(addIngredient.fulfilled, (state, action) => {
-                const payload = action.payload
-                state.feed = state.feed.forEach(
-                    recipe => {
-                        recipe.id === state.currentUpdate.id
-                            ? recipe.ingredients = { ...recipe.ingredients, payload }
-                            : recipe
-                    }
-                )
+                state.feed[0] = { ...state.feed[0], ingredients: [...state.feed[0].ingredients, action.payload] }
                 console.log('test')
                 const serializedState = JSON.stringify(state.feed)
                 window.localStorage.setItem('recipesState', serializedState)
             })
             .addCase(addIngredient.rejected, (state, action) => {
+                console.log('rejected :', action.error.message)
+                state.error = action.error.message
+            })
+            /*
+            ADDING STEP
+            */
+            .addCase(addStep.fulfilled, (state, action) => {
+                state.feed[0] = { ...state.feed[0], steps: [...state.feed[0].steps, action.payload] }
+                console.log('test')
+                const serializedState = JSON.stringify(state.feed)
+                window.localStorage.setItem('recipesState', serializedState)
+            })
+            .addCase(addStep.rejected, (state, action) => {
+                console.log('rejected :', action.error.message)
+                state.error = action.error.message
+            })
+            /*
+            ADDING COVER
+            */
+            .addCase(addCover.fulfilled, (state, action) => {
+                console.log(action.payload)
+                state.feed[0] = {
+                    ...state.feed[0], recipesImages: [
+                        ...state.feed[0].recipesImages,
+                        {
+                            id: action.payload,
+                            path: action.payload + '.jpg'
+                        }
+                    ]
+                }
+            })
+            .addCase(addCover.rejected, (state, action) => {
                 console.log('rejected :', action.error.message)
                 state.error = action.error.message
             })
@@ -88,10 +124,14 @@ export const recipeSlice = createSlice({
     }
 })
 
+export const { setStateLike } = recipeSlice.actions
+
 export default recipeSlice.reducer
 
 export const selectAllRecipes = state => state.recipes.feed
 
-export const selectUserRecipes = (state, userId) => state.recipes.feed.find(r => r.User.id == userId)
+export const selectUserRecipes = (state, userId) => {
+    state.recipes.feed.find(r => r.User.id == userId)
+}
 
 export const selectOneRecipeById = (state, recipeId) => state.recipes.feed.find(r => r.id == recipeId)

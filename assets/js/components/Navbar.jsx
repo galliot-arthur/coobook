@@ -59,13 +59,13 @@ export const NavBar = ({ history }) => {
         <div className={width < 992 ? 'col-12 container' : 'col-3 nav-head'}>
             <header
                 className={
-                    "d-flex py-3" + (
+                    "d-flex pt-3" + (
                         width > 992
                             ? ' flex-column'
                             : ' flex-wrap align-items-center justify-content-center justify-content-md-between mb-4 border-bottom'
                     )}>
                 <Link to="/" className={"mb-2 mb-md-0 text-decoration-none" + (width > 992 ? '' : ' col-md-3')}>
-                    <h2 className={"maru text-danger fade-start" + (width > 992 ? ' display-5' : ' display-3')}>CooBook</h2>
+                    <h2 className={"maru text-primary fade-start" + (width > 992 ? ' display-5' : ' display-3')}>CooBook</h2>
                 </Link>
                 <nav >
                     <ul className={
@@ -170,7 +170,7 @@ export const NavBar = ({ history }) => {
                                     <li className="nav-item px-0 px-sm-1">
                                         <button
                                             aria-label="déconnexion"
-                                            className="nav-link text-black-50 d-inline"
+                                            className="nav-link silent-button text-black-50 d-inline"
                                             onClick={handleLogOut}
                                             onMouseEnter={handleMouseOver}
                                             onMouseLeave={handleMouseLeave}

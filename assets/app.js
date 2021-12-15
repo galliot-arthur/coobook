@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import './bootstrap';
+import './css/app.css'
 import './css/GT-MARU.woff2'
 import { NavBar } from './js/components/Navbar';
 import PrivateRoute from './js/components/PrivateRoute';

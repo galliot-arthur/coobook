@@ -1,54 +1,40 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, {useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import TextArea from '../../components/forms/TextArea'
-import AddRecipeContext from '../../context/AddRecipeContext'
-import API from '../../services/API'
+import { addStep } from '../../services/recipeSlice'
 import { Loader } from '../../ui/Loader'
 
-export default function AddRecipeStep({ match, history }) {
+export default function AddRecipeStep() {
+    const dispatch = useDispatch()
+    const IRI = localStorage.getItem('IRI')
 
-    const { IRI } = useContext(AddRecipeContext);
     const [step, setStep] = useState({
         recipe: IRI,
         content: ""
     })
-    const instruction = [
-        "Faire chauffer de l'eau...",
-        "Epplucher les carottes",
-        "Etaler la farine...",
-        "Allumer le four...",
-        "Vérifier l'assaisonnement...",
-    ]
 
     const [loading, setLoading] = useState(false)
 
-    /* HANDLE DATA */
+    /* HANDLE CHANGE */
     const handleChange = ({ currentTarget }) => {
-        const { value } = currentTarget
-        setStep({
-            recipe: IRI,
-            content: value
-        })
+        setStep({ ...step, content: currentTarget.value})
     }
+
     const handleSubmit = async e => {
         e.preventDefault()
         setLoading(true)
-        try {
-            await API.post(step, 'steps')
-            toast.info('Etape enregistrée.')
-            setStep({ ...step, content: "" })
-            setLoading(false)
-        } catch (e) {
-            toast.warning("Erreur ! Merci d'essayer à nouveau.")
-            setLoading(false)
-        }
+        dispatch(addStep(step))
+        toast.info('Etape enregistrée.')
+        setStep({ ...step, content: "" })
+        setLoading(false)
     }
 
     return (
         <div className='fade-left'>
             <h1 className="display-4">Ajout d'une étape</h1>
-            <p className="lead">{instruction[(Math.floor(Math.random() * 5))]}</p>
+            <p className="lead">Allumer le four...</p>
             <hr className="my-4" />
             {/* THEN */}
             {

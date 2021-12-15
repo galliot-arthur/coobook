@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "MARU";
+    src: url("./GT-MARU.woff2") format("woff2");
+}
+
 .maru {
     font-family: 'MARU';
 }
@@ -67,12 +72,12 @@ small {
 }
 
 a {
-    color: $bs-primary;
+    color: $primary-color;
     text-decoration: none
 }
 
 a:hover {
-    color: $bs-primary-hover;
+    color: $primary-color-hover;
 }
 
 .lead {
@@ -116,7 +121,8 @@ a:hover {
     line-height: 1.1
 }
 
-.text-small {
+.text-small,
+small {
     font-size: .875rem!important
 }
 
@@ -136,33 +142,12 @@ a:hover {
     text-decoration: none!important
 }
 
-.text-decoration-underline {
-    text-decoration: underline!important
-}
-
-.text-uppercase {
-    text-transform: uppercase!important
-}
-
-.text-wrap {
-    white-space: normal!important
-}
-
-.text-nowrap {
-    white-space: nowrap!important
-}
-
-.text-break {
-    word-wrap: break-word!important;
-    word-break: break-word!important
-}
-
-.text-danger {
-    color: $bs-danger!important
+.text-primary {
+    color: $primary-color!important
 }
 
 .text-black-50 {
-    color: $bs-black!important;
+    color: $black-color!important;
     opacity: .5;
 }
 

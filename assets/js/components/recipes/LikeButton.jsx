@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import likeBookmark from '../../services/like&bookmark'
+import { setStateLike } from '../../services/recipeSlice'
 import { LikeFillIcon, LikeIcon } from '../../ui/Icons'
 
 export default function LikeButton({ recipe, onLike }) {
+
+    const dispatch = useDispatch()
     const [like, setLike] = useState(false)
 
     useEffect(() => {
@@ -22,6 +26,11 @@ export default function LikeButton({ recipe, onLike }) {
                 recipe.id,
                 recipe.likes
             )
+            dispatch(setStateLike({
+                like,
+                recipeId: recipe.id,
+                userId: parseInt(localStorage.getItem('authId'))
+            }))
         } catch (e) {
             toast.warning('Erreur, merci de réessayer.')
             setLike(!like)

@@ -12,21 +12,60 @@
 //==============================================================================
 // Configuration
 //==============================================================================
-@import 'base/variables';
-@import 'base/mixins';
+@import './base/variables';
+@import './base/mixins';
 //==============================================================================
 // Reset
 //==============================================================================
-@import 'base/normalize';
-@import 'base/reset';
+@import './base/normalize';
+@import './base/reset';
+//==============================================================================
+// Added Ones
+//==============================================================================
+@import './base/img';
+@import './base/typography';
 //==============================================================================
 // Components
 //==============================================================================
-@import 'components/scaffolding';
-@import 'components/grid';
-@import 'components/helpers';
-@import 'components/buttons';
-@import 'components/forms';
-@import 'components/tables';
-@import 'components/navigation';
-@import 'components/layout';
+@import './components/scaffolding';
+@import './components/grid';
+@import './components/buttons';
+@import './components/forms';
+@import './components/navigation';
+@import './components/layout';
+@import './components/dropdown';
+@import './components/input_group';
+@import './components/link';
+@import './components/modal';
+@import './components/toast';
+//==============================================================================
+// Layout
+//==============================================================================
+@import './layout/nav_header';
+@import './layout/footer';
+//==============================================================================
+// Utils
+//==============================================================================
+@import './utils/animation_transition';
+@import './utils/border';
+@import './utils/container';
+@import './utils/flexbox';
+@import './utils/grid';
+@import './utils/margin_padding';
+*,
+::after,
+::before {
+    box-sizing: border-box!important;
+}
+
+@media screen AND (prefers-reduced-motion:no-preference) {
+     :root {
+        scroll-behavior: smooth
+    }
+}
+
+html,
+body {
+    overflow-x: hidden;
+    font-size: 1em;
+}

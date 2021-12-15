@@ -11,9 +11,11 @@ import EditButton from './recipes/EditButton'
 import EditCoverButton from './recipes/EditCoverButton'
 import ShareButton from './recipes/ShareButton'
 import useWindowDimensions from '../hooks/useWindowDimensions'
+import { useHistory } from 'react-router-dom'
 
-export default function Recipe({ history, recipe }) {
+export default function Recipe({ recipe }) {
 
+    const history = useHistory()
     /* FORMAT DATE */
     const formatDate = str => moment(str).locale('fr').fromNow(true)
 

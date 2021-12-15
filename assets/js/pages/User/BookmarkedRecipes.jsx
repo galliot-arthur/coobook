@@ -1,31 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Loader } from '../../ui/Loader'
-import { toast } from 'react-toastify'
 import Recipe from '../../components/Recipe'
-import API from '../../services/API'
+import { useSelector } from 'react-redux'
+import { fetchBookMarked, selectAllBookMarked } from '../../services/bookMarkSlice'
+import { useDispatch } from 'react-redux'
 
-export default function BookmarkedRecipes({ history }) {
-    /* FETCHING DATA */
-    const [feed, setFeed] = useState([])
+export default function BookmarkedRecipes() {
 
+    const recipes = useSelector(selectAllBookMarked)
+        ? useSelector(selectAllBookMarked)
+        : localStorage.getItem('bookmarksState')
 
-    const fetchRecipes = async () => {
-        try {
-            let data = await API.findMarkedRecipes(window.localStorage.getItem('authId'))
-            setFeed(data)
-        } catch (e) {
-            toast.warning('Erreur, merci de vous reconnecter.')
-        }
+    if (recipes.length < 1) {
+        const dispatch = useDispatch()
+        dispatch(fetchBookMarked())
+        return <Loader />
     }
-    useEffect(() => {
-        fetchRecipes()
-    }, [])
 
-    /* RETURN PART */
-    return (
-        feed.length == 0 ?
-            <Loader look="d-flex justify-content-center my-5" />
-            :
-            feed.map(recipe => <Recipe history={history} recipe={recipe} key={recipe.id} />)
-    )
+    return recipes.map(recipe => <Recipe recipe={recipe} key={recipe.id} />)
 }

@@ -1,29 +1,31 @@
 import Axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ImageUploader from 'react-images-upload';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import AddRecipeContext from '../../context/AddRecipeContext';
+import { addCover } from '../../services/recipeSlice';
 
 export default function AddRecipeCover({ match, history }) {
-    const [loading, setLoading] = useState(false)
 
+    const dispatch = useDispatch()
+    const [loading, setLoading] = useState(false)
     /* GET THE RECIPE WE ARE CURRENTLY RECORDING */
-    const { IRI, setIRI } = useContext(AddRecipeContext);
-    useEffect(() => {
-        if (IRI === "") setIRI(window.localStorage.getItem('recipeIRI'))
-    }, [])
+    const IRI = localStorage.getItem('IRI')
+
 
     /* HANDLE IMAGE DROP */
     const [picture, setPicture] = useState([])
     const onDrop = (picture) => {
         setPicture(picture)
     }
+
     const handleSubmit = async () => {
         const formData = new FormData()
         formData.append('file', picture[0], picture[0].name)
         formData.append('recipe', IRI)
         try {
-            await Axios.post(IRI + '/image', formData)
+            const { data } = await Axios.post(IRI + '/image', formData)
+            dispatch(addCover(data))
             toast.info('Félicitation, votre recette à bien été sauvegardée !')
             window.localStorage.removeItem('IRI')
             history.push('/')
