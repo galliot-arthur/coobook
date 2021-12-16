@@ -48,36 +48,33 @@ export default function Recipe({ recipe }) {
                 </div>
 
                 {/* OPTIONS */}
-                <div>
-                    <ThreeDots >
-                        <h6 className="mx-3">{recipe.title}</h6>
-                        <ShareButton recipe={recipe} />
-                        {
-                            (recipe.User.id == window.localStorage.getItem('authId')) &&
-                            <>
-                                <EditButton recipe={recipe} history={history} />
-                                <EditCoverButton recipe={recipe} history={history} />
-                                <DeleteButton id={recipe.id} onDelete={onDelete} />
-                            </>
-                        }
+                <ThreeDots >
+                    <h6 className="mx-3">{recipe.title}</h6>
+                    <ShareButton recipe={recipe} />
+                    {
+                        (recipe.User.id == window.localStorage.getItem('authId')) &&
+                        <>
+                            <EditButton recipe={recipe} history={history} />
+                            <EditCoverButton recipe={recipe} history={history} />
+                            <DeleteButton id={recipe.id} onDelete={onDelete} />
+                        </>
+                    }
 
-                        {/* IN THE TODO LIST (23/11/2021) */}
+                    {/* IN THE TODO LIST (23/11/2021) */}
 
-                        {/* <NavLink to='/' className="dropdown-item">
+                    {/* <NavLink to='/' className="dropdown-item">
                             Signaler
                             <span className="text-muted ms-2">
                                 <WarningIcon />
                             </span>
                         </NavLink> */}
-                        {/* <NavLink to='/' className="dropdown-item">
+                    {/* <NavLink to='/' className="dropdown-item">
                             Se désabonner
                             <span className="text-muted ms-2">
                                 <StopIcon />
                             </span>
                         </NavLink> */}
-                    </ThreeDots>
-
-                </div>
+                </ThreeDots>
             </div>
 
             {/* IMAGE */}
