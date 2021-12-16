@@ -557,6 +557,18 @@ progress {
     height: auto;
 }
 
+@media screen and (max-width:992px) {
+    .img-thumbnail {
+        max-width: 50%;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .img-thumbnail {
+        max-width: 75%;
+    }
+}
+
 .img-thumbnail-small {
     border: 1px solid #dee2e6;
     border-radius: .25rem;
@@ -8515,6 +8527,24 @@ fieldset:disabled .btn {
     }
     to {
         opacity: 1;
+    }
+}
+
+.fade-left {
+    opacity: 1;
+    transform: translateX(0);
+    transform-origin: center left;
+    animation: fade-left .3s;
+}
+
+@keyframes fade-left {
+    from {
+        transform: translateX(-10px);
+        opacity: 0
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1
     }
 }
 

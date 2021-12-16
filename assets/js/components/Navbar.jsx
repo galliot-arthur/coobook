@@ -9,7 +9,7 @@ import useWindowDimensions from '../hooks/useWindowDimensions'
 import Footer from './Footer'
 
 
-export const NavBar = ({ history }) => {
+let NavBar = ({ history }) => {
 
 
 
@@ -192,3 +192,5 @@ export const NavBar = ({ history }) => {
         </div>
     )
 }
+
+export default NavBar = React.memo(NavBar)

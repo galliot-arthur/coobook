@@ -1,11 +1,14 @@
 import moment from 'moment'
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import useWindowDimensions from '../hooks/useWindowDimensions'
 import { UserCircleIcons } from '../ui/Icons'
 
-export default function RecipeSmall({ recipe }) {
+let RecipeSmall = ({ recipe }) => {
 
     const formatDate = str => moment(str).locale('fr').fromNow(true)
+    const { height, width } = useWindowDimensions()
+
 
     return (
         <div key={recipe.id} className="row align-items-center fade-left">
@@ -18,10 +21,11 @@ export default function RecipeSmall({ recipe }) {
                         {recipe.title}
                     </NavLink>
                 </div>
-                <div>
-                    {recipe.intro.substring(0, 150)}... <Link to={"/recette/" + recipe.id} >Lire plus</Link>
-                </div>
-                {recipe.selected}
+                {width > 500 &&
+                    <div>
+                        {recipe.intro.substring(0, 150)}... <Link to={"/recette/" + recipe.id} >Lire plus</Link>
+                    </div>
+                }
             </div>
 
             <div className="col-6">
@@ -54,3 +58,5 @@ export default function RecipeSmall({ recipe }) {
         </div>
     )
 }
+
+export default RecipeSmall = React.memo(RecipeSmall)

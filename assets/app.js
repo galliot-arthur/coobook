@@ -4,7 +4,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import './bootstrap';
 import './css/app.css'
 import './css/GT-MARU.woff2'
-import { NavBar } from './js/components/Navbar';
+import NavBar from './js/components/Navbar';
 import PrivateRoute from './js/components/PrivateRoute';
 import { HomePage } from './js/pages/HomePage';
 import LoginPage from './js/pages/LoginPage';
@@ -28,17 +28,18 @@ import { store } from './store';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 import useWindowDimensions from './js/hooks/useWindowDimensions';
+import Fetcher from './js/components/Fetcher';
 
 
 const App = () => {
 
     const NavbarWithRouter = withRouter(NavBar)
-
     /* HANDLE WINDOW RESIZE */
-    const { height, width } = useWindowDimensions()
+    const { width } = useWindowDimensions()
 
     return (
         <Provider store={store}>
+            <Fetcher />
             <HashRouter>
                 <div className="row">
 
@@ -86,6 +87,7 @@ const App = () => {
                     </main>
                 </div>
 
+                {width < 992 && <Footer />}
             </HashRouter>
             <ToastContainer
                 position={toast.POSITION.BOTTOM_RIGHT}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Loader } from '../../ui/Loader'
 import Ingredients from '../../components/recipes/Ingredients'
 import Images from '../../components/recipes/Images'
@@ -15,10 +15,7 @@ import moment from 'moment'
 import { UserCircleIcons } from '../../ui/Icons'
 import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { fetchRecipes, selectAllRecipes, selectOneRecipeById } from '../../services/recipeSlice'
-import { useDispatch } from 'react-redux'
-import API from '../../services/API'
-
+import { selectOneRecipeById } from '../../services/recipeSlice'
 
 export default function ShowRecipe({ match, history }) {
 

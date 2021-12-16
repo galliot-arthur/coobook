@@ -44,7 +44,15 @@ const isUserLike = (likes) => {
     return rez
 }
 
+const isUserBooked = (array) => {
+    let result
+    array.forEach(recipe => {
+
+    })
+}
+
 export default {
     toggleAffiliation,
     isUserLike,
+    isUserBooked,
 }

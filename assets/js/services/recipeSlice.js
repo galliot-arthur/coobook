@@ -3,39 +3,30 @@ import API from "./API";
 
 export const fetchRecipes = createAsyncThunk(
     'recipes/fetchRecipes',
-    async () => {
-        return await API.findAll('recipes')
-    })
-
+    async () => await API.findAll('recipes')
+)
 export const addRecipe = createAsyncThunk(
     'recipes/addRecipe',
-    async (data) => {
-        return await API.post(data, 'recipes')
-    })
-
+    async (data) => await API.post(data, 'recipes')
+)
 export const addIngredient = createAsyncThunk(
     'recipes/addIngredient',
-    async (data) => {
-        return await API.post(data, 'ingredients')
-    })
-
+    async (data) => await API.post(data, 'ingredients')
+)
 export const deleteRecipe = createAsyncThunk(
     'recipes/deleteRecipe',
     async (id) => {
         await API.deleteById(id, 'recipes')
         return id
-    })
+    }
+)
 export const addStep = createAsyncThunk(
     'recipes/addStep',
-    async (data) => {
-        return await API.post(data, 'steps')
-    }
+    async (data) => await API.post(data, 'steps')
 )
 export const addCover = createAsyncThunk(
     'recipes/addCover',
-    async (data) => {
-        return data
-    }
+    async (data) => data
 )
 export const recipeSlice = createSlice({
     name: 'recipes',
@@ -64,7 +55,6 @@ export const recipeSlice = createSlice({
                 localStorage.setItem('IRI', '/api/recipes/' + action.payload.id)
                 const serializedState = JSON.stringify(state.feed)
                 window.localStorage.setItem('recipesState', serializedState)
-                console.log('test')
             })
             .addCase(addRecipe.rejected, (state, action) => {
                 console.log('rejected :', action.error.message)
@@ -75,7 +65,6 @@ export const recipeSlice = createSlice({
             */
             .addCase(addIngredient.fulfilled, (state, action) => {
                 state.feed[0] = { ...state.feed[0], ingredients: [...state.feed[0].ingredients, action.payload] }
-                console.log('test')
                 const serializedState = JSON.stringify(state.feed)
                 window.localStorage.setItem('recipesState', serializedState)
             })
@@ -88,7 +77,6 @@ export const recipeSlice = createSlice({
             */
             .addCase(addStep.fulfilled, (state, action) => {
                 state.feed[0] = { ...state.feed[0], steps: [...state.feed[0].steps, action.payload] }
-                console.log('test')
                 const serializedState = JSON.stringify(state.feed)
                 window.localStorage.setItem('recipesState', serializedState)
             })
@@ -100,7 +88,6 @@ export const recipeSlice = createSlice({
             ADDING COVER
             */
             .addCase(addCover.fulfilled, (state, action) => {
-                console.log(action.payload)
                 state.feed[0] = {
                     ...state.feed[0], recipesImages: [
                         ...state.feed[0].recipesImages,

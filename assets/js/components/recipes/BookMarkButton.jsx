@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
-import { addBookmark, removeBookmark } from '../../services/bookMarkSlice'
+import { addBookmark, removeBookmark, selectBookMarkById } from '../../services/bookMarkSlice'
 import likeBookmark from '../../services/like&bookmark'
 import { BookMarkFilledIcon, BookMarkIcon } from '../../ui/Icons'
 
-export default function BookMarkButton({ recipe }) {
+let BookMarkButton = ({ recipe }) => {
 
     const dispatch = useDispatch()
+
     const [bookmark, setBookmark] = useState(false)
-    /* INITIALIZE BOOKMARK STATE */
+    const bookmarkedRecipe = useSelector(state => selectBookMarkById(state, recipe.id))
+
     useEffect(() => {
-        if (recipe.bookMarks.length > 0) {
-            setBookmark(likeBookmark.isUserLike(recipe.bookMarks))
+        if (bookmarkedRecipe) {
+            setBookmark(true)
         }
-    }, [])
+    }, [bookmarkedRecipe])
+
     /* HANDLE TOGGLE */
-    const toggleBookmark = async () => {
+    async function toggleBookmark() {
         setBookmark(!bookmark)
         try {
             likeBookmark.toggleAffiliation(
@@ -31,8 +35,8 @@ export default function BookMarkButton({ recipe }) {
                 dispatch(addBookmark(recipe))
             }
         } catch (e) {
-            //toast.warning('Erreur, merci de réessayer.')
-            //setBookmark(!bookmark)
+            toast.warning('Erreur, merci de réessayer.')
+            setBookmark(!bookmark)
         }
     }
     return (
@@ -44,3 +48,6 @@ export default function BookMarkButton({ recipe }) {
         </button>
     )
 }
+
+
+export default BookMarkButton = React.memo(BookMarkButton)

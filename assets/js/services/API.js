@@ -62,7 +62,6 @@ const get = async (id, entity) => {
 }
 
 const findMarkedRecipes = async (id) => {
-    console.log('test', id)
     return Axios
         .get(API_URL + 'api/recipes/' + id + '/rec?order%5BcreatedAt%5D=desc')
         .then(response => response.data)

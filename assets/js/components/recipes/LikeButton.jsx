@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import likeBookmark from '../../services/like&bookmark'
+import { addLike, removeLike, selectLikeById } from '../../services/likeSlice'
 import { setStateLike } from '../../services/recipeSlice'
 import { LikeFillIcon, LikeIcon } from '../../ui/Icons'
 
 export default function LikeButton({ recipe, onLike }) {
 
     const dispatch = useDispatch()
-    const [like, setLike] = useState(false)
-
-    useEffect(() => {
-        if (recipe.likes.length > 0) {
-            setLike(likeBookmark.isUserLike(recipe.likes))
-        }
-    }, [])
+    const like = useSelector(state => selectLikeById(state, recipe.id))
 
     const toggleLike = async () => {
-        setLike(!like)
         onLike(like)
         try {
             likeBookmark.toggleAffiliation(
@@ -26,14 +21,12 @@ export default function LikeButton({ recipe, onLike }) {
                 recipe.id,
                 recipe.likes
             )
-            dispatch(setStateLike({
-                like,
-                recipeId: recipe.id,
-                userId: parseInt(localStorage.getItem('authId'))
-            }))
+            like
+                ? dispatch(removeLike(recipe.id))
+                : dispatch(addLike(recipe.id))
+
         } catch (e) {
             toast.warning('Erreur, merci de réessayer.')
-            setLike(!like)
         }
     }
 

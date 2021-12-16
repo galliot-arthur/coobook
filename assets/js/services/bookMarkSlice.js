@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 import API from "./API";
 
 export const fetchBookMarked = createAsyncThunk(
@@ -18,7 +18,6 @@ export const bookMarkSlice = createSlice({
             localStorage.setItem('bookmarksState', serializedState)
         },
         addBookmark(state, action) {
-            console.log(action)
             state.recipes.unshift(action.payload)
             const serializedState = JSON.stringify(state.recipes)
             localStorage.setItem('bookmarksState', serializedState)
@@ -31,6 +30,9 @@ export const bookMarkSlice = createSlice({
                 const serializedState = JSON.stringify(state.recipes)
                 localStorage.setItem('bookmarksState', serializedState)
             })
+            .addCase(fetchBookMarked.rejected, (state, action) => {
+                console.log(action.error)
+            })
 
     }
 })
@@ -40,3 +42,8 @@ export const { removeBookmark, addBookmark } = bookMarkSlice.actions
 export default bookMarkSlice.reducer
 
 export const selectAllBookMarked = state => state.bookmarks.recipes
+
+export const selectBookMarkById = createSelector(
+    [selectAllBookMarked, (state, id) => id],
+    (recipes, id) => recipes.find(r => r.id == id)
+)

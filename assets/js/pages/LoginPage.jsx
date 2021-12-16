@@ -4,6 +4,7 @@ import Field from '../components/forms/Field'
 import { toast } from 'react-toastify'
 import { authLogin, isConnected } from '../services/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { fetchLikes } from '../services/likeSlice'
 
 export default function LoginPage({ history }) {
     const { connected } = useSelector(isConnected)
@@ -30,7 +31,7 @@ export default function LoginPage({ history }) {
     const handleSubmit = async e => {
         e.preventDefault()
         setLoading(true)
-        dispatch(authLogin(credentials)).then(result => {
+        dispatch(authLogin(credentials)).then(r => {
             if (!connected) {
                 setError('Identifiant ou mot de passe invalide.')
                 setLoading(false)
@@ -38,6 +39,7 @@ export default function LoginPage({ history }) {
                 setError(null)
                 setLoading(false)
                 toast.info('Bienvenue ' + window.localStorage.getItem('authToken') + '.')
+                dispatch(fetchLikes())
                 history.push('/')
             }
         })

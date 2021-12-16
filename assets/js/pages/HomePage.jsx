@@ -3,20 +3,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import ConnectedHomePage from './ConnectedHomePage'
 import { isConnected } from '../services/authSlice'
 import { fetchRecipes, selectAllRecipes } from '../services/recipeSlice'
+import { fetchBookMarked, selectAllBookMarked } from '../services/bookMarkSlice'
 
-export function HomePage({ history }) {
+export function HomePage() {
 
+    const dispatch = useDispatch()
     const { connected } = useSelector(isConnected)
     const feed = useSelector(selectAllRecipes)
+    const bookmarks = useSelector(selectAllBookMarked)
 
-    if (connected && feed.length < 1) {
-        const dispatch = useDispatch()
-        dispatch(fetchRecipes())
-    }
+    if (connected && feed.length < 1) dispatch(fetchRecipes())
+
+    if (connected && bookmarks.length < 1) dispatch(fetchBookMarked())
 
     return (
         connected ?
-            <ConnectedHomePage history={history} />
+            <ConnectedHomePage />
             :
             <StandardHomePage />
     )

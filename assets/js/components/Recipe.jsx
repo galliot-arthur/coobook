@@ -1,7 +1,7 @@
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { ShareIcon, UserCircleIcons } from '../ui/Icons'
+import { UserCircleIcons } from '../ui/Icons'
 import BookMarkButton from './recipes/BookMarkButton'
 import LikeButton from './recipes/LikeButton'
 import CommentButton from './recipes/CommentButton'
@@ -84,14 +84,14 @@ export default function Recipe({ recipe }) {
             <NavLink to={"/recette/" + recipe.id} className={"d-flex justify-content-center" + (width > 992 ? ' col-5' : '')}>
                 {
                     recipe.recipesImages[0] ?
-                        <img className="img-thumbnail w-75" src={"images/recipes/" + recipe.recipesImages[0].path} alt={recipe.slug} />
-                        :
-                        <img className="img-thumbnail w-75" src={"images/recipes/default-placeholder.png"} alt="illustration recette par défault" />
+                        <img className="img-thumbnail" src={"images/recipes/" + recipe.recipesImages[0].path} alt={recipe.slug} />
+                        : md -
+                        <img className="img-thumbnail" src={"images/recipes/default-placeholder.png"} alt="illustration recette par défault" />
                 }
             </NavLink>
-            <div className={width > 992 ? 'col-7' : ''}>
+            <div className={width > 992 ? 'col-7' : 'mt-3'}>
                 {/* ACTIONS */}
-                <div className="mt-lg-3 mb-2 d-flex align-items-end">
+                <div className="mb-2 d-flex justify-content-center justify-content-lg-start align-items-md-end">
                     <LikeButton recipe={recipe} onLike={onLike} />
                     <CommentButton recipe={recipe} history={history} />
                     <BookMarkButton recipe={recipe} />
@@ -101,7 +101,7 @@ export default function Recipe({ recipe }) {
                 <div className="align-items-start">
                     <NavLink
                         to={"/recette/" + recipe.id}
-                        className="lead text-decoration-none display-5 text-break"
+                        className="lead text-decoration-none display-6 text-break"
                     >
                         {recipe.title}
                     </NavLink>
