@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { useCallback } from 'react'
+import { useEffect } from 'react'
+import reactDom from 'react-dom'
 import { TreeDotsIcon } from '../ui/Icons'
 
 /**
@@ -12,21 +15,30 @@ export default function ThreeDots({ children }) {
 
     const toggle = () => {
         setDisplay(!display)
-
     }
-    return (
-        <>
-            <button onClick={toggle}>
-                <TreeDotsIcon size="22" />
-            </button>
-            {
-                display &&
-                <div className="dropdown-context fade-start" onClick={toggle} role="button" aria-label="close">
-                    <ul className="dropdown-menu fade-start">
-                        {children.map((child, key) => <li key={key}>{child}</li>)}
-                    </ul>
-                </div>
-            }
-        </>
-    )
+
+    return <>
+        <button onClick={toggle}>
+            <TreeDotsIcon size="22" />
+        </button>
+        {display && <PopUp children={children} toggle={toggle} />}
+    </>
+
 }
+
+const PopUp = ({ children, toggle }) => {
+    useEffect(() => {
+        const close = (e) => {
+            if (e.keyCode === 27) toggle()
+        }
+        window.addEventListener('keydown', close)
+        return () => window.removeEventListener('keydown', close)
+    }, [])
+
+    const render = <div className="dropdown-context fade-start" onClick={toggle} role="button" aria-label="close" >
+        <ul className="dropdown-menu fade-start">
+            {children.map((child, key) => <li key={key}>{child}</li>)}
+        </ul>
+    </div>
+    return reactDom.createPortal(render, document.querySelector('body'))
+} 

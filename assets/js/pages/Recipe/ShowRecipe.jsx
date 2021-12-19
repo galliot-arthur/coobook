@@ -17,7 +17,9 @@ import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectOneRecipeById } from '../../services/recipeSlice'
 import useWindowDimensions from '../../hooks/useWindowDimensions'
-import { toast } from 'react-toastify'
+import { useEffect } from 'react'
+import AddComment from '../Comment/AddComment'
+import EditSteps from '../../components/editRecipes/EditSteps'
 
 export default function ShowRecipe({ match, history }) {
 
@@ -27,28 +29,21 @@ export default function ShowRecipe({ match, history }) {
     const formatDate = str => moment(str).locale('fr').fromNow(true)
 
     /* HANDLE RECIPE */
-    let recipe
-    recipe = useSelector(state => selectOneRecipeById(state, id))
-        ?
-        useSelector(state => selectOneRecipeById(state, id))
-        :
-        JSON.parse(localStorage.getItem('recipesState')).find(r => r.id == id)
+    const recipe = useSelector(state => selectOneRecipeById(state, id))
 
-    if (!recipe) {
-        toast.warning('Element inconnu')
-        history.replace('/')
-    }
     /* HANDLE LIKE */
-    const [likes, setLikes] = useState(recipe.likes.length)
-    const onLike = (state) => {
-        !state ? setLikes(likes + 1) : setLikes(likes - 1)
-    }
+    const [likes, setLikes] = useState(0)
+    useEffect(() => { recipe && setLikes(recipe.likes.length) }, [recipe])
+
+    const onLike = (state) => !state ? setLikes(likes + 1) : setLikes(likes - 1)
+
+    if (!recipe) return <Loader />
+
     /* MUTED FUNCTION TO AVOID ERRORS */
     const onDelete = () => { }
 
-
     return (
-        <div className='fade-left'>
+        <div className='fade-left mb-lg-5'>
 
             {/* TITLE & INTRO */}
             <div className="d-flex justify-content-between align-items-start fade-start">
@@ -70,7 +65,7 @@ export default function ShowRecipe({ match, history }) {
                             <ShareButton recipe={recipe} />
                             {
                                 ((recipe.User) && (recipe.User.id == window.localStorage.getItem('authId'))) &&
-                                <EditButton recipe={recipe} history={history} />
+                                <EditButton recipe={recipe} />
                             }
                             {
                                 ((recipe.User) && (recipe.User.id == window.localStorage.getItem('authId'))) &&
@@ -93,13 +88,13 @@ export default function ShowRecipe({ match, history }) {
                         <Images recipe={recipe} />
                     </div>
                     <div className="col-6">
-                        {width >= 768 && <Ingredients ingredients={recipe.ingredients} width={width} />}
+                        {width >= 768 && <Ingredients recipe={recipe} ingredients={recipe.ingredients} width={width} />}
+
                     </div>
                 </div>
                 <div className="my-3 d-flex justify-content-between align-items-center">
                     <div>
                         <LikeButton recipe={recipe} onLike={onLike} />
-                        <CommentButton recipe={recipe} history={history} />
                         <BookMarkButton recipe={recipe} />
                         <i className="text-muted text-small me-5">{likes} j'aime{likes > 1 && 's'}</i>
                     </div>
@@ -107,43 +102,41 @@ export default function ShowRecipe({ match, history }) {
 
             </div>
 
-
-
-            {/* TITLE */}
-            <h3 className="my-3">{recipe.title}</h3>
             {/* INGREDIENTS */}
-            {width < 768 && <Ingredients ingredients={recipe.ingredients} width={width} />}
+            {width < 768 && <Ingredients recipe={recipe} width={width} />}
 
-            <h4 className="lead mt-3">Instructions :</h4>
-            <Steps steps={recipe.steps} />
+            <h2 className="mt-3">Etapes</h2>
+            {
+                recipe.User.id == window.localStorage.getItem('authId')
+                    ? <EditSteps recipeData={recipe} />
+                    : <Steps steps={recipe.steps} />
+            }
             {
                 recipe.outro &&
                 <>
-                    <h4 className="lead">Le mot de la fin :</h4>
+                    <h2>Pour Finir</h2>
                     <p>
                         {recipe.outro}
                     </p>
                 </>
             }
             <hr />
-            {
-                recipe.comments &&
-                <Comments recipe={recipe} />
 
-            }
+            {/* COMMENTS */}
+            <Comments recipe={recipe} />
+
             <div className="d-flex justify-content-end">
-                <CommentButton recipe={recipe} history={history} text="Ajouter un commentaire à cette recette" />
+                <AddComment recipe={recipe} />
             </div>
-
         </div>
     )
 }
 
 const Steps = ({ steps }) => {
 
-    if (steps.length == 0) return <></>
+    if (steps.length == 0) return <>Cette recette est incomplète.</>
 
-    return steps.map(step => <p key={step.id}>
-        {step.content}
+    return steps.map((step, key) => <p key={step.id}>
+        <b className='h6 text-primary me-1'>{key + 1}</b>{step.content}
     </p>)
 }

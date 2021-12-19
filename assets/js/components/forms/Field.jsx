@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function Field({ name, label, value, onChange, placeholder, type = "text", error = "", minLength = "2", required = true, maxLength = 255 }) {
+export default function Field({ name, label = false, value, onChange, placeholder, type = "text", error = "", minLength = "2", required = true, maxLength = 255 }) {
     return (
-        <div className="form-group">
+        <div className="form-group mb-2">
             {
                 label &&
                 <label htmlFor={name}>

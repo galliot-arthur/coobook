@@ -1,21 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import RecipeSmall from '../components/RecipeSmall'
-import { isConnected } from '../services/authSlice'
-import { fetchRecipes, selectAllRecipes } from '../services/recipeSlice'
+import { selectAllRecipes } from '../services/recipeSlice'
 import { SearchIcons } from '../ui/Icons'
 import { Loader } from '../ui/Loader'
 
 export default function SearchPage() {
 
-    const { connected } = useSelector(isConnected)
     const feed = useSelector(selectAllRecipes)
-
-    if (connected && feed.length < 1) {
-        const dispatch = useDispatch()
-        dispatch(fetchRecipes())
-    }
 
     /* SEARCH */
     const [search, setSearch] = useState("")
@@ -98,7 +90,6 @@ export default function SearchPage() {
                             filteredRecipes.map(recipe =>
                                 <RecipeSmall recipe={recipe} key={recipe.id} />
                             )
-
                 }
             </div>
         </div>

@@ -10,7 +10,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=IngredientRepository::class)
  */
-#[ApiResource]
+#[ApiResource(
+    itemOperations: [
+        'get',
+        'post',
+        'delete',
+        'put' => [
+            'validate' => false,
+        ],
+    ]
+)]
 class Ingredient
 {
     /**

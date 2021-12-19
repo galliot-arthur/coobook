@@ -1,27 +1,44 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { isConnected } from '../services/authSlice'
+import { fetchBookMarked } from '../services/bookMarkSlice'
+import { loadComments } from '../services/commentSlice'
 import { setLikes } from '../services/likeSlice'
 import { fetchRecipes, selectAllRecipes } from '../services/recipeSlice'
 
-export default function Fetcher() {
+let Fetcher = () => {
 
+    const connected = useSelector(isConnected)
+    return connected ? <Fetch /> : <></>
+}
 
-    const feed = useSelector(selectAllRecipes)
+const Fetch = () => {
+
     const dispatch = useDispatch()
 
-    /* SETTING LIKES */
-    if (feed.length < 1) {
-        dispatch(fetchRecipes())
-    } else {
-        const likes = []
+    /* feed */
+    dispatch(fetchRecipes(feed))
+    const feed = useSelector(selectAllRecipes)
+    /* likes */
+    const likes = []
+    if (feed && feed.length > 1) {
         feed.map(recipe => recipe.likes.map(like => {
             if (like.user.id == localStorage.getItem('authId')) likes.push({
                 recipe: recipe.id,
             })
         }))
-        const dispatch = useDispatch()
-        dispatch(setLikes(likes))
     }
+    dispatch(setLikes(likes))
+    /* bookmarks */
+    dispatch(fetchBookMarked())
+    /* comments */
+    const comments = []
+    feed.map(recipe => recipe.comments.map(comment => {
+        comments.push({ ...comment, recipeId: recipe.id, })
+    }))
+    dispatch(loadComments(comments))
 
     return <></>
 }
+
+export default Fetcher = React.memo(Fetcher)

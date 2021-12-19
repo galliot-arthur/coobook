@@ -54,8 +54,7 @@ export default function Recipe({ recipe }) {
                     {
                         (recipe.User.id == window.localStorage.getItem('authId')) &&
                         <>
-                            <EditButton recipe={recipe} history={history} />
-                            <EditCoverButton recipe={recipe} history={history} />
+                            <EditButton recipe={recipe} />
                             <DeleteButton id={recipe.id} onDelete={onDelete} />
                         </>
                     }
@@ -90,7 +89,6 @@ export default function Recipe({ recipe }) {
                 {/* ACTIONS */}
                 <div className="mb-2 d-flex justify-content-center justify-content-lg-start align-items-md-end">
                     <LikeButton recipe={recipe} onLike={onLike} />
-                    <CommentButton recipe={recipe} history={history} />
                     <BookMarkButton recipe={recipe} />
                     <i className="text-muted text-small">{likes} j'aime{likes > 1 && 's'}</i>
                 </div>

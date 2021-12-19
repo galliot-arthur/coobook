@@ -1,14 +1,16 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Field from '../components/forms/Field'
-import AuthContext from '../context/AuthContext'
 import authAPI from '../services/authAPI'
+import { isConnected } from '../services/authSlice'
 import { Loader } from '../ui/Loader'
 
 export default function RegisterPage({ history }) {
-    const { connected, setConnected } = useContext(AuthContext)
+    const { connected } = useSelector(isConnected)
     if (connected) history.push('/')
+
     const [user, setUser] = useState({
         email: "",
         password: "",

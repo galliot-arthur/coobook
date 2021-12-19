@@ -1,19 +1,10 @@
-import React, { useContext, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import React from 'react'
 import { CommentIcon } from '../../ui/Icons'
-import AddRecipeContext from '../../context/AddRecipeContext';
 
-export default function CommentButton({ recipe, history, text = null }) {
-    /* SET IRI  */
-    const { setIRI } = useContext(AddRecipeContext);
-
-    const handleClick = () => {
-        setIRI(recipe.id)
-        history.push('/commenter/' + recipe.id)
-    }
+export default function CommentButton({ onClick, text = null }) {
 
     return (
-        <button onClick={handleClick} className="me-3">
+        <button onClick={onClick}>
             <CommentIcon size={22} />{text && <span className="text-decoration-underline ms-2">{text}</span>}
         </button>
     )

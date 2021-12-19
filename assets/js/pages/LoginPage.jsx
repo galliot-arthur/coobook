@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Loader } from '../ui/Loader'
 import Field from '../components/forms/Field'
 import { toast } from 'react-toastify'
@@ -7,10 +7,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchLikes } from '../services/likeSlice'
 
 export default function LoginPage({ history }) {
-    const { connected } = useSelector(isConnected)
+    const connected = useSelector(isConnected)
     useEffect(() => {
         if (connected) history.replace('/')
-    })
+    }, [connected])
 
     const [credentials, setCredentials] = useState({
         username: "",

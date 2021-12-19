@@ -1,17 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import TextArea from '../../components/forms/TextArea'
-import { Loader } from '../../ui/Loader'
-import { toast } from 'react-toastify'
-import API from '../../services/API'
-import AddRecipeContext from '../../context/AddRecipeContext'
+import { addComment } from '../../services/commentSlice'
+import CommentButton from '../../components/recipes/CommentButton'
+import { useDispatch } from 'react-redux'
 
-export default function AddComment({ match, history }) {
+export default function AddComment({ recipe }) {
 
-    const [loading, setLoading] = useState(false)
-    const { IRI } = useContext(AddRecipeContext);
+    const dispatch = useDispatch()
+    const [adding, setAdding] = useState(false)
+
     /* HANDLE INPUT */
     const [comment, setComment] = useState({
-        recipe: IRI,
+        recipe: '/api/recipes/' + recipe.id,
         user: "/api/users/" + window.localStorage.getItem('authId'),
         content: "",
     })
@@ -23,40 +23,28 @@ export default function AddComment({ match, history }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setLoading(true)
-        try {
-            await API.post(comment, 'comments')
-            history.replace('/recette/' + match.params.id)
-            toast.info('Commentaire publié')
-        } catch (i) {
-            toast.warning('Erreur, merci de réessayer.')
-            setLoading(false)
-        }
+        dispatch(addComment({ comment: comment, recipeId: recipe.id }))
+        setAdding(false)
     }
 
-    return (
-        <div className='fade-left'>
-            {
-                loading ?
-                    <Loader />
-                    :
-                    <form
-                        className="fade-start form-group"
-                        onSubmit={handleSubmit}>
-                        <h1>Ajouter un commentaire</h1>
-                        <TextArea
-                            name="content"
-                            label={false}
-                            value={comment.content}
-                            onChange={handleChange}
-                            placeholder="Saisisser ici votre commentaire..."
-                            minLength="2"
-                        />
-                        <button className="btn btn-danger mt-2">
-                            Envoyer
-                        </button>
-                    </form>
-            }
-        </div>
+    return (adding
+        ? <form
+            className="fade-left form-group"
+            onSubmit={handleSubmit}>
+            <TextArea
+                name="content"
+                label={false}
+                value={comment.content}
+                onChange={handleChange}
+                placeholder="Saisisser ici votre commentaire..."
+                minLength="2"
+            />
+            <button className="btn btn-primary mt-2">
+                Enregistrer
+            </button>
+            <button onClick={() => setAdding(false)}>Annuler</button>
+        </form>
+        :
+        <CommentButton onClick={() => setAdding(true)} text="Ajouter un commentaire à cette recette" />
     )
 }

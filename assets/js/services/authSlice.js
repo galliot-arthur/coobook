@@ -80,7 +80,7 @@ export const authSlice = createSlice({
 
 export const { checkConnectedStatus } = authSlice.actions
 
-export const isConnected = state => state.auth
+export const isConnected = state => state.auth.connected
 
 export const getUser = state => state.auth.user
 

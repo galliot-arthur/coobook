@@ -1,18 +1,13 @@
-import React, { useContext } from 'react'
-import { toast } from 'react-toastify'
-import AddRecipeContext from '../../context/AddRecipeContext';
-import API from '../../services/API'
+import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { EditIcons } from '../../ui/Icons'
 
-export default function DeleteButton({ recipe, history }) {
+export default function EditButton({ recipe }) {
 
-    /* SET CONTEXT */
-    const { setIRI } = useContext(AddRecipeContext);
+    const history = useHistory()
 
-    /* HANDLE DELETE AND UPDATE */
-    const gotoEdit = async () => {
-        setIRI(recipe.id)
-        history.push('/enregistrer-recette/' + recipe.id)
+    const gotoEdit = () => {
+        history.push('/modifier-recette/' + recipe.id)
     }
 
     return (

@@ -3,8 +3,11 @@ import API from "./API";
 
 export const fetchBookMarked = createAsyncThunk(
     'bookMarks',
-    async () => {
-        return await API.findMarkedRecipes(window.localStorage.getItem('authId'))
+    async (_, { getState }) => {
+        const bookmarks = selectAllBookMarked(getState())
+        return bookmarks.length < 1
+            ? await API.findMarkedRecipes(window.localStorage.getItem('authId'))
+            : bookmarks
     }
 )
 

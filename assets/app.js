@@ -29,6 +29,7 @@ import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 import useWindowDimensions from './js/hooks/useWindowDimensions';
 import Fetcher from './js/components/Fetcher';
+import EditRecipe from './js/pages/Recipe/EditRecipe';
 
 
 const App = () => {
@@ -39,14 +40,14 @@ const App = () => {
 
     return (
         <Provider store={store}>
-            <Fetcher />
             <HashRouter>
+                <Fetcher />
                 <div className="row">
 
                     <NavbarWithRouter />
 
                     {/* MAIN */}
-                    <main className={width > 991 ? 'col-9 px-5 pt-5' : 'container'} >
+                    <main className={width > 991 ? 'col px-5 pt-3' : 'container'} >
                         <Switch >
 
 
@@ -60,6 +61,7 @@ const App = () => {
                             <PrivateRoute path="/enregistrer-ingredients/:id" component={AddIngredients} />
                             <PrivateRoute path="/enregistrer-etape/" component={AddRecipeStep} />
                             <PrivateRoute path="/enregistrer-photo/" component={AddRecipeCover} />
+                            <PrivateRoute path="/modifier-recette/:id" component={EditRecipe} />
                             <PrivateRoute path="/recette/:id" component={ShowRecipe} />
 
 
@@ -85,6 +87,12 @@ const App = () => {
 
                         </Switch>
                     </main>
+
+                    {width > 922 &&
+                        <aside className='col-1 text-muted sticky-top'>
+
+                        </aside>
+                    }
                 </div>
 
                 {width < 992 && <Footer />}

@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { MinusIcons, PlusIcons } from "../../ui/Icons"
-import { persistState } from '../../services/authAPI'
-import { useSelector } from "react-redux"
+import EditIngredient from "../editRecipes/EditIngredient"
 
-export default function Ingredients({ ingredients, width }) {
-    /* HANDLE EMPTY INGREDIENTS OR UNINITIALIZED VALUE */
-    if (ingredients.length < 1) return <></>
+export default function Ingredients({ recipe, width }) {
+
+    const ingredients = recipe.ingredients
+    /* HANDLE EMPTY INGREDIENTS  */
+    if (ingredients.length < 1) return <b className="text-primary">Cette recette est incomplete ! Merci d'ajouter la liste des ingrédients.</b>
 
     const [proportion, setProportion] = useState(1)
 
@@ -20,7 +21,7 @@ export default function Ingredients({ ingredients, width }) {
         <div className={width < 922 ? 'ms-md-3' : ''}>
 
             <div className="d-flex flex-row justify-content-between align-items-start mb-3">
-                <h4 className="lead">Ingrédients :</h4>
+                <h2>Ingrédients :</h2>
 
                 <div className="d-flex flex-column align-items-end">
                     <span className={"text-small text-muted mb-1 text-end"}>Modifier les proportions</span>
@@ -37,14 +38,18 @@ export default function Ingredients({ ingredients, width }) {
 
             <ul className="list-group">
                 {
-                    tempIngredients.map(i =>
-                        <li className="list-group-item fade-start" key={i.id}>
-                            <b>{i.tempAmount}</b> {i.name}
-                        </li>
-                    )
+                    recipe.User.id == window.localStorage.getItem('authId')
+                        ? tempIngredients.map(ingredient => <EditIngredient recipeData={recipe} ingredient={ingredient} onEdit={() => setProportion(1)} key={ingredient.id} />)
+                        : tempIngredients.map(ingredient => <Ingredient ingredient={ingredient} key={ingredient.id} />)
                 }
             </ul>
         </div>
     )
 
 }
+
+const Ingredient = ({ ingredient }) => <>
+    <li className="list-group-item fade-start">
+        <b>{ingredient.tempAmount}</b> {ingredient.name}
+    </li>
+</>

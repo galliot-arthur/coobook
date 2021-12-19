@@ -1,79 +1,25 @@
-import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import Field from '../../components/forms/Field'
-import TextArea from '../../components/forms/TextArea'
-import API from '../../services/API'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import EditSteps from '../../components/editRecipes/EditSteps'
+import { Info } from '../../components/editRecipes/Info'
+import { selectOneRecipeById } from '../../services/recipeSlice'
+import { Loader } from '../../ui/Loader'
 
-export default function EditRecipe({ match, history }) {
-    const [recipe, setRecipe] = useState({
-        title: "",
-        intro: "",
-        updatedAt: new Date(),
-        User: [],
-        outro: "",
-        author: "",
-        steps: [],
-        ingredients: [],
-    })
-    const id = match.params.id
+export default function EditRecipe({ match }) {
 
-    /* GET RECIPE */
-    const fetchRecipe = async (id) => {
-        try {
-            const recipe = await API.get(id, 'recipes')
-            setRecipe(recipe)
-            if (recipe.User.id !== window.localStorage.getItem('authId')) {
-                toast.warning('Erreur, element inconnu')
-                history.replace('/')
-            }
-        } catch (e) {
-            toast.warning('Erreur, element inconnu')
-            history.replace('/')
-        }
-    }
-    useEffect(() => {
-        fetchRecipe(id)
-    }, [])
+    const { id } = match.params
+    const recipeData = useSelector(state => selectOneRecipeById(state, id))
 
-    const handleChange = () => {
+    if (!recipeData) return <Loader />
+    //!recipe && history.replace('/')
 
-    }
     return (
         <div className='fade-left'>
-            <Field
-                name="title"
-                label="Titre"
-                value={recipe.title}
-                onChange={handleChange}
-                placeholder="Baba Ganoush"
-                type="text"
-                minLength="5"
-            />
-            <TextArea
-                name="intro"
-                label="Introduction"
-                value={recipe.intro}
-                onChange={handleChange}
-                placeholder="Un plat traditionnel qui réchauffe les coeurs."
-                minLength="5"
-            />
-            <TextArea
-                name="outro"
-                label="Note de fin"
-                value={recipe.outro}
-                onChange={handleChange}
-                placeholder="Un plat traditionnel qui réchauffe les coeurs."
-                minLength="5"
-            />
-            <Field
-                name="author"
-                label="Auteur"
-                value={recipe.author}
-                onChange={handleChange}
-                placeholder="Paul Bocuse"
-                type="text"
-                minLength="5"
-            />
+            <h1>{recipeData.title}</h1>
+            <p className="lead">Modifier ma recette</p>
+            <hr />
+            <Info recipeData={recipeData} />
+            <EditSteps recipeData={recipeData} />
         </div>
     )
 }

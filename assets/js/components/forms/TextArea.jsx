@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function TextArea({ name, label, value, onChange, placeholder, type = "text", error = "", minLength = "0", required = true }) {
+export default function TextArea({ name, label, value, classDiv = 'form-group mb-2', onChange, placeholder, type = "text", error = "", minLength = "0", required = true }) {
     return (
-        <div className="form-group">
+        <div className={classDiv}>
             <label htmlFor={name}>
                 {label}</label>
             <textarea

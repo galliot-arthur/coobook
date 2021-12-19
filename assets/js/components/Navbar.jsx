@@ -15,7 +15,7 @@ let NavBar = ({ history }) => {
 
     const dispatch = useDispatch()
     dispatch(checkConnectedStatus())
-    const { connected } = useSelector(isConnected)
+    const connected = useSelector(isConnected)
 
     /* HANDLE USER LOG OUT */
     const handleLogOut = async () => {
@@ -27,7 +27,7 @@ let NavBar = ({ history }) => {
     }
 
     /* HANDLE WINDOW RESIZE */
-    const { height, width } = useWindowDimensions()
+    const { width } = useWindowDimensions()
 
     /* HANDLE NAV LINKS ANIMATION  */
     let div = document.createElement('div')
@@ -53,19 +53,17 @@ let NavBar = ({ history }) => {
         div.remove()
         legend.remove()
     }
-
-
     return (
-        <div className={width < 992 ? 'col-12 container' : 'col-3 nav-head'}>
+        <div className={width < 992 ? 'col-12 container' : 'col-2 nav-head'}>
             <header
                 className={
                     "d-flex pt-3" + (
                         width > 992
                             ? ' flex-column'
-                            : ' flex-wrap align-items-center justify-content-center justify-content-md-between mb-4 border-bottom'
+                            : ' flex-wrap align-items-center justify-content-center justify-content-sm-between mb-4 border-bottom'
                     )}>
-                <Link to="/" className={"mb-2 mb-md-0 text-decoration-none" + (width > 992 ? '' : ' col-md-3')}>
-                    <h2 className={"maru text-primary fade-start" + (width > 992 ? ' display-5' : ' display-3')}>CooBook</h2>
+                <Link to="/" className={"mb-2 mb-sm-0 text-decoration-none" + (width > 992 ? '' : ' col-md-3')}>
+                    <h2 className={"maru text-primary" + (width > 992 ? ' display-5 ps-35' : ' display-3')}>CooBook</h2>
                 </Link>
                 <nav >
                     <ul className={
@@ -76,14 +74,14 @@ let NavBar = ({ history }) => {
                         {
                             !connected ?
                                 <>
-                                    <li className="nav-item">
+                                    <li className="nav-item ps-lg-3 py-lg-2">
                                         <Link
                                             to="/login"
                                             className="btn">
                                             Connexion
                                         </Link>
                                     </li>
-                                    <li className="nav-item px-1">
+                                    <li className="nav-item px-1 ps-lg-3">
                                         <Link
                                             to="/register"
                                             className="btn btn-danger">
@@ -93,7 +91,7 @@ let NavBar = ({ history }) => {
                                 </>
                                 :
                                 <>
-                                    <li className="nav-item px-0 px-sm-1">
+                                    <li className="nav-item px-0 px-sm-1 fade-hover">
                                         <Link
                                             aria-label="accueil"
                                             className="nav-link text-black-50"
@@ -102,13 +100,13 @@ let NavBar = ({ history }) => {
                                             onMouseLeave={handleMouseLeave}
                                             onClick={handleMouseLeave}
                                         >
-                                            <HomeIcons size="20" />
+                                            <HomeIcons size="20" fadeStart={false} />
                                             {width > 992 &&
                                                 <span className="nav-link-legend ms-2">Accueil</span>
                                             }
                                         </Link>
                                     </li>
-                                    <li className="nav-item px-0 px-sm-1">
+                                    <li className="nav-item px-0 px-sm-1 fade-hover">
                                         <Link
                                             aria-label="rechercher"
                                             className="nav-link text-black-50"
@@ -117,13 +115,13 @@ let NavBar = ({ history }) => {
                                             onMouseLeave={handleMouseLeave}
                                             onClick={handleMouseLeave}
                                         >
-                                            <SearchIcons size="20" />
+                                            <SearchIcons size="20" fadeStart={false} />
                                             {width > 992 &&
                                                 <span className="nav-link-legend ms-2">Rechercher</span>
                                             }
                                         </Link>
                                     </li>
-                                    <li className="nav-item px-0 px-sm-1">
+                                    <li className="nav-item px-0 px-sm-1 fade-hover">
                                         <Link
                                             aria-label="enregistrer"
                                             className="nav-link text-black-50"
@@ -132,13 +130,13 @@ let NavBar = ({ history }) => {
                                             onMouseLeave={handleMouseLeave}
                                             onClick={handleMouseLeave}
                                         >
-                                            <AddFileIcons size="20" />
+                                            <AddFileIcons size="20" fadeStart={false} />
                                             {width > 992 &&
                                                 <span className="nav-link-legend ms-2">Enregistrer</span>
                                             }
                                         </Link>
                                     </li>
-                                    <li className="nav-item px-0 px-sm-1">
+                                    <li className="nav-item px-0 px-sm-1 fade-hover">
                                         <Link
                                             aria-label="mon profil"
                                             className="nav-link text-black-50"
@@ -146,13 +144,13 @@ let NavBar = ({ history }) => {
                                             onMouseEnter={handleMouseOver}
                                             onMouseLeave={handleMouseLeave} onClick={handleMouseLeave}
                                         >
-                                            <UserCircleIcons size="20" />
+                                            <UserCircleIcons size="20" fadeStart={false} />
                                             {width > 992 &&
                                                 <span className="nav-link-legend ms-2">Mon Profil</span>
                                             }
                                         </Link>
                                     </li>
-                                    <li className="nav-item px-0 px-sm-1">
+                                    <li className="nav-item px-0 px-sm-1 fade-hover">
                                         <Link
                                             aria-label="marques pages"
                                             className="nav-link text-black-50"
@@ -161,13 +159,13 @@ let NavBar = ({ history }) => {
                                             onMouseLeave={handleMouseLeave}
                                             onClick={handleMouseLeave}
                                         >
-                                            <BookMarkFilledIcon size="20" />
+                                            <BookMarkFilledIcon size="20" fadeStart={false} />
                                             {width > 992 &&
                                                 <span className="nav-link-legend ms-2">Marques Pages</span>
                                             }
                                         </Link>
                                     </li>
-                                    <li className="nav-item px-0 px-sm-1">
+                                    <li className="nav-item px-0 px-sm-1 fade-hover">
                                         <button
                                             aria-label="déconnexion"
                                             className="nav-link silent-button text-black-50 d-inline"
@@ -175,7 +173,7 @@ let NavBar = ({ history }) => {
                                             onMouseEnter={handleMouseOver}
                                             onMouseLeave={handleMouseLeave}
                                         >
-                                            <DoorIcons size="20" />
+                                            <DoorIcons size="20" fadeStart={false} />
                                             {width > 992 &&
                                                 <span className="nav-link-legend ms-2">Déconnexion</span>
                                             }

@@ -1,15 +1,11 @@
-import React, { useContext } from 'react'
-import AddRecipeContext from '../../context/AddRecipeContext';
+import React from 'react'
 import { ImageIcon } from '../../ui/Icons'
 
 export default function EditCoverButton({ recipe, history }) {
 
-    /* SET CONTEXT */
-    const { setIRI } = useContext(AddRecipeContext);
 
     /* HANDLE DELETE AND UPDATE */
     const gotoEdit = async () => {
-        setIRI(recipe.id)
         window.localStorage.setItem('recipeIRI', recipe.id)
         history.push('/enregistrer-photo/')
     }
