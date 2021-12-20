@@ -1,35 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Switch, withRouter } from 'react-router-dom';
-import './bootstrap';
-import './css/app.css'
-import './css/GT-MARU.woff2'
-import NavBar from './js/components/Navbar';
-import PrivateRoute from './js/components/PrivateRoute';
-import { HomePage } from './js/pages/HomePage';
-import LoginPage from './js/pages/LoginPage';
-import RegisterPage from './js/pages/RegisterPage';
+import { Provider } from 'react-redux';
+import { HashRouter, Route, Switch, withRouter } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './bootstrap';
+import './css/app.css';
+import './css/GT-MARU.woff2';
+import Fetcher from './js/components/Fetcher';
 import Footer from './js/components/Footer';
-import AddRecipe from './js/pages/Recipe/AddRecipe';
-import AddRecipeStep from './js/pages/Recipe/AddRecipeStep';
-import AddIngredients from './js/pages/Recipe/AddIngredients';
-import AddRecipeCover from './js/pages/Recipe/AddRecipeCover';
-import ShowRecipe from './js/pages/Recipe/ShowRecipe';
-import BookmarkedRecipes from './js/pages/User/BookmarkedRecipes'
-import SearchPage from './js/pages/SearchPage';
+import NavBar from './js/components/Navbar';
+import PrivateRoute from './js/components/PrivateRoute';
+import useWindowDimensions from './js/hooks/useWindowDimensions';
 import AddComment from './js/pages/Comment/AddComment';
-import EditProfile from './js/pages/User/EditProfile';
-import Profile from './js/pages/User/Profile';
+import { HomePage } from './js/pages/HomePage';
 import About from './js/pages/infos/About';
 import Contact from './js/pages/infos/Contact';
-import { store } from './store';
-import { Provider } from 'react-redux';
-import { HashRouter } from 'react-router-dom';
-import useWindowDimensions from './js/hooks/useWindowDimensions';
-import Fetcher from './js/components/Fetcher';
+import LoginPage from './js/pages/LoginPage';
+import AddIngredients from './js/pages/Recipe/AddIngredients';
+import AddRecipe from './js/pages/Recipe/AddRecipe';
+import AddRecipeCover from './js/pages/Recipe/AddRecipeCover';
+import AddRecipeStep from './js/pages/Recipe/AddRecipeStep';
 import EditRecipe from './js/pages/Recipe/EditRecipe';
+import ShowRecipe from './js/pages/Recipe/ShowRecipe';
+import RegisterPage from './js/pages/RegisterPage';
+import SearchPage from './js/pages/SearchPage';
+import BookmarkedRecipes from './js/pages/User/BookmarkedRecipes';
+import EditProfile from './js/pages/User/EditProfile';
+import Profile from './js/pages/User/Profile';
+import { store } from './store';
 
 
 const App = () => {

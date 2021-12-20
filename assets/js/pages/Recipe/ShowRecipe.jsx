@@ -1,29 +1,28 @@
-import React, { useState } from 'react'
-import { Loader } from '../../ui/Loader'
-import Ingredients from '../../components/recipes/Ingredients'
-import Images from '../../components/recipes/Images'
-import LikeButton from '../../components/recipes/LikeButton'
-import BookMarkButton from '../../components/recipes/BookMarkButton'
-import CommentButton from '../../components/recipes/CommentButton'
-import Comments from '../Comment/Comments'
-import ThreeDots from '../../components/ThreeDots'
-import DeleteButton from '../../components/recipes/DeleteButton'
-import EditButton from '../../components/recipes/EditButton'
-import EditCoverButton from '../../components/recipes/EditCoverButton'
-import ShareButton from '../../components/recipes/ShareButton'
 import moment from 'moment'
-import { UserCircleIcons } from '../../ui/Icons'
-import { NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { selectOneRecipeById } from '../../services/recipeSlice'
-import useWindowDimensions from '../../hooks/useWindowDimensions'
-import { useEffect } from 'react'
-import AddComment from '../Comment/AddComment'
+import { NavLink } from 'react-router-dom'
+import EditImage from '../../components/editRecipes/EditImage'
 import EditSteps from '../../components/editRecipes/EditSteps'
+import { Info } from '../../components/editRecipes/Info'
+import BookMarkButton from '../../components/recipes/BookMarkButton'
+import DeleteButton from '../../components/recipes/DeleteButton'
+import Images from '../../components/recipes/Images'
+import Ingredients from '../../components/recipes/Ingredients'
+import LikeButton from '../../components/recipes/LikeButton'
+import ShareButton from '../../components/recipes/ShareButton'
+import ThreeDots from '../../components/ThreeDots'
+import useWindowDimensions from '../../hooks/useWindowDimensions'
+import { selectOneRecipeById } from '../../services/recipeSlice'
+import { EditIcons, UserCircleIcons } from '../../ui/Icons'
+import { Loader } from '../../ui/Loader'
+import AddComment from '../Comment/AddComment'
+import Comments from '../Comment/Comments'
 
 export default function ShowRecipe({ match, history }) {
 
     /* UTILITIES */
+    const [edit, setEdit] = useState(false)
     const { id } = match.params
     const { width } = useWindowDimensions()
     const formatDate = str => moment(str).locale('fr').fromNow(true)
@@ -39,6 +38,18 @@ export default function ShowRecipe({ match, history }) {
 
     if (!recipe) return <Loader />
 
+    const onEdited = () => setEdit(false)
+
+    if (edit) return <>
+        <h1 className="display-4">
+            {recipe.title}
+        </h1>
+        <p className="lead">
+            {recipe.intro}
+        </p>
+        <button onClick={() => setEdit(false)} className="btn btn-outline-dark mb-3">Annuler</button>
+        <Info recipeData={recipe} onEdited={onEdited} />
+    </>
     /* MUTED FUNCTION TO AVOID ERRORS */
     const onDelete = () => { }
 
@@ -48,8 +59,12 @@ export default function ShowRecipe({ match, history }) {
             {/* TITLE & INTRO */}
             <div className="d-flex justify-content-between align-items-start fade-start">
                 <div>
-                    <h1 className="display-4">{recipe.title}</h1>
-                    <p className="lead">{recipe.intro}</p>
+                    <h1 className="display-4">
+                        {recipe.title}
+                    </h1>
+                    <p className="lead">
+                        {recipe.intro}
+                    </p>
                     <div className="d-flex align-items-center justify-content-between py-3">
 
                         <div className="d-flex align-items-center justify-content-start">
@@ -61,22 +76,21 @@ export default function ShowRecipe({ match, history }) {
                                 <i className="text-small text-muted"> il y a {formatDate(recipe.createdAt)}</i>
                             </div>
                         </div>
-                        <ThreeDots >
-                            <ShareButton recipe={recipe} />
+                        <div>
                             {
                                 ((recipe.User) && (recipe.User.id == window.localStorage.getItem('authId'))) &&
-                                <EditButton recipe={recipe} />
+                                <button onClick={() => setEdit(true)} className="me-3 text-muted">
+                                    <EditIcons />
+                                </button>
                             }
-                            {
-                                ((recipe.User) && (recipe.User.id == window.localStorage.getItem('authId'))) &&
-                                <EditCoverButton recipe={recipe} history={history} />
-                            }
-                            {
-                                ((recipe.User) && (recipe.User.id == window.localStorage.getItem('authId'))) &&
-                                <DeleteButton id={recipe.id} onDelete={onDelete} />
-                            }
-
-                        </ThreeDots>
+                            <ThreeDots >
+                                <ShareButton recipe={recipe} />
+                                {
+                                    ((recipe.User) && (recipe.User.id == window.localStorage.getItem('authId'))) &&
+                                    <DeleteButton id={recipe.id} onDelete={onDelete} />
+                                }
+                            </ThreeDots>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -85,7 +99,10 @@ export default function ShowRecipe({ match, history }) {
             <div className="d-flex justify-content-center flex-column align-items-center">
                 <div className="row">
                     <div className="col-12 col-md-6 d-flex">
-                        <Images recipe={recipe} />
+                        {recipe.User.id == localStorage.getItem('authId')
+                            ? <EditImage recipe={recipe} />
+                            : <Images recipe={recipe} />
+                        }
                     </div>
                     <div className="col-6">
                         {width >= 768 && <Ingredients recipe={recipe} ingredients={recipe.ingredients} width={width} />}
@@ -134,7 +151,7 @@ export default function ShowRecipe({ match, history }) {
 
 const Steps = ({ steps }) => {
 
-    if (steps.length == 0) return <>Cette recette est incomplète.</>
+    if (steps.length == 0) return <b className="text-primary">Cette recette est incomplète.</b>
 
     return steps.map((step, key) => <p key={step.id}>
         <b className='h6 text-primary me-1'>{key + 1}</b>{step.content}

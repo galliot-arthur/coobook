@@ -27,9 +27,9 @@
     --bs-primary-hover: #ff9d3b;
     --bs-secondary: #c4c4c4;
     --bs-success: #55c276;
-    --bs-info: rgb(214, 233, 255);
-    --bs-warning: #fff67c;
-    --bs-warning-light: #fff891;
+    --bs-info: #55687e17;
+    --bs-warning: #fff67c96;
+    --bs-warning-light: #ffee00bd;
     --bs-danger: #f57a00;
     --bs-light: #f1f3f5;
     --bs-dark: #222;
@@ -7835,10 +7835,6 @@ fieldset:disabled .btn {
     .fs-4 {
         font-size: 1.5rem!important
     }
-}
-
-.bg-dark {
-    background-color: #000!important
 }
 
 .bg-light {

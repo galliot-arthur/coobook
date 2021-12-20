@@ -19,6 +19,8 @@ export const authLogin = createAsyncThunk(
                 window.localStorage.setItem('userRecipesState', JSON.stringify(userRecipes))
                 window.localStorage.setItem('userState', JSON.stringify({ ...userData, connectedAt: new Date() }))
                 window.localStorage.setItem(
+                    'toto', token)
+                window.localStorage.setItem(
                     'authToken', data.firstName
                 )
                 window.localStorage.setItem(

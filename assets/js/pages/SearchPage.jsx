@@ -77,7 +77,7 @@ export default function SearchPage() {
                     placeholder="Rechercher..."
                 />
             </div>
-            <div className="container mb-5">
+            <div className="mb-5">
                 {
 
                     feed.length == 0 ?

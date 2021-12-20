@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { isConnected } from '../services/authSlice'
@@ -7,6 +8,8 @@ import { setLikes } from '../services/likeSlice'
 import { fetchRecipes, selectAllRecipes } from '../services/recipeSlice'
 
 let Fetcher = () => {
+    if (!axios.defaults.headers["Authorization"])
+        axios.defaults.headers["Authorization"] = "Bearer " + localStorage.getItem('toto')
 
     const connected = useSelector(isConnected)
     return connected ? <Fetch /> : <></>

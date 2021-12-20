@@ -12,6 +12,7 @@ import EditCoverButton from './recipes/EditCoverButton'
 import ShareButton from './recipes/ShareButton'
 import useWindowDimensions from '../hooks/useWindowDimensions'
 import { useHistory } from 'react-router-dom'
+import Images from './recipes/Images'
 
 export default function Recipe({ recipe }) {
 
@@ -78,12 +79,7 @@ export default function Recipe({ recipe }) {
 
             {/* IMAGE */}
             <NavLink to={"/recette/" + recipe.id} className={"d-flex justify-content-center" + (width > 992 ? ' col-5' : '')}>
-                {
-                    recipe.recipesImages[0] ?
-                        <img className="img-thumbnail" src={"images/recipes/" + recipe.recipesImages[0].path} alt={recipe.slug} />
-                        : md -
-                        <img className="img-thumbnail" src={"images/recipes/default-placeholder.png"} alt="illustration recette par défault" />
-                }
+                <Images recipe={recipe} />
             </NavLink>
             <div className={width > 992 ? 'col-7' : 'mt-3'}>
                 {/* ACTIONS */}

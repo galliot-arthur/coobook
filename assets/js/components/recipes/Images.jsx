@@ -1,7 +1,10 @@
 import React from 'react'
-import useWindowDimensions from '../../hooks/useWindowDimensions'
 
 export default function Images({ recipe }) {
+
+    const handleError = ({ target }) => {
+        target.src = 'images/recipes/default-placeholder.png'
+    }
 
     if (recipe.recipesImages == undefined) {
         return (
@@ -15,14 +18,16 @@ export default function Images({ recipe }) {
             <img
                 className="img-full"
                 src={"images/recipes/default-placeholder.png"}
-                alt="illustration recette par défault" />
+                alt="illustration recette par défault"
+            />
         )
     } else {
         return (
             <img
                 className="img-full"
                 src={"images/recipes/" + recipe.recipesImages[0].path}
-                alt={recipe.slug} />
+                alt={recipe.slug}
+                onError={handleError} />
         )
     }
 }

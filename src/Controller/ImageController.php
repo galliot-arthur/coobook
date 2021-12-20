@@ -15,9 +15,9 @@ class ImageController extends AbstractController
     public function __invoke(Recipe $recipe, Request $request, EntityManagerInterface $em)
     {
         $file = $request->files->get('file');
+
         if ($file->isValid()) {
             [$originalWidth, $originalHeight] = getimagesize($file->getPathname());
-
             // Check px size
             if (
                 $originalWidth >= 100

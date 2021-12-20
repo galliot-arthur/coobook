@@ -3,6 +3,7 @@ import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import useWindowDimensions from '../hooks/useWindowDimensions'
 import { UserCircleIcons } from '../ui/Icons'
+import Images from './recipes/Images'
 
 let RecipeSmall = ({ recipe }) => {
 
@@ -32,12 +33,7 @@ let RecipeSmall = ({ recipe }) => {
                 <div className="d-flex flex-column justify-content-between align-items-end">
                     <div className="ps-1">
                         <NavLink to={"/recette/" + recipe.id} >
-                            {
-                                recipe.recipesImages[0] ?
-                                    <img className="img-thumbnail-small" src={"images/recipes/" + recipe.recipesImages[0].path} alt={recipe.slug} />
-                                    :
-                                    <img className="img-thumbnail-small" src={"images/recipes/default-placeholder.png"} alt="illustration recette par défault" />
-                            }
+                            <Images recipe={recipe} />
                         </NavLink>
                     </div>
                 </div>
