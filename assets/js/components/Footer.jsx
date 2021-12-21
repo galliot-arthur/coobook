@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import useWindowDimensions from '../hooks/useWindowDimensions'
+import { isConnected } from '../services/authSlice'
 
 export default function Footer() {
-
+    const [admin, setAdmin] = useState(false)
+    const connected = useSelector(isConnected)
+    const user = JSON.parse(localStorage.getItem('userState'))
     const { width } = useWindowDimensions()
+
+    useEffect(() => {
+        if (user && connected) user.roles.map(r => r == 'ROLE_ADMIN' && setAdmin(true)
+        )
+        else setAdmin(false)
+    }, [connected])
 
     return (
         <div className={width > 992 ? 'mt-auto ps-35' : "container w-100 mt-auto"}>
@@ -18,7 +29,10 @@ export default function Footer() {
                 <ul className={'list-unstyled ms-0 ' + (width > 992 ? 'mb-3' : " mb-0 nav col-12 col-md-4 justify-content-center justify-content-md-end d-flex text-center")}>
                     <NavLink to="/a-propos">A propos</NavLink>
                     <NavLink to="/contact" className={width > 992 ? 'ms-2' : "ms-3"}>Contact</NavLink>
-                    <NavLink to="/admin" className={width > 992 ? 'ms-2' : "ms-3"}>Admin</NavLink>
+                    {admin && <>
+                        {width > 992 && <br />}
+                        <NavLink to="/admin" className={width > 992 ? '' : "ms-3"}>Admin</NavLink>
+                    </>}
 
                 </ul>
             </footer>
