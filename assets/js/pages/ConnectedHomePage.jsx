@@ -12,7 +12,7 @@ export default function ConnectedHomePage() {
         feed.length == 0 ?
             <Loader />
             :
-            feed.map(recipe =>
+            feed.filter(r => r.status !== 'deactivate').map(recipe =>
                 <Recipe recipe={recipe} key={recipe.id} />
             )
     )

@@ -170,6 +170,12 @@ class Recipe
     #[Groups(['recipes_read'])]
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    #[Groups(['recipes_read'])]
+    private $status;
+
 
     public function __construct()
     {
@@ -437,6 +443,18 @@ class Recipe
                 $comment->setRecipe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

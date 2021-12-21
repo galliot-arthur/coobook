@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import RecipeSmall from '../../components/RecipeSmall'
@@ -7,13 +6,11 @@ import ThreeDots from '../../components/ThreeDots'
 import FollowButton from '../../components/user/FollowButton'
 import MessageButton from '../../components/user/MessageButton'
 import { getUser } from '../../services/authSlice'
-import { selectUserRecipes, fetchRecipes } from '../../services/recipeSlice'
+import { selectUserRecipes } from '../../services/recipeSlice'
 import { UserCircleIcons } from '../../ui/Icons'
 
 
 export default function Profile({ match }) {
-
-    const dispatch = useDispatch()
 
     const user = useSelector(getUser).length > 1
         ? useSelector(getUser)
@@ -73,7 +70,7 @@ export default function Profile({ match }) {
                             Vous n'avez pas encore ajouté de recette.
                         </div> :
 
-                        recipes.map(recipe => <RecipeSmall recipe={recipe} key={recipe.id} />)
+                        recipes.filter(r => r.status !== 'deactivate').map(recipe => <RecipeSmall recipe={recipe} key={recipe.id} />)
                 }
             </div>
         </div>

@@ -68,6 +68,32 @@ export const editIngredient = createAsyncThunk('recipes/editIngredient',
     }
 )
 
+export const setReport = createAsyncThunk('recipes/setReport',
+    async (id) => {
+        const recipeData = { status: "reported" }
+        return await API.put(id, recipeData, 'recipes')
+    }
+)
+export const cancelReport = createAsyncThunk('recipes/cancelReport',
+    async (id) => {
+        const recipeData = { status: "" }
+        return await API.put(id, recipeData, 'recipes')
+    }
+)
+export const deactivate = createAsyncThunk('recipes/deactivate',
+    async (id) => {
+        const recipeData = { status: "deactivate" }
+        return await API.put(id, recipeData, 'recipes')
+    }
+)
+
+export const reactivate = createAsyncThunk('recipes/reactivate',
+    async (id) => {
+        const recipeData = { status: "" }
+        return await API.put(id, recipeData, 'recipes')
+    }
+)
+
 
 export const recipeSlice = createSlice({
     name: 'recipes',
@@ -156,8 +182,28 @@ export const recipeSlice = createSlice({
             DELETE RECIPE
             */
             .addCase(deleteRecipe.fulfilled, (state, action) => {
-                { state.feed = state.feed.filter(r => r.id !== action.payload) }
+                state.feed = state.feed.filter(r => r.id !== action.payload)
             })
+
+            /* REPORT */
+            .addCase(setReport.fulfilled, (state, action) => {
+                state.feed = state.feed.map(r => r.id == action.payload.id ? action.payload : r)
+            })
+            .addCase(setReport.rejected, (state, action) => console.log(action.error.message))
+            .addCase(cancelReport.fulfilled, (state, action) => {
+                state.feed = state.feed.map(r => r.id == action.payload.id ? action.payload : r)
+            })
+            .addCase(cancelReport.rejected, (state, action) => console.log(action.error.message))
+            /* DEACTIVATE */
+            .addCase(deactivate.fulfilled, (state, action) => {
+                state.feed = state.feed.map(r => r.id == action.payload.id ? action.payload : r)
+            })
+            .addCase(deactivate.rejected, (state, action) => console.log(action.error.message))
+            /* REACTIVATE */
+            .addCase(reactivate.fulfilled, (state, action) => {
+                state.feed = state.feed.map(r => r.id == action.payload.id ? action.payload : r)
+            })
+            .addCase(reactivate.rejected, (state, action) => console.log(action.error.message))
     }
 })
 
@@ -167,8 +213,14 @@ export default recipeSlice.reducer
 
 export const selectAllRecipes = state => state.recipes.feed
 
-export const selectUserRecipes = (state, userId) => {
-    state.recipes.feed.find(r => r.User.id == userId)
-}
+export const selectUserRecipes = (state, userId) => state.recipes.feed
+    .find(r => r.User.id == userId)
 
-export const selectOneRecipeById = (state, recipeId) => state.recipes.feed.find(r => r.id == recipeId)
+export const selectReportedRecipes = state => state.recipes.feed
+    .filter(r => r.status == 'reported')
+
+export const selectDeactivateRecipes = state => state.recipes.feed
+    .filter(r => r.status == 'deactivate')
+
+export const selectOneRecipeById = (state, recipeId) => state.recipes.feed
+    .find(r => r.id == recipeId)

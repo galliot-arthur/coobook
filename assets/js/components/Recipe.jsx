@@ -13,6 +13,7 @@ import ShareButton from './recipes/ShareButton'
 import useWindowDimensions from '../hooks/useWindowDimensions'
 import { useHistory } from 'react-router-dom'
 import Images from './recipes/Images'
+import ReportRecipeButton from './recipes/ReportRecipeButton'
 
 export default function Recipe({ recipe }) {
 
@@ -29,6 +30,7 @@ export default function Recipe({ recipe }) {
     /* HANDLE DELETE */
     const [deleted, setDeleted] = useState(false)
     const onDelete = () => setDeleted(true)
+
     if (deleted) return <></>
 
     const { height, width } = useWindowDimensions()
@@ -53,27 +55,15 @@ export default function Recipe({ recipe }) {
                     <h6 className="mx-3">{recipe.title}</h6>
                     <ShareButton recipe={recipe} />
                     {
-                        (recipe.User.id == window.localStorage.getItem('authId')) &&
-                        <>
-                            <EditButton recipe={recipe} />
-                            <DeleteButton id={recipe.id} onDelete={onDelete} />
-                        </>
+                        (recipe.User.id == window.localStorage.getItem('authId'))
+                            ? <>
+                                <DeleteButton id={recipe.id} onDelete={onDelete} />
+                            </>
+                            : <>
+                                <ReportRecipeButton recipe={recipe} />
+                            </>
                     }
 
-                    {/* IN THE TODO LIST (23/11/2021) */}
-
-                    {/* <NavLink to='/' className="dropdown-item">
-                            Signaler
-                            <span className="text-muted ms-2">
-                                <WarningIcon />
-                            </span>
-                        </NavLink> */}
-                    {/* <NavLink to='/' className="dropdown-item">
-                            Se désabonner
-                            <span className="text-muted ms-2">
-                                <StopIcon />
-                            </span>
-                        </NavLink> */}
                 </ThreeDots>
             </div>
 

@@ -87,7 +87,7 @@ export default function SearchPage() {
                         filteredRecipes.length == 0 ?
                             <p className="fade-start">Nous ne trouvons aucuns résultats. Merci de préciser votre recherche.</p>
                             :
-                            filteredRecipes.map(recipe =>
+                            filteredRecipes.filter(r => r.status !== 'deactivate').map(recipe =>
                                 <RecipeSmall recipe={recipe} key={recipe.id} />
                             )
                 }

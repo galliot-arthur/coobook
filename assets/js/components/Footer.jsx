@@ -18,6 +18,8 @@ export default function Footer() {
                 <ul className={'list-unstyled ms-0 ' + (width > 992 ? 'mb-3' : " mb-0 nav col-12 col-md-4 justify-content-center justify-content-md-end d-flex text-center")}>
                     <NavLink to="/a-propos">A propos</NavLink>
                     <NavLink to="/contact" className={width > 992 ? 'ms-2' : "ms-3"}>Contact</NavLink>
+                    <NavLink to="/admin" className={width > 992 ? 'ms-2' : "ms-3"}>Admin</NavLink>
+
                 </ul>
             </footer>
         </div>

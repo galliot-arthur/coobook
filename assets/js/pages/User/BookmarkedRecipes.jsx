@@ -14,7 +14,7 @@ let BookmarkedRecipes = () => {
             <h1 className="display-4">Marque-Pages</h1>
             <p className="lead">Vos recettes enregistrée</p>
             <hr className="my-4" />
-            {recipes.map(recipe => <Recipe recipe={recipe} key={recipe.id} />)}
+            {recipes.filter(r => r.status !== 'deactivate').filter(r => r.status !== 'deactivate').map(recipe => <Recipe recipe={recipe} key={recipe.id} />)}
         </div>)
 }
 

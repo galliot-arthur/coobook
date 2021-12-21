@@ -12,6 +12,7 @@ import Footer from './js/components/Footer';
 import NavBar from './js/components/Navbar';
 import PrivateRoute from './js/components/PrivateRoute';
 import useWindowDimensions from './js/hooks/useWindowDimensions';
+import AdminIdex from './js/pages/Admin/AdminIndex';
 import AddComment from './js/pages/Comment/AddComment';
 import { HomePage } from './js/pages/HomePage';
 import About from './js/pages/infos/About';
@@ -77,6 +78,8 @@ const App = () => {
                             {/* SEARCH */}
                             <PrivateRoute path="/rechercher" component={SearchPage} />
 
+                            {/* ADMIN */}
+                            <PrivateRoute path="/admin" component={AdminIdex} />
 
                             {/* HOME */}
                             <Route path="/contact" component={Contact} />

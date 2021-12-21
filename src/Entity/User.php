@@ -66,6 +66,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="json")
      */
+    #[Groups(['recipes_read', 'user_read'])]
     private $roles = [];
 
     /**

@@ -2,6 +2,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import EditImage from '../../components/editRecipes/EditImage'
 import EditSteps from '../../components/editRecipes/EditSteps'
 import { Info } from '../../components/editRecipes/Info'
@@ -37,7 +38,10 @@ export default function ShowRecipe({ match, history }) {
     const onLike = (state) => !state ? setLikes(likes + 1) : setLikes(likes - 1)
 
     if (!recipe) return <Loader />
-
+    if (recipe.status == 'deactivate') {
+        history.replace('/')
+        toast.info('Element inconnu')
+    }
     const onEdited = () => setEdit(false)
 
     if (edit) return <>

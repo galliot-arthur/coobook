@@ -40,6 +40,7 @@ export const authLogout = createAsyncThunk(
         window.localStorage.removeItem('authToken')
         window.localStorage.removeItem('authId')
         window.localStorage.removeItem('sessionOpenedAt')
+        window.localStorage.removeItem('userState')
         return await axios
             .post(API_URL + 'api/' + 'logout')
             .then(r => {
