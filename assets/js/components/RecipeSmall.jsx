@@ -31,7 +31,7 @@ let RecipeSmall = ({ recipe }) => {
 
             <div className="col-6">
                 <div className="d-flex flex-column justify-content-between align-items-end">
-                    <div className="ps-1">
+                    <div className="ps-1 h-100 w-100">
                         <NavLink to={"/recette/" + recipe.id} >
                             <Images recipe={recipe} />
                         </NavLink>
