@@ -1,0 +1,22 @@
+api_platform:
+    title: 'SYMREACT'
+    description: 'INVOICES SHOUDNT BE A PROBLEM'
+    version: 1.0.0
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity']
+    formats:
+        json: ['application/json']
+        jsonld: ['application/ld+json']
+        html: ['text/html']
+        multipart: ['multipart/form-data']
+    patch_formats:
+        json: ['application/merge-patch+json']
+    enable_swagger: true
+    enable_swagger_ui: true
+    swagger:
+        versions: [3]
+    collection:
+        pagination:
+            enabled: false
+    eager_loading:
+        max_joins: 100

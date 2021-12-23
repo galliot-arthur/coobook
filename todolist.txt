@@ -1,0 +1,9 @@
+handle cache on API request
+
+handle 'report recipe'
+
+handle 'user public profile'
+
+set 'following' between users
+
+handle 'multiplication ingredients' on mounted component
