@@ -28,6 +28,7 @@ import RegisterPage from './js/pages/RegisterPage';
 import SearchPage from './js/pages/SearchPage';
 import BookmarkedRecipes from './js/pages/User/BookmarkedRecipes';
 import EditProfile from './js/pages/User/EditProfile';
+import MyProfile from './js/pages/User/MyProfile';
 import Profile from './js/pages/User/Profile';
 import { store } from './store';
 
