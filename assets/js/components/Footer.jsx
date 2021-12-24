@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { isConnected } from '../services/authSlice'
 import { NavLink } from 'react-router-dom'
 import useWindowDimensions from '../hooks/useWindowDimensions'
+import { useState } from 'react'
 
 export default function Footer() {
+
+    const [admin, setAdmin] = useState(false)
+    const connected = useSelector(isConnected)
+    const user = JSON.parse(localStorage.getItem('userState'))
+
+    useEffect(() => {
+        if (connected && user) {
+            if (user.roles[0] == 'ROLE_ADMIN' || user.roles[0] == 'ROLE_SUPERADMIN') setAdmin(true)
+            else setAdmin(false)
+            console.log(connected)
+        } else setAdmin(false)
+    }, [connected])
 
     const { width } = useWindowDimensions()
 
@@ -18,7 +33,8 @@ export default function Footer() {
                 <ul className={'list-unstyled ms-0 ' + (width > 992 ? 'mb-3' : " mb-0 nav col-12 col-md-4 justify-content-center justify-content-md-end d-flex text-center")}>
                     <NavLink to="/a-propos">A propos</NavLink>
                     <NavLink to="/contact" className={width > 992 ? 'ms-2' : "ms-3"}>Contact</NavLink>
-                    <NavLink to="/admin" className={width > 992 ? 'ms-2' : "ms-3"}>Admin</NavLink>
+                    <br />
+                    {admin && <NavLink to="/admin" className={width > 992 ? '' : "ms-3"}>Admin</NavLink>}
 
                 </ul>
             </footer>
