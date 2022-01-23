@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import TextArea from '../../components/forms/TextArea'
-import { addComment } from '../../services/commentSlice'
-import CommentButton from '../../components/recipes/CommentButton'
 import { useDispatch } from 'react-redux'
+import TextArea from '../../components/forms/TextArea'
+import CommentButton from '../../components/recipes/CommentButton'
+import { addComment } from '../../services/commentSlice'
 
 export default function AddComment({ recipe }) {
 

@@ -1,19 +1,16 @@
 import moment from 'moment'
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
+import useWindowDimensions from '../hooks/useWindowDimensions'
 import { UserCircleIcons } from '../ui/Icons'
 import BookMarkButton from './recipes/BookMarkButton'
-import LikeButton from './recipes/LikeButton'
-import CommentButton from './recipes/CommentButton'
-import ThreeDots from './ThreeDots'
 import DeleteButton from './recipes/DeleteButton'
-import EditButton from './recipes/EditButton'
-import EditCoverButton from './recipes/EditCoverButton'
-import ShareButton from './recipes/ShareButton'
-import useWindowDimensions from '../hooks/useWindowDimensions'
-import { useHistory } from 'react-router-dom'
 import Images from './recipes/Images'
+import LikeButton from './recipes/LikeButton'
 import ReportRecipeButton from './recipes/ReportRecipeButton'
+import ShareButton from './recipes/ShareButton'
+import ThreeDots from './ThreeDots'
+import ReportUserButton from './user/ReportUserButton'
 
 export default function Recipe({ recipe }) {
 
@@ -61,6 +58,7 @@ export default function Recipe({ recipe }) {
                             </>
                             : <>
                                 <ReportRecipeButton recipe={recipe} />
+                                <ReportUserButton user={recipe.User} />
                             </>
                     }
 

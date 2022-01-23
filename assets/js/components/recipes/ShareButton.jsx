@@ -1,7 +1,7 @@
 import React from 'react'
 import { toast } from 'react-toastify'
-import { ShareIcon } from '../../ui/Icons'
 import { API_URL } from '../../config'
+import { ShareIcon } from '../../ui/Icons'
 
 export default function ShareButton({ recipe }) {
 

@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import likeBookmark from '../../services/like&bookmark'
 import { addLike, removeLike, selectLikeById } from '../../services/likeSlice'
-import { setStateLike } from '../../services/recipeSlice'
 import { LikeFillIcon, LikeIcon } from '../../ui/Icons'
 
 export default function LikeButton({ recipe, onLike }) {

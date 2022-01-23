@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from "react-redux"
-import { deleteStep, editIngredient, editStep } from "../../services/recipeSlice"
+import { deleteStep, editIngredient } from "../../services/recipeSlice"
 import { EditIcons } from '../../ui/Icons'
 
 export default function EditIngredient({ recipeData, ingredient, onEdit }) {

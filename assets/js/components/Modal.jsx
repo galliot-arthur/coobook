@@ -1,7 +1,4 @@
 import React from 'react'
-import ReactDom from 'react-dom'
-import useModal from '../services/useModal'
-import { MinusIcons } from '../ui/Icons'
 
 export default function Modal({ display, toggleDisplay, children = null }) {
 

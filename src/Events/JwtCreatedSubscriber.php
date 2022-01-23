@@ -23,7 +23,6 @@ class JwtCreatedSubscriber
 
     public function onJWTCreated(JWTCreatedEvent $event)
     {
-        $request = $this->requestStack->getCurrentRequest();
 
         $payload = $event->getData();
         $user = $event->getUser();
@@ -33,7 +32,6 @@ class JwtCreatedSubscriber
         $payload['email'] = $user->getEmail();
 
         $event->setData($payload);
-
         $header = $event->getHeader();
         $header['cty'] = 'JWT';
 

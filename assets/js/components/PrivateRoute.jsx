@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { isConnected } from '../services/authSlice';
 

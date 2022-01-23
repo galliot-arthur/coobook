@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { addBookmark, removeBookmark, selectBookMarkById } from '../../services/bookMarkSlice'
 import likeBookmark from '../../services/like&bookmark'

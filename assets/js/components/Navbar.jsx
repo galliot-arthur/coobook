@@ -1,11 +1,10 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { AddFileIcons, BookMarkFilledIcon, DoorIcons, HomeIcons, SearchIcons, UserCircleIcons } from '../ui/Icons'
-import { useSelector } from 'react-redux'
-import { isConnected, authLogout, checkConnectedStatus } from '../services/authSlice'
-import { useDispatch } from 'react-redux'
 import useWindowDimensions from '../hooks/useWindowDimensions'
+import { authLogout, checkConnectedStatus, isConnected } from '../services/authSlice'
+import { AddFileIcons, BookMarkFilledIcon, DoorIcons, HomeIcons, SearchIcons, UserCircleIcons } from '../ui/Icons'
 import Footer from './Footer'
 
 

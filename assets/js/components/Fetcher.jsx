@@ -18,7 +18,6 @@ let Fetcher = () => {
 const Fetch = () => {
 
     const dispatch = useDispatch()
-
     /* feed */
     dispatch(fetchRecipes(feed))
     const feed = useSelector(selectAllRecipes)

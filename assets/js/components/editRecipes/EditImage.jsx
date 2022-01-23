@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import ImageUploader from 'react-images-upload';
 import { toast } from 'react-toastify';
 import { EditIcons } from '../../ui/Icons';
+import Images from '../recipes/Images';
 
 export default function EditImage({ recipe }) {
 
@@ -53,27 +54,14 @@ export default function EditImage({ recipe }) {
         </form>
     </div>
 
-    if (recipe.recipesImages[0]) return <>
+
+    return <>
         <div className='position-relative'>
-            <img
-                className="img-full"
-                src={"images/recipes/" + recipe.recipesImages[0].path}
-                alt={recipe.slug}
-                onError={handleError} />
+            <Images recipe={recipe} />
             <button onClick={() => setEdit(true)} className='position-absolute top-0 start-100 translate-middle badge rounded-pill text-muted bg-light'>
                 <EditIcons size='12' />
             </button>
-        </div></>
-    else return <>
-        <div className='position-relative'>
-            <img
-                className="img-full"
-                src={"images/recipes/default-placeholder.png"}
-                alt={recipe.slug}
-                onError={handleError} />
-            <button onClick={() => setEdit(true)} className='position-absolute top-0 start-100 translate-middle badge rounded-pill text-muted bg-light'>
-                <EditIcons size='12' />
-            </button>
-        </div></>
+        </div>
+    </>
 
 }

@@ -43,18 +43,14 @@ const App = () => {
             <HashRouter>
                 <Fetcher />
                 <div className="row">
-
                     <NavbarWithRouter />
-
                     {/* MAIN */}
                     <main className={width > 991 ? 'col px-5 pt-3' : 'container'} >
                         <Switch >
 
-
                             {/* SECURITY */}
                             <Route path="/login" component={LoginPage} />
                             <Route path="/register" component={RegisterPage} />
-
 
                             {/* RECIPES */}
                             <PrivateRoute path="/enregistrer-recette/:id" component={AddRecipe} />
@@ -64,16 +60,13 @@ const App = () => {
                             <PrivateRoute path="/modifier-recette/:id" component={EditRecipe} />
                             <PrivateRoute path="/recette/:id" component={ShowRecipe} />
 
-
                             {/* COMMENTS */}
                             <PrivateRoute path="/commenter/:id" component={AddComment} />
-
 
                             {/* USER */}
                             <PrivateRoute path="/profil/:id" component={Profile} />
                             <PrivateRoute path="/marques-pages" component={BookmarkedRecipes} />
                             <PrivateRoute path="/editer-mon-profil" component={EditProfile} />
-
 
                             {/* SEARCH */}
                             <PrivateRoute path="/rechercher" component={SearchPage} />
@@ -86,15 +79,10 @@ const App = () => {
                             <Route path="/a-propos" component={About} />
                             <Route path="/" component={HomePage} />
 
-
                         </Switch>
                     </main>
 
-                    {width > 922 &&
-                        <aside className='col-1 text-muted sticky-top'>
-
-                        </aside>
-                    }
+                    {width > 922 && <aside className='col-1 text-muted sticky-top'></aside>}
                 </div>
 
                 {width < 992 && <Footer />}

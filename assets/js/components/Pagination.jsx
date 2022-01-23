@@ -1,7 +1,7 @@
 import React from 'react'
 import { NextIcons, PrevIcons } from '../ui/Icons'
 
-export default function Pagination({currentPage, itemsPerPage, length, onPageChanged}) {
+export default function Pagination({ currentPage, itemsPerPage, length, onPageChanged }) {
 
 
     const pagesCount = Math.ceil(length / itemsPerPage)

@@ -1,10 +1,9 @@
 import moment from 'moment'
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import Field from '../../components/forms/Field'
-import { editComment, deleteComment, getCommentsByRecipe } from '../../services/commentSlice'
+import { deleteComment, editComment, getCommentsByRecipe } from '../../services/commentSlice'
 import { EditIcons, TrashIcons, UserIcons } from '../../ui/Icons'
 
 let Comments = ({ recipe }) => {

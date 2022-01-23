@@ -22,7 +22,7 @@ const Recipe = ({ recipe }) => {
     const handleReactivate = () => dispatch(reactivate(recipe.id))
 
     return <li className='list-group-admin'>
-        <Link to={'/'}>{recipe.title}</Link>
+        <Link to={'/recette/' + recipe.id}>{recipe.title}</Link>
         <div>
             <button className='text-success' onClick={handleReactivate}>
                 <CheckIcon /> Réactiver

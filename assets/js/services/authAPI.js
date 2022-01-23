@@ -2,6 +2,11 @@ import Axios from "axios";
 import jwtDecode from "jwt-decode";
 import { API_URL } from "../config";
 
+/**
+ * 
+ * @param {Array} credentials 
+ * @returns Boolean || Void
+ */
 const authenticate = async (credentials) => {
     return Axios
         .post(API_URL + 'api/' + 'login_check', credentials)
@@ -24,6 +29,11 @@ const authenticate = async (credentials) => {
         })
 }
 
+/**
+ * 
+ * @param {Array} user 
+ * @returns Void
+ */
 const register = async (user) => {
     return Axios
         .post(API_URL + 'api/' + 'register', user)
@@ -44,7 +54,19 @@ const setUp = () => {
     return window.localStorage.getItem('authToken')
 }
 
-export default { authenticate, logout, setUp, register }
+/**
+ * 
+ * @param {number} id 
+ * @param {Array} roles 
+ * @returns Promise
+ */
+const updateRole = async (id, roles) => await API.put(
+    id,
+    roles,
+    'users'
+)
+
+export default { authenticate, logout, setUp, register, updateRole }
 
 
 

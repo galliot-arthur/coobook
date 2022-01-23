@@ -24,7 +24,6 @@ class JWTAuthenticationSuccessListener
 
     /**
      * Sets JWT as a cookie on successful authentication.
-     * 
      * @param AuthenticationSuccessEvent $event
      * @throws Exception
      */

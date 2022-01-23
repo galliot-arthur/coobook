@@ -20,20 +20,21 @@ class PasswordHasherSubscriber implements EventSubscriberInterface
         $this->hasher = $hasher;
     }
 
-    public static function getSubscribedEvents() {
+    public static function getSubscribedEvents()
+    {
         return [
             KernelEvents::VIEW => ['hashPassword', EventPriorities::PRE_WRITE]
         ];
     }
 
-    public function hashPassword(ViewEvent $event) {
+    public function hashPassword(ViewEvent $event)
+    {
         $result = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
         if ($result instanceof User && $method == "POST") {
             $hash = $this->hasher->hashPassword($result, $result->getPassword());
             $result->setPassword($hash);
-
         }
     }
 }

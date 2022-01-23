@@ -27,7 +27,7 @@
     --primary-hover: #ff9d3b;
     --secondary: #c4c4c4;
     --success: #55c276;
-    --info: #55687e17;
+    --info: #55687e15;
     --warning: #fff67c96;
     --warning-light: #ffee00bd;
     --danger: #f57a00;
@@ -531,6 +531,18 @@ progress {
     content: "\2014\00A0"
 }
 
+.img-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto auto auto;
+}
+.img-container::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
 .img-thumbnail {
     border-radius: .25rem;
     max-width: 100%;
@@ -551,10 +563,11 @@ progress {
 }
 
 .img-full {
+    position: absolute;
     border-radius: .25rem;
-    max-width: 100%;
-    height: auto;
-    margin: 0 auto auto auto;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     box-shadow: 0 2px 0 var(--info);
 }
 
@@ -642,6 +655,7 @@ progress {
 .row {
     --gutter-x: 1.5rem;
     --gutter-y: 0;
+    width: 100%;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
@@ -4702,6 +4716,8 @@ fieldset:disabled .btn {
 }
 
 .position-relative {
+    width: 100%;
+    height: 100%;
     position: relative!important
 }
 
