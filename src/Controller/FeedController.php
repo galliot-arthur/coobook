@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Security;
 
+/**
+ * Provide to user recipes from followed users.
+ */
 class FeedController extends AbstractController
 {
 

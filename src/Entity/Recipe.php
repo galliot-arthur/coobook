@@ -44,6 +44,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
             'path' => '/recipes/{id}/rec',
             'deserialize' => false,
             'controller' => GetBookmarkController::class,
+        ],
+        'feed' => [
+            'method' => 'GET',
+            'path' => '/feed',
+            'deserialize' => false,
+            'controller' => FeedController::class,
         ]
     ]
 )]
