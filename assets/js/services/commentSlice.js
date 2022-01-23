@@ -39,7 +39,7 @@ const commentSlice = createSlice({
         builder
             /* ADD */
             .addCase(addComment.fulfilled, (state, action) => {
-                state.comments = state.comments.push(action.payload)
+                state.comments = [...state.comments, action.payload]
             })
             .addCase(addComment.rejected, (state, action) => console.log('rejected :', action.error))
             /* EDIT */
