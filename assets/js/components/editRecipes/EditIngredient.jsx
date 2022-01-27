@@ -32,7 +32,6 @@ export default function EditIngredient({ recipeData, ingredient, onEdit }) {
                 id: ingredientData.id, recipe: recipe
             }))
         } else {
-            console.log(ingredientData)
             recipe.ingredients = recipe.ingredients
                 .map(i => i.id == ingredientData.id ? ingredientData : i)
             dispatch(editIngredient({

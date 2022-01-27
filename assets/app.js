@@ -16,7 +16,9 @@ import AdminIdex from './js/pages/Admin/AdminIndex';
 import AddComment from './js/pages/Comment/AddComment';
 import { HomePage } from './js/pages/HomePage';
 import About from './js/pages/infos/About';
+import CGU from './js/pages/infos/CGU';
 import Contact from './js/pages/infos/Contact';
+import RGPD from './js/pages/infos/RGPD';
 import LoginPage from './js/pages/LoginPage';
 import AddIngredients from './js/pages/Recipe/AddIngredients';
 import AddRecipe from './js/pages/Recipe/AddRecipe';
@@ -76,6 +78,8 @@ const App = () => {
 
                             {/* HOME */}
                             <Route path="/contact" component={Contact} />
+                            <Route path="/coobook-cgu" component={CGU} />
+                            <Route path="/rgpd" component={RGPD} />
                             <Route path="/a-propos" component={About} />
                             <Route path="/" component={HomePage} />
 

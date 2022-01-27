@@ -37,6 +37,7 @@ export default function ShowRecipe({ match, history }) {
 
     const onLike = (state) => !state ? setLikes(likes + 1) : setLikes(likes - 1)
 
+    /* BAD CASES */
     if (!recipe) return <Loader />
     if (recipe.status == 'deactivate') {
         history.replace('/')
@@ -44,6 +45,7 @@ export default function ShowRecipe({ match, history }) {
     }
     const onEdited = () => setEdit(false)
 
+    /* HANDLE TITLE & INTRO EDIT */
     if (edit) return <>
         <h1 className="display-4">
             {recipe.title}
@@ -76,7 +78,9 @@ export default function ShowRecipe({ match, history }) {
                                 <UserCircleIcons size="24" />
                             </div>
                             <div className="ps-2">
-                                <NavLink to={"/profil/" + recipe.User.id} className="me-1">{recipe.User.firstName}</NavLink>
+                                <NavLink to={"/profil/" + recipe.User.id} className="me-1">
+                                    {recipe.User.firstName}
+                                </NavLink>
                                 <i className="text-small text-muted"> il y a {formatDate(recipe.createdAt)}</i>
                             </div>
                         </div>
@@ -105,12 +109,10 @@ export default function ShowRecipe({ match, history }) {
                     <div className="col-12 col-md-6 d-flex">
                         {recipe.User.id == localStorage.getItem('authId')
                             ? <EditImage recipe={recipe} />
-                            : <Images recipe={recipe} />
-                        }
+                            : <Images recipe={recipe} />}
                     </div>
                     <div className="col-6">
                         {width >= 768 && <Ingredients recipe={recipe} ingredients={recipe.ingredients} width={width} />}
-
                     </div>
                 </div>
                 <div className="my-3 d-flex justify-content-between align-items-center">
@@ -120,9 +122,7 @@ export default function ShowRecipe({ match, history }) {
                         <i className="text-muted text-small me-5">{likes} j'aime{likes > 1 && 's'}</i>
                     </div>
                 </div>
-
             </div>
-
             {/* INGREDIENTS */}
             {width < 768 && <Ingredients recipe={recipe} width={width} />}
 
@@ -133,8 +133,7 @@ export default function ShowRecipe({ match, history }) {
                     : <Steps steps={recipe.steps} />
             }
             {
-                recipe.outro &&
-                <>
+                recipe.outro && <>
                     <h2>Pour Finir</h2>
                     <p>
                         {recipe.outro}
@@ -142,10 +141,8 @@ export default function ShowRecipe({ match, history }) {
                 </>
             }
             <hr />
-
             {/* COMMENTS */}
             <Comments recipe={recipe} />
-
             <div className="d-flex justify-content-end">
                 <AddComment recipe={recipe} />
             </div>

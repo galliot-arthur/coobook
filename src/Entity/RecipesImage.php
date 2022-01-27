@@ -16,13 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
     collectionOperations: [
         'get',
-        'post',
-        'image' => [
-            'method' => 'POST',
-            'path' => '/recipes/{id}/image',
-            'deserialize' => false,
-            'controller' => ImageController::class
-        ]
+        'post'
     ]
 )]
 class RecipesImage

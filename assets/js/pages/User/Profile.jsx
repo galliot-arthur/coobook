@@ -1,13 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import RecipeSmall from '../../components/RecipeSmall'
 import ThreeDots from '../../components/ThreeDots'
-import FollowButton from '../../components/user/FollowButton'
 import MessageButton from '../../components/user/MessageButton'
 import ReportUserButton from '../../components/user/ReportUserButton'
-import API from '../../services/API'
-import { getUser } from '../../services/authSlice'
 import { selectUserRecipes } from '../../services/recipeSlice'
 import { UserCircleIcons } from '../../ui/Icons'
 import { Loader } from '../../ui/Loader'
@@ -16,7 +13,6 @@ import { Loader } from '../../ui/Loader'
 export default function Profile({ match }) {
 
     const recipes = useSelector(state => selectUserRecipes(state, match.params.id))
-
     if (recipes.length < 1) return <Loader />
 
     const user = recipes[0].User

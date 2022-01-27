@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import RecipeSmall from '../components/RecipeSmall'
 import { selectAllRecipes } from '../services/recipeSlice'
+import { includeIngredient } from '../services/searchFunctions'
 import { SearchIcons } from '../ui/Icons'
 import { Loader } from '../ui/Loader'
 
@@ -37,12 +38,15 @@ export default function SearchPage() {
             if (
                 recipe.title
                     .toLowerCase()
-                    .normalize("NFD").replace(/\p{Diacritic}/gu, "")
-                    .includes(term) &&
+                    .normalize("NFD")
+                    .replace(/\p{Diacritic}/gu, "")
+                    .includes(term) ||
                 recipe.intro
                     .toLowerCase()
-                    .normalize("NFD").replace(/\p{Diacritic}/gu, "")
-                    .includes(term)
+                    .normalize("NFD")
+                    .replace(/\p{Diacritic}/gu, "")
+                    .includes(term) ||
+                includeIngredient(recipe.ingredients, term)
             ) {
                 recipe.selected += 1
             }

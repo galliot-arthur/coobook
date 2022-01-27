@@ -32,6 +32,9 @@ export default function Footer() {
                     <NavLink to="/a-propos">A propos</NavLink>
                     <NavLink to="/contact" className={width > 992 ? 'ms-2' : "ms-3"}>Contact</NavLink>
                     <br />
+                    <NavLink to="/rgpd">R.G.P.D</NavLink>
+                    <NavLink to="/coobook-cgu" className={width > 992 ? 'ms-2' : "ms-3"}>C.G.U</NavLink>
+                    <br />
                     {admin && <NavLink to="/admin" className={width > 992 ? '' : "ms-3"}>Admin</NavLink>}
 
                 </ul>

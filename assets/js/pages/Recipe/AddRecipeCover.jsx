@@ -61,6 +61,12 @@ export default function AddRecipeCover({ match, history }) {
                         Enregistrer
                     </button>
                 </form>
+                <button
+                    className={"btn mx-auto text-muted " + (loading && "disabled")}
+                    onClick={() => history.push('/')}
+                >
+                    Je ne souhaite pas ajouter d'image maintenant.
+                </button>
             </div>
         </div>
 

@@ -9,33 +9,14 @@ export default function ConnectedHomePage() {
 
     const feed = useSelector(selectAllRecipes)
 
-    const setSuperAdmin = async () => {
-        const roles = { roles: ["ROLE_SUPERADMIN"] }
-        const res = await API.put(
-            localStorage.getItem('authId'),
-            roles,
-            'users'
-        )
-    }
-    const setAdmin = async () => {
-        const roles = { roles: ["ROLE_ADMIN"] }
-        const res = await API.put(
-            localStorage.getItem('authId'),
-            roles,
-            'users'
-        )
-    }
-
     return (<>
-        {/* <button onClick={setSuperAdmin} className='btn'>SUPER ADMIN</button>
-        <button onClick={setAdmin} className='btn'>ADMIN</button> */}
         {
             feed.length == 0 ?
                 <Loader />
                 :
-                feed.filter(r => r.status !== 'deactivate').map(recipe =>
-                    <Recipe recipe={recipe} key={recipe.id} />
-                )
+                feed
+                    .filter(r => r.status !== 'deactivate')
+                    .map(recipe => <Recipe recipe={recipe} key={recipe.id} />)
         }
     </>)
 }
