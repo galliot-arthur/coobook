@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './bootstrap';
 import './css/app.css';
 import './css/GT-MARU.woff2';
+import CookieConsent from './js/components/CookieConsent';
 import Fetcher from './js/components/Fetcher';
 import Footer from './js/components/Footer';
 import NavBar from './js/components/Navbar';
@@ -18,6 +19,7 @@ import { HomePage } from './js/pages/HomePage';
 import About from './js/pages/infos/About';
 import CGU from './js/pages/infos/CGU';
 import Contact from './js/pages/infos/Contact';
+import Legacy from './js/pages/infos/Legale';
 import RGPD from './js/pages/infos/RGPD';
 import LoginPage from './js/pages/LoginPage';
 import AddIngredients from './js/pages/Recipe/AddIngredients';
@@ -80,6 +82,7 @@ const App = () => {
                             <Route path="/contact" component={Contact} />
                             <Route path="/coobook-cgu" component={CGU} />
                             <Route path="/rgpd" component={RGPD} />
+                            <Route path="/mentions-legales" component={Legacy} />
                             <Route path="/a-propos" component={About} />
                             <Route path="/" component={HomePage} />
 
@@ -89,6 +92,7 @@ const App = () => {
                     {width > 922 && <aside className='col-1 text-muted sticky-top'></aside>}
                 </div>
 
+                <CookieConsent />
                 {width < 992 && <Footer />}
             </HashRouter>
             <ToastContainer

@@ -25,6 +25,7 @@ export default function EditIngredient({ recipeData, ingredient, onEdit }) {
     const handleSubmit = (e) => {
         e.preventDefault()
         const recipe = { ...recipeData }
+
         if (ingredientData.amount == '' && ingredientData.name == '') {
             recipe.steps = recipe.steps
                 .filter(s => s.id !== ingredientData.id)
@@ -32,6 +33,7 @@ export default function EditIngredient({ recipeData, ingredient, onEdit }) {
                 id: ingredientData.id, recipe: recipe
             }))
         } else {
+            console.log(ingredient)
             recipe.ingredients = recipe.ingredients
                 .map(i => i.id == ingredientData.id ? ingredientData : i)
             dispatch(editIngredient({
